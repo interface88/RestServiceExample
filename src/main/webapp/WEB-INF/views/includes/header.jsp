@@ -12,7 +12,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>HOLCIM - Admin Panel</title>
+    <title>CRICKET - Admin Panel</title>
 
     <!-- Bootstrap Core CSS -->
  
@@ -89,9 +89,9 @@
               </a>    
             </div>
           <div class="nav navbar-top-links navbar-center">
-              <center><h1 style="margin-top:40px;">Geostone-VR Application 
+              <center><h1 style="margin-top:40px;">CRICKET - Application 
               	<security:authorize access="hasAnyRole('ADMIN')">Admin Panel</security:authorize>
-              	<security:authorize access="hasAnyRole('SALES')">Sales Panel</security:authorize>
+              	<security:authorize access="hasAnyRole('ADMIN')">Sales Panel</security:authorize>
               </center>
               </h1>
                </div>

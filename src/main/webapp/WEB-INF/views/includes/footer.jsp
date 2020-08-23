@@ -6,7 +6,7 @@
    
    
    <div class="footer">
- <center><p style="font-face:Arial;"><b>&copy; Holcim (Australia) Pty Ltd.  2019</b></p></center>
+ <center><p style="font-face:Arial;"><b>&copy; Cricket (Australia) Pty Ltd.  2020</b></p></center>
 </div>
    
     </div>
