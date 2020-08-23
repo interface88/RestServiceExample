@@ -25,7 +25,7 @@ public class PasswordResetTokenDaoImp implements PasswordResetTokenDao {
 	public PasswordResetToken findByToken(String token) {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("from com.progenetive.model.PasswordResetToken where token = :token").setParameter("token", token);
+		Query query = session.createQuery("from com.cricket.model.PasswordResetToken where token = :token").setParameter("token", token);
 		PasswordResetToken passwordResetToken = (PasswordResetToken) query.uniqueResult();
 		return passwordResetToken;
 	}

@@ -67,7 +67,7 @@ public class ProductDaoImp implements ProductDao {
 		String cityName = paramList.get("cityName");
 		String productType = paramList.get("productType");
 		/*
-		String hql = "from com.progenetive.model.Product as product where product.cityList.cityName = :cityName ";
+		String hql = "from com.cricket.model.Product as product where product.cityList.cityName = :cityName ";
 		Query query = session.createQuery(hql);
 		List<Product>  productList = query.list();
 		return productList;

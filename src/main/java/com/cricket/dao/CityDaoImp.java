@@ -53,7 +53,7 @@ public class CityDaoImp implements CityDao {
   @Override
   public void delete(long id) {
     Session session = sessionFactory.getCurrentSession();
-    session.createQuery("delete from com.progenetive.model.City where id =:id")
+    session.createQuery("delete from com.cricket.model.City where id =:id")
         .setParameter("id", id).executeUpdate();
     /*
      * City city = session.byId(City.class).load(id); session.delete(city);
@@ -64,7 +64,7 @@ public class CityDaoImp implements CityDao {
   public City cityName(String cityName) {
     Session session = sessionFactory.getCurrentSession();
     Query query =
-        session.createQuery("from com.progenetive.model.City where cityName = :cityName")
+        session.createQuery("from com.cricket.model.City where cityName = :cityName")
             .setParameter("cityName", cityName);
     City city = (City) query.uniqueResult();
     return city;

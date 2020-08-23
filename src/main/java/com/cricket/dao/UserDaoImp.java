@@ -63,7 +63,7 @@ public class UserDaoImp implements UserDao {
 	@Override
 	public User loadUserByUsername(String userName) {
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("from com.progenetive.model.User where name = :name").setParameter("name", userName);
+		Query query = session.createQuery("from com.cricket.model.User where name = :name").setParameter("name", userName);
 		User user = (User) query.uniqueResult();
 		return user;
 	}
@@ -71,7 +71,7 @@ public class UserDaoImp implements UserDao {
 	@Override
 	public User getUserByEmail(String email) {
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("from com.progenetive.model.User where email = :email").setParameter("email", email);
+		Query query = session.createQuery("from com.cricket.model.User where email = :email").setParameter("email", email);
 		User user = (User) query.uniqueResult();
 		return user;
 	}
@@ -79,7 +79,7 @@ public class UserDaoImp implements UserDao {
 	@Override
 	public User getUserByEmployeeId(String employeeId) {
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("from com.progenetive.model.User where employeeId = :employeeId").setParameter("employeeId", employeeId);
+		Query query = session.createQuery("from com.cricket.model.User where employeeId = :employeeId").setParameter("employeeId", employeeId);
 		User user = (User) query.uniqueResult();
 		return user;
 	}

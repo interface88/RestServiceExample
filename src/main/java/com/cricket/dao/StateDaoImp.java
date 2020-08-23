@@ -44,7 +44,7 @@ public class StateDaoImp implements StateDao {
     	  Query<State> query = session.createQuery(cq);
     	  return query.getResultList();
       }else{
-    	  Query query = session.createQuery("from com.progenetive.model.State where upper(stateName) = upper(:stateName)")
+    	  Query query = session.createQuery("from com.cricket.model.State where upper(stateName) = upper(:stateName)")
     			  .setParameter("stateName", stateName);
     	  List<State> stateList = (List<State>) query.getResultList();
 		  return stateList;
