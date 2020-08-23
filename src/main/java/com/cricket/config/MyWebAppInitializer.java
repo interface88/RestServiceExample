@@ -9,7 +9,7 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
   /*
    * @Override public void onStartup(ServletContext container) {
    * AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-   * context.setConfigLocation("com.progenetive.config");
+   * context.setConfigLocation("com.cricket.config");
    * 
    * container.addListener(new ContextLoaderListener(context));
    * 

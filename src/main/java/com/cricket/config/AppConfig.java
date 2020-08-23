@@ -19,7 +19,8 @@ import static org.hibernate.cfg.Environment.*;
 
 
 @Configuration
-@PropertySource({"file:/HOLCIM/db.properties", "file:/HOLCIM/email.properties"})
+//@PropertySource({"file:/CRICKET/db.properties", "file:/CRICKET/email.properties"})
+@PropertySource({"classpath:db.properties", "classpath:email.properties"})
 @EnableTransactionManagement
 @ComponentScans(value = { @ComponentScan("com.cricket.dao"),
 @ComponentScan("com.cricket.service"),@ComponentScan("com.cricket.model"),@ComponentScan("com.cricket.config")  })
@@ -75,7 +76,7 @@ public class AppConfig {
       props.put(C3P0_MAX_STATEMENTS, env.getProperty("hibernate.c3p0.max_statements"));
 
       factoryBean.setHibernateProperties(props);
-      factoryBean.setPackagesToScan("com.progenetive.model");
+      factoryBean.setPackagesToScan("com.cricket.model");
 
       return factoryBean;
       /*

@@ -34,11 +34,12 @@ public class MainController {
     @RequestMapping(value = "/loginPage", method = RequestMethod.GET)
 	public String loginPage(@RequestParam(value = "error",required = false) String error,
 	@RequestParam(value = "logout",	required = false) String logout, Model model) {
-    	String password = "holcim@123";
+    	String password = "admin@123";
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String hashedPassword = passwordEncoder.encode(password);
-
+		System.out.println("+++++++");
 		System.out.println(hashedPassword);
+		System.out.println("+++++++");
 		if (error != null) {
 			model.addAttribute("error", "Invalid Credentials provided.");
 		}
@@ -53,7 +54,7 @@ public class MainController {
     @RequestMapping(value = "/forgotPassword", method = RequestMethod.GET)
 	public String forgotPassword(@RequestParam(value = "error",required = false) String error,
 	@RequestParam(value = "logout",	required = false) String logout, Model model) {
-    	String password = "holcim@123";
+    	String password = "admin@123";
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String hashedPassword = passwordEncoder.encode(password);
 
