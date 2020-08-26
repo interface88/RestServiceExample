@@ -49,6 +49,7 @@ public class MainController {
 			model.addAttribute("message", "Logged out from JournalDEV successfully.");
 		}
 		return "login";
+		//return "addPlayer";
     }
     
     @RequestMapping(value = "/forgotPassword", method = RequestMethod.GET)

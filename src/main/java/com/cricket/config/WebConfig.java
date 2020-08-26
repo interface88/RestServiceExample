@@ -10,28 +10,44 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
+import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = {"com.cricket.controller"})
 public class WebConfig extends WebMvcConfigurerAdapter {
 
+	
+	/**
+     * Configure TilesConfigurer.
+     */
+    @Bean
+    public TilesConfigurer tilesConfigurer(){
+        TilesConfigurer tilesConfigurer = new TilesConfigurer();
+        tilesConfigurer.setDefinitions(new String[] {"/WEB-INF/views/**/tiles.xml"});
+        tilesConfigurer.setCheckRefresh(true);
+        return tilesConfigurer;
+    }
+    
   /**
    * Configure ViewResolvers to deliver preferred views.
    */
   @Override
   public void configureViewResolvers(ViewResolverRegistry registry) {
 
-    InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+    /*InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
     viewResolver.setPrefix("/WEB-INF/views/");
     viewResolver.setSuffix(".jsp");
     registry.viewResolver(viewResolver);
+    */
+    TilesViewResolver viewResolver = new TilesViewResolver();
+    registry.viewResolver(viewResolver);
   }
 
+  
   /**
    * Configure ResourceHandlers to serve static resources like CSS/ Javascript etc...
    */
@@ -61,11 +77,10 @@ public class WebConfig extends WebMvcConfigurerAdapter {
   public void configurePathMatch(PathMatchConfigurer matcher) {
     matcher.setUseRegisteredSuffixPatternMatch(true);
   }
-
-  @Override
-  public void addViewControllers(ViewControllerRegistry registry) {
-    registry.addViewController("/").setViewName("index");
-  }
+	/*
+	 * @Override public void addViewControllers(ViewControllerRegistry registry) {
+	 * registry.addViewController("/").setViewName("index"); }
+	 */
 
   @Bean(name = "multipartResolver")
   public CommonsMultipartResolver getResolver() throws IOException {
