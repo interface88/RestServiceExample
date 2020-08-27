@@ -11,7 +11,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>HOLIM - Login</title>
+<title>Cricket - Login</title>
 
 <link href="<c:url value="/static/bootstrap/css/bootstrap.min.css" />"
 	rel="stylesheet">
@@ -31,6 +31,8 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 <style>
+
+
 .error {
 	padding: 15px;
 	margin-bottom: 20px;
@@ -74,6 +76,11 @@ body {
 	font-family: Arial;
 }
 
+body {
+  background: #007bff;
+  background: linear-gradient(to right, #0062E6, #33AEFF);
+}
+
 .form-control {
 	box-shadow: none;
 	border-color: #ddd;
@@ -82,8 +89,6 @@ body {
     padding: 8px 12px;
     
 }
-inpu
-}
 
 .form-control:focus {
 	border-color: #1863e6;
@@ -91,18 +96,17 @@ inpu
 
 .login-form {
 	width: 400px;
-	
 	margin: 150px auto;
-	padding: 30px 0;
+	padding: 0;
 	display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .login-form form {
+	border-radius:20px;
 	color: #434343;
-	border-radius: 1px;
-	margin-bottom: 15px;
+	margin-bottom: 0;
 	background: #fff;
 	border: 1px solid #f3f3f3;
 	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
@@ -178,20 +182,14 @@ inpu
 </head>
 
 <body>
-	<div class="login-form jumbotron vertical-center">
+	<div class="login-form  vertical-center">
 
 		<form name='loginForm' action="<c:url value='/appLogin' />"
 			method='POST' role="form">
 			<div class="avatar">
-				<img src="${pageContext.request.contextPath}/static/images/holcimlogo.png"
-					width="300" class="center" />
+				<img src="${pageContext.request.contextPath}/static/images/logo.png" width="300" class="center" />
 			</div>
-			<br>
 			<h4>Login</h4>
-			<br>
-			<h6 class="modal-title"><center>Enter Username and Password to Login</center></h6>
-			<br>
-
 			<c:if test="${not empty error}">
 				<div class="error">${error}</div>
 			</c:if>
@@ -201,11 +199,11 @@ inpu
 			<div class="form-group">
 				<input class="form-control" placeholder="Username"
 					required="required" type="text" name="username" value="" autofocus>
-			</div><br>
+			</div>
 			<div class="form-group">
 				<input class="form-control" placeholder="Password" type="password"
 					name="password" value="" required="required" />
-			</div><br>
+			</div>
 			<div class="form-group small clearfix">
 				<label class="checkbox-inline"><input type="checkbox">
 					Remember me</label> <a
