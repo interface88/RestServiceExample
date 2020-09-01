@@ -1,17 +1,62 @@
 package com.cricket.controller.master;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.cricket.model.Player;
+import com.cricket.service.BattingStyleService;
+import com.cricket.service.BowlingStyleService;
+import com.cricket.service.PlayerRoleService;
+import com.cricket.service.PlayerService;
 
 @Controller
 @RequestMapping("/mvc/player")
-public class PlayerController {
+public class PlayerController extends AbstractBaseController{
 
-	@RequestMapping(value = "/addPlayer", method = RequestMethod.GET)
-	public String addPlayer() {
+	@Autowired
+	PlayerService playerService;
+	
+	@Autowired
+	PlayerRoleService playerRoleService;
+	
+	@Autowired
+	BattingStyleService battingStyleService;
+	
+	@Autowired
+	BowlingStyleService bowlingStyleService;
+	
+	@RequestMapping(value = "/viewPlayer", method = RequestMethod.GET)
+	public String viewPlayer(@RequestParam(required = false) Long uuid, Model model) {
+		Player player = new Player();
+		if(uuid!=null) {
+			player = null;
+		}
 		
-		System.out.println("************************");
-		return "addPlayer";
+		model.addAttribute("playerRoleList", playerRoleService.findAll());
+		model.addAttribute("battingStyleList", battingStyleService.findAll());
+		model.addAttribute("bowlingStyleList", bowlingStyleService.findAll());
+		
+		model.addAttribute("player",player);
+		return "viewPlayer";
 	}
+	
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	  public String save(@ModelAttribute("player") Player player, Model model, RedirectAttributes rm) {
+
+	    if (player.getUuid() != null) {
+	    	playerService.update(player);
+	    } else {
+	    	playerService.save(player);
+	    }
+	    model.addAttribute("player", player);
+
+	    rm.addFlashAttribute("message", "Record Saved Sucessfully");
+	    return "redirect:viewPlayer";
+	  }
 }

@@ -16,7 +16,7 @@
                 <div class="submenu">
                   <ul class="submenu-item">
                     <li class="nav-item">
-                      <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a>
+                      <a class="nav-link" href="mvc/player/viewPlayer">Add Player</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdown</a>
