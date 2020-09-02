@@ -22,25 +22,21 @@
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <!-- endinject -->
-    <!-- Layout styles -->
-    <link rel="stylesheet" href="<c:url value="/static/assets/css/demo_2/style.css"/>" />
+     <!-- Layout styles -->
+    <link rel="stylesheet" href="<c:url value="/static/assets/css/demo_1/style.css"/>" />
     <!-- End layout styles -->
     <link rel="shortcut icon" href="<c:url value="/static/assets/images/favicon.png"/>" />
   </head>
   <body>
     <div class="container-scroller">
-    	<div class="horizontal-menu">
-	        <tiles:insertAttribute name="header" />
-	        <tiles:insertAttribute name="menu" />
-        </div>
-        <div class="container-fluid page-body-wrapper">
-	        <div class="main-panel">
-	        	<div class="content-wrapper pb-0">
-			    <tiles:insertAttribute name="body" />
-			    </div>
-			</div>
+        <tiles:insertAttribute name="menu" />
+        <tiles:insertAttribute name="header" />
+        <div class="main-panel">
+        	<div class="content-wrapper pb-0">
+		    	<tiles:insertAttribute name="body" />
+		    </div>
+		    <tiles:insertAttribute name="footer" />
 		</div>
-    <tiles:insertAttribute name="footer" />
     </div>
   </body>
 </html>
