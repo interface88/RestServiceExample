@@ -160,7 +160,6 @@ body {
 }
 </style>
 </head>
-
 <body>
 	<div class="login-form">
 		<form name='loginForm' action="<c:url value='/mvc/security/sendResetPasswordLink' />" method='POST' role="form">
@@ -181,11 +180,8 @@ body {
 			<input type="submit" class="btn btn-primary btn-block btn-lg" value="Submit">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /><br>
 			<div style="float:right;"><a href="${pageContext.request.contextPath}/loginPage" ><u>back</u></a></div>
-		</form>
-		
+		</form>		
 	</div>
-
 </body>
-
 </html>
 

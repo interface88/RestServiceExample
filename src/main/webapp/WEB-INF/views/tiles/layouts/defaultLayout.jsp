@@ -10,7 +10,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>Plus Admin</title>
+    <title>CricScore</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="<c:url value="/static/assets/vendors/mdi/css/materialdesignicons.min.css"/>">
     <link rel="stylesheet" href="<c:url value="/static/assets/vendors/flag-icon-css/css/flag-icon.min.css"/>">
@@ -26,6 +26,21 @@
     <link rel="stylesheet" href="<c:url value="/static/assets/css/demo_1/style.css"/>" />
     <!-- End layout styles -->
     <link rel="shortcut icon" href="<c:url value="/static/assets/images/favicon.png"/>" />
+    
+    <!-- Datepicker -->
+    <link href="<c:url value="/static/datepicker/css/bootstrap-datepicker3.min.css" />" rel="stylesheet">	 
+    
+    
+    
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+	<script src="<c:url value="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js" />"></script>
+	
+    <!-- Datepicker -->
+	<script src="<c:url value="/static/datepicker/js/bootstrap-datepicker.min.js" />"></script>
+    
+    
+	
   </head>
   <body>
     <div class="container-scroller">

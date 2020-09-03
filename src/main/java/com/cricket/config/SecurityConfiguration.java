@@ -38,7 +38,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         // .antMatchers("/mvc/user/resetPassword","/mvc/user/changePassword",
         // "/mvc/user/sendResetPasswordLink").permitAll()
         .antMatchers("/").access("hasRole('ADMIN') or hasRole('SALES')")
-        .antMatchers("/mvc/book/**").access("hasRole('ADMIN') or hasRole('SALES')")
+        .antMatchers("/mvc/**/**").access("hasRole('ADMIN') or hasRole('SALES')")
         .antMatchers("/mvc/city/**").access("hasRole('ADMIN') or hasRole('SALES')")
         .antMatchers("/mvc/state/**").access("hasRole('ADMIN') or hasRole('SALES')")
         .antMatchers("/mvc/customer/**").access("hasRole('ADMIN') or hasRole('SALES')")

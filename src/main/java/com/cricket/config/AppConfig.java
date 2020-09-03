@@ -88,6 +88,20 @@ public class AppConfig {
 	   */
    }
 
+	/*
+	 * @Bean public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+	 * final LocalContainerEntityManagerFactoryBean emf = new
+	 * LocalContainerEntityManagerFactoryBean();
+	 * emf.setDataSource(restDataSource());
+	 * emf.setPackagesToScan("com.cricket.model");
+	 * 
+	 * final JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+	 * emf.setJpaVendorAdapter(vendorAdapter);
+	 * emf.setJpaProperties(hibernateProperties());
+	 * 
+	 * return emf; }
+	 */
+   
    @Bean
    public HibernateTransactionManager getTransactionManager() {
       HibernateTransactionManager transactionManager = new HibernateTransactionManager();

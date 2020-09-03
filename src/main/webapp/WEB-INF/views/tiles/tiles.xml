@@ -32,9 +32,9 @@
        <put-attribute name="title" value="login" />  
    </definition>  
    
-   <definition name="addPlayer" extends="template-def">  
+   <definition name="viewPlayer" extends="template-def">  
        <put-attribute name="title" value="Player" />  
-       <put-attribute name="body" value="/WEB-INF/views/tiles/player/addPlayer.jsp" />     
+       <put-attribute name="body" value="/WEB-INF/views/tiles/player/viewPlayer.jsp" />     
    </definition>  
-  
+
 </tiles-definitions>
