@@ -37,6 +37,12 @@
               <span class="menu-title">Live Score</span>
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<c:url value="/mvc/player/viewPlayer"/>">
+              <i class="mdi mdi-compass-outline menu-icon"></i>
+              <span class="menu-title">Player</span>
+            </a>
+          </li>
 	          <li class="nav-item">
             <a class="nav-link" href="pages/icons/mdi.html">
               <i class="mdi mdi-contacts menu-icon"></i>
