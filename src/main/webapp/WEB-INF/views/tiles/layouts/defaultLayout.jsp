@@ -30,16 +30,8 @@
     <!-- Datepicker -->
     <link href="<c:url value="/static/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css" />" rel="stylesheet">	 
     
-    
-    
-    
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 	<script src="<c:url value="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js" />"></script>
-	
-    <!-- Datepicker -->
-    <script src="<c:url value="/static/datepicker/js/bootstrap-datepicker.min.js" />"></script>
-    <script src="<c:url value="/static/assets/js/numbermask.js"/>"></script>
-    
 	
   </head>
   <body>
@@ -53,7 +45,7 @@
 		    <tiles:insertAttribute name="footer" />
 		</div>
     </div>
-    <script src="<c:url value="/static/assets/vendors/js/bootstrap-datepicker.min.js" />"></script>
+    <script src="<c:url value="/static/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js" />"></script>
     <script src="<c:url value="/static/assets/vendors/inputmask/jquery.inputmask.js" />"></script>
   </body>
 </html>

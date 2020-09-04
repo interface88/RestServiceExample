@@ -45,8 +45,11 @@
                    <div class="col-md-6">
                      <div class="form-group row">
                        <form:label path = "dob" cssClass="col-sm-2 col-form-label">Born</form:label>
-                       <div class="col-sm-10">
-                         <form:input path = "dob" cssClass="form-control"/>
+                       <div class="col-sm-10 ">
+                       <div id="datepicker-popup" class="input-group date datepicker">
+	                         <form:input path = "dob" cssClass="form-control"/>
+                            <span class="mdi mdi-calendar input-group-text"></span>
+                        </div>
                        </div>
                      </div>
                    </div>
@@ -104,10 +107,14 @@
 <script>
 	
 $(function() {
-	//data-inputmask-alias="(+99) 9999-9999" 
-	//$('#adhaarNumber').attr('data-inputmask', "'alias': 'datetime'");
-	//$('#adhaarNumber').attr('data-inputmask-inputformat', "'alias': 'dd/mm/yyyy'");
+	$('#adhaarNumber').attr('data-inputmask-alias', "9999-9999-9999");
 	$("#adhaarNumber").inputmask();
+	
+	$('#datepicker-popup input').datepicker({
+	    format: "dd-mm-yyyy",
+	    todayHighlight: true
+	});
+	
     $("#playerForm").validate({
         rules: {
             playerName: "required",
