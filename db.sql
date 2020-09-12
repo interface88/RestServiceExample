@@ -672,3 +672,20 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2020-09-10 23:19:13
+
+
+
+/* modified the player table 12 SEPT 2020 @Rajesh*/
+CREATE TABLE `csn_player` (
+  `uuid` int(10) UNSIGNED NOT NULL,
+  `player_name` varchar(100) DEFAULT NULL,
+  `adhaar_number` varchar(50) NOT NULL,
+  `mobile` varchar(20) DEFAULT NULL,
+  `dob` date DEFAULT NULL,
+  `place` varchar(500) DEFAULT NULL,
+  `player_role` varchar(50) DEFAULT NULL,
+  `batting_style` varchar(50) DEFAULT NULL,
+  `bowling_style` varchar(50) DEFAULT NULL,
+  `is_deleted` tinyint(1) DEFAULT 1,
+  `creation_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
