@@ -17,7 +17,7 @@
             <a class="nav-link d-block" href="index.html">
               <img class="sidebar-brand-logo" src="<c:url value="/static/assets/images/logo.svg"/>" alt="" />
               <img class="sidebar-brand-logomini" src="<c:url value="/static/assets/images/logo-mini.svg"/>" alt="" />
-              <div class="small font-weight-light pt-1">Responsive Dashboard</div>
+              <div class="small font-weight-light pt-1">Responsive Dashboard</div>e
             </a>
             <form class="d-flex align-items-center" action="#">
               <div class="input-group">
@@ -37,10 +37,16 @@
               <span class="menu-title">Live Score</span>
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="<c:url value="/mvc/player/viewPlayer"/>">
+           <li class="nav-item">
+            <a class="nav-link" href="<c:url value="/mvc/scorer/view"/>">
               <i class="mdi mdi-compass-outline menu-icon"></i>
-              <span class="menu-title">Player</span>
+              <span class="menu-title">Scorer</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<c:url value="/mvc/player/playerList"/>">
+              <i class="mdi mdi-compass-outline menu-icon"></i>
+              <span class="menu-title">Player List</span>
             </a>
           </li>
 	          <li class="nav-item">

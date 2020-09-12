@@ -1,10 +1,11 @@
 <%@taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <div class="page-header">
    <h3 class="page-title">Player</h3>
    <nav aria-label="breadcrumb">
      <ol class="breadcrumb">
-       <li class="breadcrumb-item"><a href="#">Player List</a></li>
+       <li class="breadcrumb-item"><a href="<spring:url value="/mvc/player/playerList" htmlEscape="true"/>">Player List</a></li>
        <li class="breadcrumb-item active" aria-current="page"> Add new player </li>
      </ol>
    </nav>
@@ -22,6 +23,7 @@
          <div class="card-body">
            <h4 class="card-title">Player information</h4>
            <form:form id="playerForm" method = "POST" action ="${pageContext.request.contextPath}/mvc/player/save" modelAttribute="player">
+           		<form:hidden path="uuid"/>
            		<p class="card-description">Personal info</p>
                  <div class="row">
                    <div class="col-md-6">
@@ -29,6 +31,14 @@
                        <form:label path = "playerName" cssClass="col-sm-3 col-form-label">Name</form:label>
                        <div class="col-sm-9">
                          <form:input path = "playerName" cssClass="form-control"/>
+                       </div>
+                     </div>
+                   </div>
+                   <div class="col-md-6">
+                     <div class="form-group row">
+                       <form:label path="mobile" cssClass="col-sm-3 col-form-label">Mobile</form:label>
+                       <div class="col-sm-9">
+                         <form:input path = "mobile" cssClass="form-control"/>
                        </div>
                      </div>
                    </div>
@@ -68,9 +78,9 @@
                  <div class="row">
                    <div class="col-md-6">
                      <div class="form-group row">
-                       <form:label path = "playerRole.uuid" cssClass="col-sm-3 col-form-label">Role</form:label>
+                       <form:label path = "playerRole" cssClass="col-sm-3 col-form-label">Role</form:label>
                        <div class="col-sm-9">
-                         <form:select path="playerRole.uuid" items="${playerRoleList}" itemLabel="playerRoleName" itemValue="uuid" cssClass="form-control"/>
+                         <form:select path="playerRole" items="${playerRoleList}" cssClass="form-control"/>
                        </div>
                      </div>
                    </div>
@@ -78,17 +88,17 @@
                  <div class="row">
                    <div class="col-md-6">
                      <div class="form-group row">
-                       <form:label path = "battingStyle.uuid" cssClass="col-sm-3 col-form-label">Batting Style</form:label>
+                       <form:label path = "battingStyle" cssClass="col-sm-3 col-form-label">Batting Style</form:label>
                        <div class="col-sm-9">
-                         <form:select path="battingStyle.uuid" items="${battingStyleList}" itemLabel="battingStyleName" itemValue="uuid" cssClass="form-control"/>
+                         <form:select path="battingStyle" items="${battingStyleList}" cssClass="form-control"/>
                        </div>
                      </div>
                    </div>
                    <div class="col-md-6">
                      <div class="form-group row">
-                       <form:label path = "bowlingStyle.uuid" cssClass="col-sm-3 col-form-label">Bowling	 Style</form:label>
+                       <form:label path = "bowlingStyle" cssClass="col-sm-3 col-form-label">Bowling	 Style</form:label>
                        <div class="col-sm-9">
-                         <form:select path="bowlingStyle.uuid" items="${bowlingStyleList}" itemLabel="bowlingStyleName" itemValue="uuid" cssClass="form-control"/>
+                         <form:select path="bowlingStyle" items="${bowlingStyleList}" cssClass="form-control"/>
                        </div>
                      </div>
                    </div>

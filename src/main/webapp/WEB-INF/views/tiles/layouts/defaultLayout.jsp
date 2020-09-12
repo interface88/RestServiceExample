@@ -11,28 +11,16 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>CricScore</title>
-    <!-- plugins:css -->
     <link rel="stylesheet" href="<c:url value="/static/assets/vendors/mdi/css/materialdesignicons.min.css"/>">
     <link rel="stylesheet" href="<c:url value="/static/assets/vendors/flag-icon-css/css/flag-icon.min.css"/>">
-    <link rel="stylesheet" href="<c:url value="/static/assets/vendors/css/vendor.bundle.base.css"/>">
-    <!-- endinject -->
-    <!-- Plugin css for this page -->
     <link rel="stylesheet" href="<c:url value="/static/assets/vendors/jquery-bar-rating/css-stars.css"/>" />
     <link rel="stylesheet" href="<c:url value="/static/assets/vendors/font-awesome/css/font-awesome.min.css"/>" />
-    <!-- End plugin css for this page -->
-    <!-- inject:css -->
-    <!-- endinject -->
-     <!-- Layout styles -->
     <link rel="stylesheet" href="<c:url value="/static/assets/css/demo_1/style.css"/>" />
-    <!-- End layout styles -->
     <link rel="shortcut icon" href="<c:url value="/static/assets/images/favicon.png"/>" />
-    
-    <!-- Datepicker -->
-    <link href="<c:url value="/static/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css" />" rel="stylesheet">	 
-    
-    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-	<script src="<c:url value="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js" />"></script>
-	
+	<link href="<c:url value="/static/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css" />" rel="stylesheet">
+    <link href="<c:url value="/static/assets/vendors/datatables/css/dataTables.bootstrap.min.css" />" rel="stylesheet">
+    <link rel="stylesheet" href="<c:url value="/static/assets/vendors/css/vendor.bundle.base.css"/>">
+    <script src="<c:url value="/static/assets/vendors/js/vendor.bundle.base.js" />"></script>
   </head>
   <body>
     <div class="container-scroller">
@@ -47,5 +35,11 @@
     </div>
     <script src="<c:url value="/static/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js" />"></script>
     <script src="<c:url value="/static/assets/vendors/inputmask/jquery.inputmask.js" />"></script>
+     
+     <script src="<c:url value="/static/assets/vendors/datatables/js/jquery.dataTables.js" />"></script>
+    <script src="<c:url value="/static/assets/vendors/datatables/js/dataTables.bootstrap4.js" />"></script>
+    <script>
+    	$('.dropdown-toggle').dropdown()
+    </script>
   </body>
 </html>
