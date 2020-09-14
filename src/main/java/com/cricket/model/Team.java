@@ -5,12 +5,15 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -35,7 +38,10 @@ public class Team implements Serializable {
 	@Column(name = "PLACE")
 	private String place;
 
-	@ManyToMany(mappedBy = "teams", fetch = FetchType.EAGER)
+	@ManyToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.EAGER)
+	@JoinTable(name = "csn_team_players", joinColumns = {
+			@JoinColumn(name = "team_uuid")}, inverseJoinColumns = {
+					@JoinColumn(name = "player_uuid")})
     private Set<Player> players = new HashSet<>();
 
 	@Column(name = "creation_date")

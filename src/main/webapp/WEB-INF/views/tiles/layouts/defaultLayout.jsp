@@ -15,11 +15,14 @@
     <link rel="stylesheet" href="<c:url value="/static/assets/vendors/flag-icon-css/css/flag-icon.min.css"/>">
     <link rel="stylesheet" href="<c:url value="/static/assets/vendors/jquery-bar-rating/css-stars.css"/>" />
     <link rel="stylesheet" href="<c:url value="/static/assets/vendors/font-awesome/css/font-awesome.min.css"/>" />
-    <link rel="stylesheet" href="<c:url value="/static/assets/css/demo_1/style.css"/>" />
     <link rel="shortcut icon" href="<c:url value="/static/assets/images/favicon.png"/>" />
 	<link href="<c:url value="/static/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css" />" rel="stylesheet">
     <link href="<c:url value="/static/assets/vendors/datatables/css/dataTables.bootstrap.min.css" />" rel="stylesheet">
     <link rel="stylesheet" href="<c:url value="/static/assets/vendors/css/vendor.bundle.base.css"/>">
+    <link rel="stylesheet" href="<c:url value="/static//assets/vendors/select2/select2.min.css"/>" />
+    <link rel="stylesheet" href="<c:url value="/static/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css"/>" />
+    <link rel="stylesheet" href="<c:url value="/static/assets/css/demo_1/style.css"/>" />
+    
     <script src="<c:url value="/static/assets/vendors/js/vendor.bundle.base.js" />"></script>
   </head>
   <body>
@@ -38,6 +41,7 @@
      
      <script src="<c:url value="/static/assets/vendors/datatables/js/jquery.dataTables.js" />"></script>
     <script src="<c:url value="/static/assets/vendors/datatables/js/dataTables.bootstrap4.js" />"></script>
+    <script src="<c:url value="/static/assets/vendors/select2/select2.min.js" />"></script>
     <script>
     	$('.dropdown-toggle').dropdown()
     </script>

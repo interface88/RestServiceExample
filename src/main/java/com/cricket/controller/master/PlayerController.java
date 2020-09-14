@@ -57,7 +57,7 @@ public class PlayerController extends AbstractBaseController{
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	  public String save(@ModelAttribute("player") Player player, Model model, RedirectAttributes rm) {
+	public String save(@ModelAttribute("player") Player player, Model model, RedirectAttributes rm) {
 
 	    if (player.getUuid() != null) {
 	    	playerService.update(player);

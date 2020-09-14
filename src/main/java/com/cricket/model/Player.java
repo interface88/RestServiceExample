@@ -5,14 +5,12 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -67,11 +65,8 @@ public class Player implements Serializable {
 	@Transient
 	private Date creationDate;
 
-	@ManyToMany(cascade = {CascadeType.ALL})
-	@JoinTable(name = "csn_team_players", joinColumns = {
-			@JoinColumn(name = "team_uuid")}, inverseJoinColumns = {
-					@JoinColumn(name = "player_uuid")})
-	Set<Team> teams = new HashSet<>();
+	@ManyToMany(mappedBy = "players", fetch = FetchType.EAGER)
+	Set<Team> teams = new HashSet<>(0);
 
 	public String getPlayerName() {
 		return playerName;

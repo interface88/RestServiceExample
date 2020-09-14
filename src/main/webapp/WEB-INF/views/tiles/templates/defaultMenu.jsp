@@ -62,9 +62,9 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="pages/charts/chartjs.html">
-              <i class="mdi mdi-chart-bar menu-icon"></i>
-              <span class="menu-title">Teams</span>
+            <a class="nav-link" href="<c:url value="/mvc/team/teamList"/>">
+              <i class="mdi mdi-compass-outline menu-icon"></i>
+              <span class="menu-title">Team List</span>
             </a>
           </li>
           <li class="nav-item">

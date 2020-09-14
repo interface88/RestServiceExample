@@ -30,6 +30,7 @@
        <put-attribute name="title" value="login" />  
    </definition>  
    
+   <!-- player -->
    <definition name="playerList" extends="template-def">  
        <put-attribute name="title" value="Player" />  
        <put-attribute name="body" value="/WEB-INF/views/player/playerList.jsp" />     
@@ -39,7 +40,17 @@
        <put-attribute name="title" value="Player" />  
        <put-attribute name="body" value="/WEB-INF/views/player/viewPlayer.jsp" />     
    </definition>  
+
+   <!-- team -->
+    <definition name="teamList" extends="template-def">  
+       <put-attribute name="title" value="Player" />  
+       <put-attribute name="body" value="/WEB-INF/views/team/teamList.jsp" />     
+   </definition>
    
+   <definition name="viewTeam" extends="template-def">  
+       <put-attribute name="title" value="Player" />  
+       <put-attribute name="body" value="/WEB-INF/views/team/viewTeam.jsp" />     
+   </definition> 
    <definition name="viewScorer" extends="template-def">  
        <put-attribute name="title" value="Player" />  
        <put-attribute name="body" value="/WEB-INF/views/scorer/view.jsp" />     
