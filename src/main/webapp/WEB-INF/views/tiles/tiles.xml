@@ -56,4 +56,13 @@
        <put-attribute name="body" value="/WEB-INF/views/scorer/view.jsp" />     
    </definition>
 
+	<definition name="viewTournament" extends="template-def">  
+       <put-attribute name="title" value="Tournament" />  
+       <put-attribute name="body" value="/WEB-INF/views/tournament/viewTournament.jsp" />     
+   </definition> 
+   
+   <definition name="tournamentList" extends="template-def">  
+       <put-attribute name="title" value="Tournament" />  
+       <put-attribute name="body" value="/WEB-INF/views/tournament/listTournament.jsp" />     
+   </definition>
 </tiles-definitions>

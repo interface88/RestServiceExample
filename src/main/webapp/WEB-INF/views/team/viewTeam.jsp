@@ -51,7 +51,7 @@
 	                   			<div class="col-sm-9">
 				                 <ul class="list-group" id="playerInTeamList">
 				                 	<c:forEach var="player" items="${teamVO.playerList}">
-									  <li class="list-group-item"> ${player.name} - ${player.adhaarNumber}<span class="playerRemover mdi mdi-close-circle pull-right" style="cursor:pointer;" ></span>
+									  <li class="list-group-item"> ${player.playerName} - ${player.adhaarNumber}<span class="playerRemover mdi mdi-close-circle pull-right" style="cursor:pointer;" ></span>
 									  	<input type="hidden" name="playerIdList" value="${player.uuid}"/>
 									  </li>
 									  </c:forEach>
