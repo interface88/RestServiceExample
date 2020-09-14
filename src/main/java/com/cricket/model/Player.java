@@ -2,12 +2,18 @@ package com.cricket.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -24,6 +30,9 @@ public class Player implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "UUID")
 	private Long uuid;
+
+	@Column(name = "PLAYER_ID")
+	private String playerId;
 
 	@Column(name = "PLAYER_NAME")
 	private String playerName;
@@ -57,6 +66,12 @@ public class Player implements Serializable {
 	@Column(name = "creation_date")
 	@Transient
 	private Date creationDate;
+
+	@ManyToMany(cascade = {CascadeType.ALL})
+	@JoinTable(name = "csn_team_players", joinColumns = {
+			@JoinColumn(name = "team_uuid")}, inverseJoinColumns = {
+					@JoinColumn(name = "player_uuid")})
+	Set<Team> teams = new HashSet<>();
 
 	public String getPlayerName() {
 		return playerName;
@@ -144,6 +159,14 @@ public class Player implements Serializable {
 
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
+	}
+
+	public String getPlayerId() {
+		return playerId;
+	}
+
+	public void setPlayerId(String playerId) {
+		this.playerId = playerId;
 	}
 
 }
