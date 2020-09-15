@@ -51,7 +51,7 @@
 	                   			<div class="col-sm-9">
 				                 <ul class="list-group" id="playerInTeamList">
 				                 	<c:forEach var="player" items="${teamVO.playerList}">
-									  <li class="list-group-item"> ${player.playerName} - ${player.adhaarNumber}<span class="playerRemover mdi mdi-close-circle pull-right" style="cursor:pointer;" ></span>
+									  <li class="list-group-item">  <img src="http://via.placeholder.com/50x50" /> ${player.playerName} - ${player.adhaarNumber}<span class="playerRemover mdi mdi-close-circle pull-right" style="cursor:pointer;" ></span>
 									  	<input type="hidden" name="playerIdList" value="${player.uuid}"/>
 									  </li>
 									  </c:forEach>
@@ -64,18 +64,13 @@
 	                   <div class="col-md-12">
 	                   		<div class="form-group row">
 	                   			<div class="col-sm-9">
-	                   			<select id="playerSelector"  multi="true">
-	                   				<c:forEach var="player" items="${playerList}">
-									    <option value="${player.uuid}">${player.playerName} - ${player.adhaarNumber}</option>
-							        </c:forEach>
-								</select>
-								<%
-								/*
-								<form:select path="playerList" items="${playerList}" itemLabel="playerName" itemValue="uuid"></form:select>
-								*/
-								%>
-	                                 <button type="button" style="margin-top: 10px;" id="playerAdder" class="btn btn-primary btn-block">Add</button>
-									</div>
+		                   			<select id="playerSelector"  multi="true">
+		                   				<c:forEach var="player" items="${playerList}">
+										    <option value="${player.uuid}">${player.playerName} - ${player.adhaarNumber}</option>
+								        </c:forEach>
+									</select>
+                	                 <button type="button" style="margin-top: 10px;" id="playerAdder" class="btn btn-primary btn-block">Add</button>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -98,12 +93,19 @@ $(function() {
 	$('.playerRemover').click(function(){
 		$(this).parent().remove();
 	});
+	
 	$('#playerAdder').click(function(){
-		
+		$("div input[value='hello']")
 		var player_id = $('#playerSelector').select2('data')[0].id;
-		var ul = '<li class="list-group-item">'+$('#playerSelector').select2('data')[0].text
-		+' <span class="playerRemover mdi mdi-close-circle pull-right" style="cursor:pointer;"  ></span><input type="hidden" name="playerIdList" value="'+player_id+'"/></li>';
-		$('#playerInTeamList').append(ul);
+		
+		if($("div input[value='"+player_id+"']").length == 0){
+			var ul = '<li class="list-group-item">'+$('#playerSelector').select2('data')[0].text
+			+' <span class="playerRemover mdi mdi-close-circle pull-right" style="cursor:pointer;"  ></span><input type="hidden" name="playerIdList" value="'+player_id+'"/></li>';
+			$('#playerInTeamList').append(ul);
+		}else{
+			bootbox.alert("Player already present in team!");
+		}
+		
 	});
 	
 	$("#playerSelector").select2();

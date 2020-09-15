@@ -42,6 +42,8 @@
      <script src="<c:url value="/static/assets/vendors/datatables/js/jquery.dataTables.js" />"></script>
     <script src="<c:url value="/static/assets/vendors/datatables/js/dataTables.bootstrap4.js" />"></script>
     <script src="<c:url value="/static/assets/vendors/select2/select2.min.js" />"></script>
+    <script src="<c:url value="/static/assets/vendors/bootbox/bootbox.all.min.js" />"></script>
+    
     <script>
     	$('.dropdown-toggle').dropdown()
     </script>

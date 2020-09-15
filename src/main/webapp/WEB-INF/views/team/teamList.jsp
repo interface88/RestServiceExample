@@ -16,7 +16,7 @@
            <div class="row">
  	<div class="col-12 grid-margin">
            <div class="table-responsive">
-           <table class="table table-striped table-bordered table-hover" id="playerList">
+           <table class="table table-striped table-bordered table-hover" id="teamList">
            		<thead>
            			<tr>
            				<th>Name</th>
@@ -42,8 +42,7 @@
 		
 <script>
 	$(function(){
-		//$('#playerList').DataTable();
-		$('#playerList').DataTable({
+		$('#teamList').DataTable({
 		      "aLengthMenu": [
 		        [5, 10, 15, -1],
 		        [5, 10, 15, "All"]
@@ -53,7 +52,7 @@
 		        search: ""
 		      }
 		    });
-		    $('#playerList').each(function() {
+		    $('#teamList').each(function() {
 		      var datatable = $(this);
 		      // SEARCH - Add the placeholder for Search and Turn this into in-line form control
 		      var search_input = datatable.closest('.dataTables_wrapper').find('div[id$=_filter] input');
