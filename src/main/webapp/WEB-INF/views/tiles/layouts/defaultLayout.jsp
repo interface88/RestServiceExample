@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="<c:url value="/static//assets/vendors/select2/select2.min.css"/>" />
     <link rel="stylesheet" href="<c:url value="/static/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css"/>" />
     <link rel="stylesheet" href="<c:url value="/static/assets/css/demo_1/style.css"/>" />
+    <link rel="stylesheet" href="<c:url value="/static/assets/vendors/croppie/croppie.css"/>" />
     
     <script src="<c:url value="/static/assets/vendors/js/vendor.bundle.base.js" />"></script>
   </head>
@@ -43,7 +44,7 @@
     <script src="<c:url value="/static/assets/vendors/datatables/js/dataTables.bootstrap4.js" />"></script>
     <script src="<c:url value="/static/assets/vendors/select2/select2.min.js" />"></script>
     <script src="<c:url value="/static/assets/vendors/bootbox/bootbox.all.min.js" />"></script>
-    
+    <script src="<c:url value="/static/assets/vendors/croppie/croppie.js" />"></script>
     <script>
     	$('.dropdown-toggle').dropdown()
     </script>
