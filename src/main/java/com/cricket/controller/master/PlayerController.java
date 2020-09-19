@@ -1,5 +1,6 @@
 package com.cricket.controller.master;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cricket.common.DropDownUtil;
 import com.cricket.model.Player;
-import com.cricket.service.BattingStyleService;
-import com.cricket.service.BowlingStyleService;
 import com.cricket.service.PlayerRoleService;
 import com.cricket.service.PlayerService;
+import com.cricket.service.StorageService;
 
 @Controller
 @RequestMapping("/mvc/player")
@@ -29,10 +29,7 @@ public class PlayerController extends AbstractBaseController{
 	PlayerRoleService playerRoleService;
 
 	@Autowired
-	BattingStyleService battingStyleService;
-
-	@Autowired
-	BowlingStyleService bowlingStyleService;
+	StorageService storageService;
 
 	@RequestMapping(value = "/playerList", method = RequestMethod.GET)
 	public String list(@RequestParam(required = false) Long uuid, Model model) {
@@ -57,8 +54,12 @@ public class PlayerController extends AbstractBaseController{
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String save(@ModelAttribute("player") Player player, Model model, RedirectAttributes rm) {
+	public String save(@ModelAttribute("player") Player player, @RequestParam(required = false) String base64String, Model model, RedirectAttributes rm) throws IOException {
 
+		if(!base64String.isEmpty()) {
+			String uploadedFileName = storageService.uploadImage(base64String);
+			player.setProfilePic(uploadedFileName);
+		}
 	    if (player.getUuid() != null) {
 	    	playerService.update(player);
 	    } else {

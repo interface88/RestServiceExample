@@ -50,6 +50,9 @@ public class Player implements Serializable {
 	@Column(name = "PLAYER_ROLE")
 	private String playerRole;
 
+	@Column(name = "PROFILE_PIC")
+	private String profilePic;
+
 	@Column(name = "BATTING_STYLE")
 	private String battingStyle;
 
@@ -163,5 +166,22 @@ public class Player implements Serializable {
 	public void setPlayerId(String playerId) {
 		this.playerId = playerId;
 	}
+
+	public String getProfilePic() {
+		return profilePic;
+	}
+
+	public void setProfilePic(String profilePic) {
+		this.profilePic = profilePic;
+	}
+
+	public Set<Team> getTeams() {
+		return teams;
+	}
+
+	public void setTeams(Set<Team> teams) {
+		this.teams = teams;
+	}
+
 
 }

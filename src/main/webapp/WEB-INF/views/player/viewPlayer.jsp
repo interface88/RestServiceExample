@@ -24,12 +24,19 @@
            <h4 class="card-title">Player information</h4>
            <form:form id="playerForm" method="POST" action="${pageContext.request.contextPath}/mvc/player/save" modelAttribute="player">
            		<form:hidden path="uuid"/>
+           		<form:hidden path="profilePic"/>
+           		<input type="hidden" name="base64String" id="base64String" value="">
            		<p class="card-description">Personal info</p>
 				<div class="row">
 					<div class="col-md-3">
                        <label>
 							<figure>
-								<img src="https://user.gadjian.com/static/images/personnel_boy.png" class="gambar img-responsive img-thumbnail" id="item-img-output" />
+								<c:if test="${empty player.profilePic}">
+									<img src="https://user.gadjian.com/static/images/personnel_boy.png" class="gambar img-responsive img-thumbnail" id="item-img-output" />
+								</c:if>
+								<c:if test="${not empty player.profilePic}">
+									<img src="${pageContext.request.contextPath}/mvc/resource/image/${player.profilePic}" class="gambar img-responsive img-thumbnail" id="item-img-output" />
+								</c:if>
 								<figcaption><i class="fa fa-camera"></i></figcaption>
 						    </figure>
 							<input type="file" style="display: none;" class="item-img file center-block" name="file_photo"/>
@@ -209,6 +216,7 @@ $(function() {
             }
         }).then(function(resp) {
             $('#item-img-output').attr('src', resp);
+            $('#base64String').val(resp);
             $('#cropImagePop').modal('hide');
         });
     });
