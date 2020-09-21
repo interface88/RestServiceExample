@@ -22,7 +22,7 @@
        <div class="card">
          <div class="card-body">
            <h4 class="card-title">Tournament information</h4>
-           <form:form id="tournamentForm" method = "POST" action ="${pageContext.request.contextPath}/mvc/tournament/save" modelAttribute="tournament">
+           <form:form id="tournamentForm" method = "POST" action ="${pageContext.request.contextPath}/mvc/tournament/save" modelAttribute="tournamentVO">
                  <div class="row">
                    <div class="col-md-6">
                      <div class="form-group row">
@@ -83,8 +83,83 @@
                      </div>
                    </div>
                  </div>
+                 
+                 <p class="card-description">Team info</p>
+                 <div class="well text-left">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group row">
+								<div class="col-sm-9">
+									<ul class="list-group" id="teamInGroupList">
+										<c:forEach var="teamGroup"
+											items="${tournamentVO.teamGroupList}" varStatus="teamGroupStatus">
+											<c:if test="${teamGroup.name ne previousGroupName}">
+												<li class="list-group-item"><img
+													src="http://via.placeholder.com/50x50" />
+													${teamGroup.name} 
+													<span
+													class="teamRemover mdi mdi-close-circle pull-right"
+													style="cursor: pointer;"></span> <input type="hidden"
+													name="teamIdList" value="${teamGroup.uuid}" />
+												</li>
+											</c:if>	
+											<form:input type="hidden" path="teamGroupList[${teamGroupStatus.index}].uuid" value="${teamGroup.uuid}"/>
+											<form:input type="hidden" path="teamGroupList[${teamGroupStatus.index}].name" value="${teamGroup.name}"/>
+											<c:set var="previousGroupName" value="${teamGroup.name}" />
+												<%-- ${tournamentVO.teamGroupList[0].teamList[0]} --%>
+													<ul class="list-group" id="teamsList">
+														<c:forEach var="team" items="${teamGroup.teamList}" varStatus="teamStatus">
+														 <li class="list-group-item"><img
+															src="http://via.placeholder.com/50x50" />
+														 ${team.name}
+														 <span
+													class="teamRemover mdi mdi-close-circle pull-right"
+													style="cursor: pointer;"></span> 
+														<form:input type="hidden" path="teamGroupList[${teamGroupStatus.index}].teamList[${teamStatus.index}].uuid" value="${team.uuid}"/>
+														</c:forEach>
+													</ul>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+	                   <div class="col-md-12">
+	                   		<div class="form-group row">
+	                   			<div class="col-sm-9">
+	                   			<%-- <form:input type="text" path="teamGroupList[0].name" value="Group AA"/> --%>
+		                   			<select id="teamSelector" multi="true">
+		                   				<c:forEach var="team" items="${teamList}">
+										    <option value="${team.uuid}">${team.name}</option>
+								        </c:forEach>
+									</select>
+                	                 <button type="button" style="margin-top: 10px;" id="teamAdder" class="btn btn-primary btn-block">Add</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
                  <div class="row">
                    <div class="col-md-6">
+                   
+                   <%-- <tr>
+                        <td><form:input type="text" path="teamGroupList[0].name" value="Group AA"/></td>
+                        <td><form:input type="text" path="teamGroupList[0].teamList[0].uuid" value="1"/></td>
+                    </tr> --%>
+                   
+                   
+                   <%-- <c:forEach varStatus="us" var="user" items="${tournament.teamGroupList}" >
+                    <tr>
+                        <td><form:input type="text" path="teamGroupList[${us.index}].name" value="Group AA"/>${user.name}</td>
+                        <td><form:input type="text" path="teamGroupList[${us.index}].teamList[0].uuid" value="1"/> ${user.team.uuid}</td>
+                    </tr>
+                	</c:forEach> --%>
+                
+                	<form:input type="hidden" path="uuid" />
+                	<input type="text" name="groupSize" id="groupSize" value="${tournamentVO.teamGroupList.size()}"/>
+                	<input type="text" name="teamSize" id="teamSize" value=""/>
                      <button type="submit" class="btn btn-primary btn-icon-text"><i class="mdi mdi-file-check btn-icon-prepend"></i>Submit</button>
                    </div>
                  </div>
@@ -97,6 +172,32 @@
 <script>
 	
 $(function() {
+	
+	
+	$('.teamRemover').click(function(){
+		$(this).parent().remove();
+	});
+	
+	$('#teamAdder').click(function(){
+		$("div input[value='hello']");
+		var team_id = $('#teamSelector').select2('data')[0].id;
+		var groupIndex = parseInt($("#groupSize").val())+1;
+		var teamIndex = parseInt($("#teamSize").val())+1;
+		alert('index'+teamIndex);
+		if($("div input[value='"+team_id+"']").length == 0){
+			var ul = '<li class="list-group-item">'+$('#teamSelector').select2('data')[0].text
+			+' <span class="teamRemover mdi mdi-close-circle pull-right" style="cursor:pointer;"></span><input type="hidden" name="teamGroupList['+groupIndex+'].teamList['+teamIndex+'].uuid" value="'+team_id+'"/></li>';
+			$('#teamInGroupList').append(ul);
+			$("#teamSize").val(teamIndex);
+		}else{
+			bootbox.alert("Team already present in group!");
+		}
+		
+	});
+	
+	$("#teamSelector").select2();
+	
+	
 	//$('#adhaarNumber').attr('data-inputmask-alias', "9999-9999-9999");
 	//$("#adhaarNumber").inputmask();
 	

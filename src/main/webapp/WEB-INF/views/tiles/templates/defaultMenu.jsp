@@ -17,7 +17,7 @@
             <a class="nav-link d-block" href="index.html">
               <img class="sidebar-brand-logo" src="<c:url value="/static/assets/images/logo.svg"/>" alt="" />
               <img class="sidebar-brand-logomini" src="<c:url value="/static/assets/images/logo-mini.svg"/>" alt="" />
-              <div class="small font-weight-light pt-1">Responsive Dashboard</div>e
+              <div class="small font-weight-light pt-1">Responsive Dashboard</div>
             </a>
             <form class="d-flex align-items-center" action="#">
               <div class="input-group">

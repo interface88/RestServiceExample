@@ -1,14 +1,27 @@
 package com.cricket.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.cricket.vo.TeamGroupVO;
 
 @Entity
 @Table(name = "csn_tournament")
@@ -41,6 +54,35 @@ public class Tournament implements Serializable{
 
 	@Column(name = "end_date")
 	private Date endDate;
+
+	/*
+	 * @ManyToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.EAGER)
+	 * 
+	 * @JoinTable(name = "csn_team_group", joinColumns = {
+	 * 
+	 * @JoinColumn(name = "tournament_uuid")}, inverseJoinColumns = {
+	 * 
+	 * @JoinColumn(name = "team_uuid")})
+	 */
+	
+	@OneToMany(mappedBy = "tournament",cascade = {CascadeType.PERSIST}, fetch= FetchType.EAGER)
+	private Set<TeamGroup> teamGroups = new HashSet<>();
+	
+	/*
+	 * @Transient private List<TeamGroup> teamGroups = new ArrayList();
+	 * 
+	 * public List<TeamGroup> getTeamGroups() { return teamGroups; }
+	 * 
+	 * public void setTeamGroups(List<TeamGroup> list) { this.teamGroups = list; }
+	 */	
+	
+	public Set<TeamGroup> getTeamGroups() {
+		return teamGroups;
+	}
+
+	public void setTeamGroups(Set<TeamGroup> teamGroups) {
+		this.teamGroups = teamGroups;
+	}
 
 	public Long getUuid() {
 		return uuid;
