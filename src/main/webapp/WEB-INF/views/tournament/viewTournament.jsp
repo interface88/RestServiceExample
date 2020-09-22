@@ -141,9 +141,27 @@
 					</div>
 				</div>
 				
-                 <div class="row">
+                <div class="row">
                    <div class="col-md-6">
-                   
+                   	<ul id="groupInfo" class="list-group">
+                   		<li class="list-group-item" data-index="0">
+                   			<input type="text" name="teamGroupList[0].name" class="form-control groupName" placeholder="Group Name">
+                   			<ul style="margin-left:10px;" class="list-group"></ul>
+                   			<div class="input-group">
+	  							<select class="teamSelector custom-select">
+	                   				<c:forEach var="team" items="${teamList}">
+									    <option value="${team.uuid}">${team.name}</option>
+							        </c:forEach>
+								</select>
+							  	<div class="input-group-append">
+							    	<button class="btn btn btn-primary btn-icon-text addTeamToGroup" type="button">Add Team</button>
+							  	</div>
+							</div>
+                   		</li>
+                   </ul>
+                  <input type="button" id="addNewGroup" class="btn btn-primary" value="Add new group">
+                 </div>
+              </div>
                    <%-- <tr>
                         <td><form:input type="text" path="teamGroupList[0].name" value="Group AA"/></td>
                         <td><form:input type="text" path="teamGroupList[0].teamList[0].uuid" value="1"/></td>
@@ -157,55 +175,88 @@
                     </tr>
                 	</c:forEach> --%>
                 
-                	<form:input type="hidden" path="uuid" />
-                	<input type="text" name="groupSize" id="groupSize" value="${tournamentVO.teamGroupList.size()}"/>
-                	<input type="text" name="teamSize" id="teamSize" value=""/>
-                     <button type="submit" class="btn btn-primary btn-icon-text"><i class="mdi mdi-file-check btn-icon-prepend"></i>Submit</button>
+                   <div class="row">
+                   <div class="col-md-6">
+                		<form:input type="hidden" path="uuid" />
+                		<input type="text" name="groupSize" id="groupSize" value="${tournamentVO.teamGroupList.size()}"/>
+                		<input type="text" name="teamSize" id="teamSize" value=""/>
+                     	<button type="submit" class="btn btn-primary btn-icon-text"><i class="mdi mdi-file-check btn-icon-prepend"></i>Submit</button>
                    </div>
                  </div>
            </form:form>
+                   </div>
+                  </div>
+                 
+                 
          </div>
        </div>
-   </div>
-</div>
 		
 <script>
 	
 $(function() {
-	
-	
-	$('.teamRemover').click(function(){
-		$(this).parent().remove();
-	});
-	
-	$('#teamAdder').click(function(){
-		$("div input[value='hello']");
-		var team_id = $('#teamSelector').select2('data')[0].id;
-		var groupIndex = parseInt($("#groupSize").val())+1;
-		var teamIndex = parseInt($("#teamSize").val())+1;
-		alert('index'+teamIndex);
-		if($("div input[value='"+team_id+"']").length == 0){
-			var ul = '<li class="list-group-item">'+$('#teamSelector').select2('data')[0].text
-			+' <span class="teamRemover mdi mdi-close-circle pull-right" style="cursor:pointer;"></span><input type="hidden" name="teamGroupList['+groupIndex+'].teamList['+teamIndex+'].uuid" value="'+team_id+'"/></li>';
-			$('#teamInGroupList').append(ul);
-			$("#teamSize").val(teamIndex);
-		}else{
-			bootbox.alert("Team already present in group!");
-		}
-		
-	});
-	
-	$("#teamSelector").select2();
-	
-	
-	//$('#adhaarNumber').attr('data-inputmask-alias', "9999-9999-9999");
-	//$("#adhaarNumber").inputmask();
-	
-	$('#datepicker-popup input').datepicker({
-	    format: "dd-mm-yyyy",
-	    todayHighlight: true
-	});
-	
+
+    // Function needed to reset index if any item removed
+    function resetElemIndexing() {
+
+    }
+
+    $('#groupInfo').on("click", ".addTeamToGroup", function() {
+        //debugger;
+        var grp_index = $(this).closest('.list-group-item').data('index');
+        var $teamSelector = $(this).closest('.list-group-item').find('.teamSelector'); // dropdown
+        var $ul = $(this).closest('.list-group-item').find('ul'); // team list
+        var team_index = $(this).closest('.list-group-item').find('ul li').length;
+        var li = '<li class="list-group-item list-group-item-secondary">' + $teamSelector.text() + '<input type="text" name="teamGroupList[' + grp_index + '].teamList[' + team_index + '].id" id="teamSize" value="' + $teamSelector.val() + '"/>' +
+            '<span class="playerRemover mdi mdi-close-circle pull-right" style="cursor:pointer;"></span></li>'
+        var $this = $(this).next().add()
+        $ul.append(li);
+    });
+
+    $('#addNewGroup').click(function() {
+        var grp_index = $('#groupInfo li').length;
+        var groupRow = '<li class="list-group-item" data-index="' + grp_index + '">' +
+            '<input type="text" name="teamGroupList[' + grp_index + '].name" class="form-control groupName" placeholder="Group Name">' +
+            '<ul style="margin-left:10px;" class="list-group"></ul>' +
+            '<div class="input-group">' +
+            '	<select class="teamSelector custom-select">' +
+            '	<c:forEach var="team" items="${teamList}">' +
+            '	    <option value="${team.uuid}">${team.name}</option>' +
+            '    </c:forEach>' +
+            '</select>' +
+            '<div class="input-group-append"><button class="btn btn btn-primary btn-icon-text addTeamToGroup" type="button">Add Team</button></div>' +
+            '</div></li>';
+        $('#groupInfo').append(groupRow);
+    });
+
+
+    $('#teamAdder').click(function() {
+        $("div input[value='hello']");
+        var team_id = $('#teamSelector').select2('data')[0].id;
+        var groupIndex = parseInt($("#groupSize").val()) + 1;
+        var teamIndex = parseInt($("#teamSize").val()) + 1;
+        alert('index' + teamIndex);
+        if ($("div input[value='" + team_id + "']").length == 0) {
+            var ul = '<li class="list-group-item">' + $('#teamSelector').select2('data')[0].text +
+                ' <span class="teamRemover mdi mdi-close-circle pull-right" style="cursor:pointer;"></span><input type="hidden" name="teamGroupList[' + groupIndex + '].teamList[' + teamIndex + '].uuid" value="' + team_id + '"/></li>';
+            $('#teamInGroupList').append(ul);
+            $("#teamSize").val(teamIndex);
+        } else {
+            bootbox.alert("Team already present in group!");
+        }
+
+    });
+
+    $("#teamSelector").select2();
+
+
+    //$('#adhaarNumber').attr('data-inputmask-alias', "9999-9999-9999");
+    //$("#adhaarNumber").inputmask();
+
+    $('#datepicker-popup input').datepicker({
+        format: "dd-mm-yyyy",
+        todayHighlight: true
+    });
+
     $("#tournamentForm").validate({
         rules: {
             tournamentName: "required",
@@ -235,5 +286,4 @@ $(function() {
             $(element).parents(".form-group").removeClass("has-danger");
         }
     });
-});
-</script>	
+});</script>	
