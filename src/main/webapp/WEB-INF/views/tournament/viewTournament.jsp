@@ -145,7 +145,12 @@
                    <div class="col-md-6">
                    	<ul id="groupInfo" class="list-group">
                    		<li class="list-group-item" data-index="0">
-                   			<input type="text" name="teamGroupList[0].name" class="form-control groupName" placeholder="Group Name">
+                   			<div class="input-group ">
+                   				<input type="text" name="teamGroupList[0].name" class="form-control groupName" placeholder="Group Name">
+							  	<div class="input-group-append">
+							    	<button class="btn btn-danger btn-sm removeGroup" type="button"><i class="mdi mdi-close-circle"></i></button>
+							  	</div>
+							</div>
                    			<ul style="margin-left:10px;" class="list-group"></ul>
                    			<div class="input-group">
 	  							<select class="teamSelector custom-select">
@@ -197,8 +202,30 @@ $(function() {
 
     // Function needed to reset index if any item removed
     function resetElemIndexing() {
+    	$('#groupInfo > li').each(function(k,v){
+        	var newIndex = k;
 
+        	$(v).attr('data-index', newIndex); // reseting index of li data-index attribute
+        	$(v).find('.groupName').prop('name','teamGroupList['+newIndex+'].name'); // reseting the index of groupname textbox 
+
+        	// ReIndexing team list
+        	var $teamList = $(v).find('ul');
+        	$teamList.find('li').each(function(i,j){
+        		$(j).find('input').prop('name','teamGroupList['+newIndex+'].teamList[' + i+'].id'); // reseting the index of team input in team list
+            });
+       	});
     }
+
+    $('#groupInfo').on("click", ".removeGroup", function() {
+    	$(this).closest('.list-group-item').remove();
+    	resetElemIndexing();
+    });
+
+    $('#groupInfo').on("click", ".removeTeam", function() {
+    	$(this).closest('.list-group-item').remove();
+    	resetElemIndexing();	
+    });
+    
 
     $('#groupInfo').on("click", ".addTeamToGroup", function() {
         //debugger;
@@ -207,15 +234,21 @@ $(function() {
         var $ul = $(this).closest('.list-group-item').find('ul'); // team list
         var team_index = $(this).closest('.list-group-item').find('ul li').length;
         var li = '<li class="list-group-item list-group-item-secondary">' + $teamSelector.text() + '<input type="text" name="teamGroupList[' + grp_index + '].teamList[' + team_index + '].id" id="teamSize" value="' + $teamSelector.val() + '"/>' +
-            '<span class="playerRemover mdi mdi-close-circle pull-right" style="cursor:pointer;"></span></li>'
+            '<span class="removeTeam mdi mdi-close-circle pull-right" style="cursor:pointer;"></span></li>'
         var $this = $(this).next().add()
         $ul.append(li);
     });
 
     $('#addNewGroup').click(function() {
-        var grp_index = $('#groupInfo li').length;
+        var grp_index = $('#groupInfo > li').length;
         var groupRow = '<li class="list-group-item" data-index="' + grp_index + '">' +
-            '<input type="text" name="teamGroupList[' + grp_index + '].name" class="form-control groupName" placeholder="Group Name">' +
+	         '<div class="input-group "> '+
+			'	<input type="text" name="teamGroupList[' + grp_index + '].name" class="form-control groupName" placeholder="Group Name"> '+
+		  	 '<div class="input-group-append"> '+
+		    '	<button class="btn btn-danger btn-sm removeGroup" type="button"><i class="mdi mdi-close-circle"></i></button> '+
+		  	 '</div> '+
+			 '</div> '+
+            //'<input type="text" name="teamGroupList[' + grp_index + '].name" class="form-control groupName" placeholder="Group Name">' +
             '<ul style="margin-left:10px;" class="list-group"></ul>' +
             '<div class="input-group">' +
             '	<select class="teamSelector custom-select">' +
