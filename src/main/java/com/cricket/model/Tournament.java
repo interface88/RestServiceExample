@@ -18,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -64,7 +65,7 @@ public class Tournament implements Serializable{
 	 * 
 	 * @JoinColumn(name = "team_uuid")})
 	 */
-	
+	@OrderBy("name asc")
 	@OneToMany(mappedBy = "tournament",cascade = {CascadeType.PERSIST}, fetch= FetchType.EAGER)
 	private Set<TeamGroup> teamGroups = new HashSet<>();
 	

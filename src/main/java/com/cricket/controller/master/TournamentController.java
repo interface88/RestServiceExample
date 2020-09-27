@@ -1,6 +1,9 @@
 package com.cricket.controller.master;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,7 +80,17 @@ public class TournamentController  extends AbstractBaseController{
 	    
 		
 		Set<TeamGroup> teamGroups = (Set<TeamGroup>) tournament.getTeamGroups();
-
+		List<String> uuids = new ArrayList<String>();
+		
+		for (TeamGroup t : teamGroups) {
+			if (t.getUuid() !=null) {
+				uuids.add(t.getUuid().toString());
+			}
+		}
+		
+		if(!uuids.isEmpty() && uuids.size()>0)
+			teamGroupService.deleteByIds(uuids);
+		
 		for (TeamGroup t : teamGroups) {
 			/*
 			 * TeamGroup teamGroup = new TeamGroup();
@@ -85,13 +98,7 @@ public class TournamentController  extends AbstractBaseController{
 			 * teamGroup.setTournament(tournament); teamGroup.setName(t.getName());
 			 * teamGroup.setTeam(teamService.getByUuid(t.getTeam().getUuid()));
 			 */
-			if (t.getUuid() !=null) {
-				
-			}else
-			{
-				
-			}
-			teamGroupService.save(t);
+			teamGroupService.update(t);
 		} 
 		
 		/*
@@ -117,16 +124,20 @@ public class TournamentController  extends AbstractBaseController{
 		
 		List<TeamGroupVO> playerIdList =  tournamentVO.getTeamGroupList();
 		for (TeamGroupVO teamGroupVO : playerIdList) {
-			TeamGroup teamGroup = new TeamGroup();
-			
-			Team team = new Team();
-			team.setUuid(teamGroupVO.getTeamList().get(0).getUuid());
-			teamGroup.setUuid(teamGroupVO.getUuid());
-			teamGroup.setTeam(team);
-			teamGroup.setName(teamGroupVO.getName());
-			teamGroup.setTournament(tournament);
-			
-			tournament.getTeamGroups().add(teamGroup);
+			for(TeamVO teamVO : teamGroupVO.getTeamList()) {
+				TeamGroup teamGroup = new TeamGroup();
+				Team team = new Team();
+				
+				team.setUuid(teamVO.getUuid());
+				
+				teamGroup.setTeam(team);		
+				//teamGroup.setUuid(teamGroupVO.getUuid());
+				teamGroup.setUuid(teamVO.getGroupUuid());
+				teamGroup.setName(teamGroupVO.getName());
+				teamGroup.setTournament(tournament);
+				
+				tournament.getTeamGroups().add(teamGroup);
+			}
 		}
 		return tournament;
 	}
@@ -144,17 +155,31 @@ public class TournamentController  extends AbstractBaseController{
 		
 		Set<TeamGroup> teamGroups = tournament.getTeamGroups();
 		
+		Map<String,TeamGroupVO> teamGroupMap = new HashMap<String, TeamGroupVO>();
+		
 		for (TeamGroup teamGroup:teamGroups) {
-			TeamGroupVO teamGroupVO = new TeamGroupVO();
-			teamGroupVO.setUuid(teamGroup.getUuid());
-			teamGroupVO.setName(teamGroup.getName());
 			
-			TeamVO teamVO= new TeamVO(); 
+			TeamGroupVO teamGroupVO = teamGroupMap.get(teamGroup.getName());
+			
+			if(teamGroupVO==null) {
+				teamGroupVO = new TeamGroupVO();
+				teamGroupVO.setUuid(teamGroup.getUuid());
+				teamGroupVO.setName(teamGroup.getName());
+				teamGroupMap.put(teamGroup.getName(), teamGroupVO);
+			}
+			
+			TeamVO teamVO = new TeamVO();
 			teamVO.setUuid(teamGroup.getTeam().getUuid());
 			teamVO.setName(teamGroup.getTeam().getName());
+			teamVO.setGroupUuid(teamGroup.getUuid());
 			
-			teamGroupVO.getTeamList().add(teamVO);
-			tournamentVO.getTeamGroupList().add(teamGroupVO);
+			teamGroupVO.getTeamList().add(teamVO); 
+ 
+			//tournamentVO.getTeamGroupList().add(teamGroupVO);
+		}
+		
+		for (Map.Entry<String,TeamGroupVO> entry : teamGroupMap.entrySet()) {  
+			tournamentVO.getTeamGroupList().add(entry.getValue());
 		}
 		
 		return tournamentVO;

@@ -11,6 +11,7 @@ public class TeamVO {
 	private List<PlayerVO> playerList = new ArrayList<>();
 	private List<Long> playerIdList = new ArrayList<>();
 
+	private Long groupUuid;
 
 	public Long getUuid() {
 		return uuid;
@@ -44,14 +45,31 @@ public class TeamVO {
 		this.playerList = playerList;
 	}
 
+	public List<Long> getPlayerIdList() {
+		return playerIdList;
+	}
+
+	public void setPlayerIdList(List<Long> playerIdList) {
+		this.playerIdList = playerIdList;
+	}
+
+	public Long getGroupUuid() {
+		return groupUuid;
+	}
+
+	public void setGroupUuid(Long groupUuid) {
+		this.groupUuid = groupUuid;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((groupUuid == null) ? 0 : groupUuid.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((place == null) ? 0 : place.hashCode());
-		result = prime * result
-				+ ((playerList == null) ? 0 : playerList.hashCode());
+		result = prime * result + ((playerIdList == null) ? 0 : playerIdList.hashCode());
+		result = prime * result + ((playerList == null) ? 0 : playerList.hashCode());
 		result = prime * result + ((uuid == null) ? 0 : uuid.hashCode());
 		return result;
 	}
@@ -65,6 +83,11 @@ public class TeamVO {
 		if (getClass() != obj.getClass())
 			return false;
 		TeamVO other = (TeamVO) obj;
+		if (groupUuid == null) {
+			if (other.groupUuid != null)
+				return false;
+		} else if (!groupUuid.equals(other.groupUuid))
+			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
@@ -74,6 +97,11 @@ public class TeamVO {
 			if (other.place != null)
 				return false;
 		} else if (!place.equals(other.place))
+			return false;
+		if (playerIdList == null) {
+			if (other.playerIdList != null)
+				return false;
+		} else if (!playerIdList.equals(other.playerIdList))
 			return false;
 		if (playerList == null) {
 			if (other.playerList != null)
@@ -90,16 +118,8 @@ public class TeamVO {
 
 	@Override
 	public String toString() {
-		return "TeamVO [uuid=" + uuid + ", name=" + name + ", place=" + place
-				+ ", playerList=" + playerList + "]";
+		return "TeamVO [uuid=" + uuid + ", name=" + name + ", place=" + place + ", playerList=" + playerList
+				+ ", playerIdList=" + playerIdList + ", groupUuid=" + groupUuid + "]";
 	}
-
-	public List<Long> getPlayerIdList() {
-		return playerIdList;
-	}
-
-	public void setPlayerIdList(List<Long> playerIdList) {
-		this.playerIdList = playerIdList;
-	}
-
+	
 }

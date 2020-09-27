@@ -18,5 +18,10 @@ public interface IGenericDao<T extends Serializable> {
 	   void deleteById(final long entityId);
 
 	   void setClazz(Class<T> class1);
+	   
+	   int deleteQuery(String query,Long uuid);
 
+	   int deleteQuery(String query,String uuids);
+	   
+	   int deleteSQLQuery(String query,String uuids);
 }

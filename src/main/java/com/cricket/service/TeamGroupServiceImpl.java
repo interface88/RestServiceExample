@@ -2,6 +2,7 @@ package com.cricket.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,5 +41,14 @@ public class TeamGroupServiceImpl implements TeamGroupService{
 	@Override
 	public List<TeamGroup> getList(Map<String, String> paramList) {
 		return dao.findAll();
+	}
+
+	public int deleteByIds(List<String> teamGroups) {
+		int rowsDeleted = 0;
+		String strUuids = String.join(",", teamGroups);
+		// TODO Auto-generated method stub
+		rowsDeleted = dao.deleteSQLQuery("delete from csn_team_group where uuid not in ("+strUuids+")",strUuids);
+		
+		return rowsDeleted;
 	}
 }
