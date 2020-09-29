@@ -50,15 +50,24 @@
                         <div class="col-lg-6">Batsman</div>
                         <div class="col-lg-6">Run</div>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <input type="radio" name="strike"> <button type="button" class="btn btn-info btn-sm"> + Add new batsman</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <input type="radio" name="strike"> <button type="button" class="btn btn-info btn-sm "> + Add new batsman</button>
-                        </div>
+                    <div id="batting_panel">
+	                    <div class="row">
+	                        <div class="col-lg-6">
+	                        	<label><input type="radio" name="striker" value="Mark Waugh"><span>Mark waugh</span></label>
+	                        </div>
+	                        <div class="col-lg-6">
+	                        	<span>0 Runs in 0 ball</span>
+	                        </div>
+	                    </div>
+	                    <div class="row">
+	                        <div class="col-lg-6">
+	                        	<label><input type="radio" name="striker" value="Steve Waugh"><span>Steve waugh</span></label>
+	                        </div>
+	                        <div class="col-lg-6">
+	                        	<span>0 Runs in 0 ball</span>
+	                        </div>
+	                    </div>
+                    
                     </div>
                     <hr>
                     <div class="row">
@@ -67,46 +76,46 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-6">
-                            Add new Bowler
+                            
+                           <button type="button" class="btn btn-primary">+ Add new Bowler</button>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
-                        	<button type="button" class="btn btn-primary">0</button>
-                        	<button type="button" class="btn btn-primary">2</button>
-                        	<button type="button" class="btn btn-primary">3</button>
-                        	<button type="button" class="btn btn-primary">4</button>
-                        	<button type="button" class="btn btn-primary">5</button>
-                        	<button type="button" class="btn btn-primary">6</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                        	<div class="btn-group">
-							  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-							    No Ball
-							    <span class="caret"></span>
-							  </button>
-							  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-							    <li><a class="dropdown-item" href="#">+1</a></li>
-							    <li><a class="dropdown-item" href="#">+2</a></li>
-							    <li><a class="dropdown-item" href="#">+3</a></li>
-							    <li><a class="dropdown-item" href="#">+4</a></li>
-							    <li><a class="dropdown-item" href="#">+5</a></li>
-							    <li><a class="dropdown-item" href="#">+6</a></li>					
-							  </ul>
+                        	<div class="runPanel">
+	                        	<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+		                        	<div class="btn-group noramBalllScore"  role="group" aria-label="">
+									  <button type="button" class="btn btn-primary">0</button>
+									  <button type="button" class="btn btn-primary">1</button>
+									  <button type="button" class="btn btn-primary">2</button>
+									  <button type="button" class="btn btn-primary">3</button>
+									  <button type="button" class="btn btn-primary">4</button>
+									  <button type="button" class="btn btn-primary">5</button>
+									  <button type="button" class="btn btn-primary">6</button>
+									</div>
+									<div class="btn-group noBallScore" role="group" aria-label="Basic example">
+									  <button type="button" class="btn btn-primary">NB</button>
+									  <button type="button" class="btn btn-primary">NB + 1</button>
+									  <button type="button" class="btn btn-primary">NB + 2</button>
+									  <button type="button" class="btn btn-primary">NB + 3</button>
+									  <button type="button" class="btn btn-primary">NB + 4</button>
+									  <button type="button" class="btn btn-primary">NB + 5</button>
+									  <button type="button" class="btn btn-primary">NB + 6</button>
+									</div>
+	  
 							</div>
-							<div class="btn-group">
-							  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-							    Wide
-							    <span class="caret"></span>
-							  </button>
-							  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-							    <li><a class="dropdown-item" href="#">+1</a></li>
-							    <li><a class="dropdown-item" href="#">+2</a></li>
-							    <li><a class="dropdown-item" href="#">+3</a></li>
-							    <li><a class="dropdown-item" href="#">+4</a></li>				
-							  </ul>
+                        	</div>
+                    		<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                    			<div class="runPanel">
+									<div class="btn-group wideBallScore" role="group" aria-label="Basic example">
+									  <button type="button" value="0" class="btn btn-primary">W</button>
+									  <button type="button" class="btn btn-primary">W + 1</button>
+									  <button type="button" class="btn btn-primary">W + 2</button>
+									  <button type="button" class="btn btn-primary">W + 3</button>
+									  <button type="button" class="btn btn-primary">W + 4</button>
+									  <button type="button" class="btn btn-primary">W + 5</button>
+									</div>
+								</div>
 							</div>
                         </div>
                     </div>
@@ -126,5 +135,12 @@
        </div>
    </div>
 </div>
-		
+<style>
+	.runPanel {
+		margin:10px 0;
+	}
+</style>
+<script id="batsmanPanel" type="text/x-jsrender">
+
+</script>
 	
