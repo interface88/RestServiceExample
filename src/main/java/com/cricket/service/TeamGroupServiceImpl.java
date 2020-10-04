@@ -51,4 +51,8 @@ public class TeamGroupServiceImpl implements TeamGroupService{
 		
 		return rowsDeleted;
 	}
+	
+	public List<TeamGroup> getFilterList(Map<String, String> paramList) {
+		return dao.findAll(paramList);
+	}
 }

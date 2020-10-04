@@ -2,6 +2,9 @@ package com.cricket.dao;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
+
+import javax.persistence.Query;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -24,7 +27,18 @@ public abstract class AbstractHibernateDao<T extends Serializable> {
     public List findAll() {
         return getCurrentSession().createQuery("from " + clazz.getName()).list();
     }
-
+    
+    public List findAll(Map<String, String> paramList) {
+    	String query = "from " + clazz.getName();
+    	if (paramList != null) {
+    		query = query + " where ";
+			for (Map.Entry<String, String> entry : paramList.entrySet()) {
+				query= query +" "+entry.getKey() + " = "+  entry.getValue();
+			}
+		}	
+        return getCurrentSession().createQuery(query).list();
+    }
+    
     public T create(T entity) {
         getCurrentSession().saveOrUpdate(entity);
         return entity;

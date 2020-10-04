@@ -37,6 +37,8 @@
 		    <tiles:insertAttribute name="footer" />
 		</div>
     </div>
+    
+    <script src="<c:url value="/static/assets/vendors/x-editable/bootstrap-editable.min.js" />"></script>
     <script src="<c:url value="/static/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js" />"></script>
     <script src="<c:url value="/static/assets/vendors/inputmask/jquery.inputmask.js" />"></script>
      

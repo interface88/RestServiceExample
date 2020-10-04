@@ -2,12 +2,15 @@ package com.cricket.dao;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 public interface IGenericDao<T extends Serializable> {
 	 
 	   T findOne(final long id);
 	 
 	   List<T> findAll();
+	   
+	   List<T> findAll(Map<String, String> paramList);
 	 
 	   T create(final T entity);
 	 

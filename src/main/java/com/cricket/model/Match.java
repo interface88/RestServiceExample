@@ -1,6 +1,7 @@
 package com.cricket.model;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -38,9 +39,11 @@ public class Match implements Serializable{
 	@JoinColumn(name = "team2_uuid")
 	private Team team2;
 	
-	@ManyToOne
-	@JoinColumn(name = "group_uuid")
-	private TeamGroup teamGroup;
+	//@ManyToOne
+	//@JoinColumn(name = "group_uuid")
+	//private TeamGroup teamGroup;
+	@Column(name="group_name")
+	private String groupName;
 	
 	@Column(name = "match_no")
 	private Long matchNo;
@@ -66,10 +69,10 @@ public class Match implements Serializable{
 	private String umpire3;
 	
 	@Column(name = "est_start_datetime")
-	private Date estStartDatetime;
+	private String estStartDatetime;
 
 	@Column(name = "est_end_datetime")
-	private Date estEndDatetime;
+	private String estEndDatetime;
 
 	@Column(name = "act_start_datetime")
 	private Date actStartDatetime;
@@ -80,9 +83,18 @@ public class Match implements Serializable{
 	@Column(name = "match_title")
 	private String matchTitle;
 
-	@Column(name = "scorer_id")
+	@Column(name = "scorer_uuid")
 	private String scorerId;
+	
+	@Column(name = "overs")
+	private Long overs;
 
+	@Column(name = "player_of_match")
+	private String playerOfMatch;
+	
+	@Column(name = "outcome")
+	private String outcome;
+	
 	public Long getUuid() {
 		return uuid;
 	}
@@ -115,16 +127,22 @@ public class Match implements Serializable{
 		this.team2 = team2;
 	}
 
-	public TeamGroup getTeamGroup() {
-		return teamGroup;
-	}
-
-	public void setTeamGroup(TeamGroup teamGroup) {
-		this.teamGroup = teamGroup;
-	}
+	/*
+	 * public TeamGroup getTeamGroup() { return teamGroup; }
+	 * 
+	 * public void setTeamGroup(TeamGroup teamGroup) { this.teamGroup = teamGroup; }
+	 */
 
 	public Long getMatchNo() {
 		return matchNo;
+	}
+
+	public String getGroupName() {
+		return groupName;
+	}
+
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
 	}
 
 	public void setMatchNo(Long matchNo) {
@@ -179,19 +197,19 @@ public class Match implements Serializable{
 		this.umpire3 = umpire3;
 	}
 
-	public Date getEstStartDatetime() {
+	public String getEstStartDatetime() {
 		return estStartDatetime;
 	}
 
-	public void setEstStartDatetime(Date estStartDatetime) {
+	public void setEstStartDatetime(String estStartDatetime) {
 		this.estStartDatetime = estStartDatetime;
 	}
 
-	public Date getEstEndDatetime() {
+	public String getEstEndDatetime() {
 		return estEndDatetime;
 	}
 
-	public void setEstEndDatetime(Date estEndDatetime) {
+	public void setEstEndDatetime(String estEndDatetime) {
 		this.estEndDatetime = estEndDatetime;
 	}
 
@@ -225,6 +243,30 @@ public class Match implements Serializable{
 
 	public void setScorerId(String scorerId) {
 		this.scorerId = scorerId;
+	}
+
+	public Long getOvers() {
+		return overs;
+	}
+
+	public void setOvers(Long overs) {
+		this.overs = overs;
+	}
+
+	public String getPlayerOfMatch() {
+		return playerOfMatch;
+	}
+
+	public void setPlayerOfMatch(String playerOfMatch) {
+		this.playerOfMatch = playerOfMatch;
+	}
+
+	public String getOutcome() {
+		return outcome;
+	}
+
+	public void setOutcome(String outcome) {
+		this.outcome = outcome;
 	}
 
 }

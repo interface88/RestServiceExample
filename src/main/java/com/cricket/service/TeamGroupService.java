@@ -14,4 +14,5 @@ public interface TeamGroupService {
 	void update(TeamGroup teamGroup);
 	List<TeamGroup> getList(Map<String, String> paramList);
 	int deleteByIds(List<String> teamGroups);
+	List<TeamGroup> getFilterList(Map<String, String> paramList);
 }

@@ -15,13 +15,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.cricket.model.Match;
 import com.cricket.model.Player;
 import com.cricket.model.Team;
 import com.cricket.model.TeamGroup;
 import com.cricket.model.Tournament;
+import com.cricket.service.MatchService;
 import com.cricket.service.TeamGroupService;
 import com.cricket.service.TeamService;
 import com.cricket.service.TournamentService;
+import com.cricket.vo.MatchVO;
+import com.cricket.vo.ScheduleVO;
 import com.cricket.vo.TeamGroupVO;
 import com.cricket.vo.TeamVO;
 import com.cricket.vo.TournamentVO;
@@ -38,6 +42,8 @@ public class TournamentController  extends AbstractBaseController{
 	TeamGroupService teamGroupService;
 	@Autowired
 	TeamService teamService;
+	@Autowired
+	MatchService matchService;
 	
 	@RequestMapping(value = "/tournamentList", method = RequestMethod.GET)
 	public String list(@RequestParam(required = false) Long uuid, Model model) {
@@ -183,5 +189,113 @@ public class TournamentController  extends AbstractBaseController{
 		}
 		
 		return tournamentVO;
+	}
+	
+	@RequestMapping(value = "/viewSchedule", method = RequestMethod.GET)
+	public String viewSchedule(@RequestParam(required = false) Long uuid, Model model) {
+		Tournament tournament = new Tournament();
+		//TournamentVO tournamentVO = new TournamentVO();
+		List<Match> match = new ArrayList<Match>();
+		
+		ScheduleVO scheduleVO = new ScheduleVO();
+		Map<String, String> paramList = new HashMap<String, String>();
+		
+		if(uuid!=null) {
+			paramList.put("tournament.uuid", uuid.toString());
+			match = matchService.getList(paramList);
+			tournament = tournamentService.getByUuid(uuid);
+			scheduleVO = convertMatchDTOtoScheduleVO(match,tournament);
+		}
+
+		//model.addAttribute("tournament",tournament);
+		
+		//model.addAttribute("tournamentVO", tournamentVO);
+		model.addAttribute("scheduleVO", scheduleVO);
+		model.addAttribute("teamList", teamService.getList(null));
+		Map<String, String> groupParamList = new HashMap<String, String>();
+		groupParamList.put("tournament.uuid", uuid.toString());
+		model.addAttribute("teamGroupList",teamGroupService.getFilterList(groupParamList));//remove duplicate
+		
+		return "viewSchedule";
+	}
+
+	@RequestMapping(value = "/saveSchedule", method = RequestMethod.POST)
+	  public String save(@ModelAttribute("schedule") ScheduleVO scheduleVO, Model model, RedirectAttributes rm) {
+		
+		List<Match> matchs = convertScheduleVOtoMatchDTO(scheduleVO);
+		List<String> uuids = new ArrayList<String>();
+		
+		for (Match match : matchs) {
+			if (match.getUuid() !=null) {
+				uuids.add(match.getUuid().toString());
+			}
+		}
+		
+		if(!uuids.isEmpty() && uuids.size()>0)
+			matchService.deleteByIds(uuids);
+		
+		for(Match m:matchs) {
+			matchService.save(m);
+		}
+		
+		//Convert Vo -> DTO -> Vo
+		model.addAttribute("scheduleVO",scheduleVO);
+		rm.addFlashAttribute("message", "Record Saved Sucessfully");
+	    return "redirect:viewSchedule?uuid=" + scheduleVO.getTournamentUuid();
+	}
+	
+	private List<Match> convertScheduleVOtoMatchDTO(ScheduleVO scheduleVO) {
+		List<Match> matchs = new ArrayList<Match>();
+		
+		Tournament tournament = new Tournament();
+		tournament.setUuid(scheduleVO.getTournamentUuid());
+		tournament.setTournamentName(scheduleVO.getTournamentName());
+		
+		for(MatchVO matchVO:scheduleVO.getMatchVOList()) {
+			Match match = new Match();
+			match.setUuid(matchVO.getUuid());
+			match.setMatchNo(matchVO.getMatchNo());
+			match.setMatchTitle(matchVO.getMatchTitle());
+			match.setGroupName(matchVO.getTeamGroupName());
+			
+			match.setTournament(tournament);
+			
+			Team team1 = new Team();
+			team1.setUuid(matchVO.getTeam1Uuid());
+			match.setTeam1(team1);
+			
+			Team team2 = new Team();
+			team2.setUuid(matchVO.getTeam2Uuid());
+			match.setTeam2(team2);
+			
+			match.setEstStartDatetime(matchVO.getEstStartDatetime());
+			match.setEstEndDatetime(matchVO.getEstEndDatetime());
+			matchs.add(match);
+		}
+		return matchs;
+	}
+
+	private ScheduleVO convertMatchDTOtoScheduleVO(List<Match> matchList,Tournament tournament) {
+		ScheduleVO scheduleVO =  new ScheduleVO();
+		scheduleVO.setTournamentName(tournament.getTournamentName());
+		scheduleVO.setTournamentUuid(tournament.getUuid());
+		
+		for (Match match:matchList) {
+			
+			
+			MatchVO matchVO = new MatchVO();
+			matchVO.setUuid(match.getUuid());
+			matchVO.setMatchNo(match.getMatchNo());
+			matchVO.setMatchTitle(match.getMatchTitle());
+			matchVO.setTeam1Uuid(match.getTeam1().getUuid());
+			matchVO.setTeam2Uuid(match.getTeam2().getUuid());
+			matchVO.setTeam1Name(match.getTeam1().getName());
+			matchVO.setTeam2Name(match.getTeam2().getName());
+			matchVO.setTeamGroupName(match.getGroupName());
+			matchVO.setEstStartDatetime(match.getEstStartDatetime());
+			matchVO.setEstEndDatetime(match.getEstEndDatetime());
+			scheduleVO.getMatchVOList().add(matchVO);
+		}
+		return scheduleVO;
 	}
 }
