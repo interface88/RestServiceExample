@@ -65,4 +65,20 @@
        <put-attribute name="title" value="Tournament" />  
        <put-attribute name="body" value="/WEB-INF/views/tournament/listTournament.jsp" />     
    </definition>
+   
+   <definition name="toss" extends="template-def">  
+       <put-attribute name="title" value="Toss" />  
+       <put-attribute name="body" value="/WEB-INF/views/scorer/toss.jsp" />     
+   </definition>
+   
+   <definition name="playerSelection" extends="template-def">  
+       <put-attribute name="title" value="Tournament" />  
+       <put-attribute name="body" value="/WEB-INF/views/scorer/playerSelection.jsp" />     
+   </definition>
+   
+   
+   <definition name="scorebook" extends="template-def">  
+       <put-attribute name="title" value="Scorebook" />  
+       <put-attribute name="body" value="/WEB-INF/views/scorer/scorebook.jsp" />     
+   </definition>
 </tiles-definitions>
