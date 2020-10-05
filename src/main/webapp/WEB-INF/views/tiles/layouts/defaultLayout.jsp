@@ -47,6 +47,7 @@
     <script src="<c:url value="/static/assets/vendors/select2/select2.min.js" />"></script>
     <script src="<c:url value="/static/assets/vendors/bootbox/bootbox.all.min.js" />"></script>
     <script src="<c:url value="/static/assets/vendors/croppie/croppie.js" />"></script>
+    <script src="<c:url value="/static/assets/vendors/jsrender/jsrender.min.js" />"></script>
     <script>
     	$('.dropdown-toggle').dropdown()
     </script>
