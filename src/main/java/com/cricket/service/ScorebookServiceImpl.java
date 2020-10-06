@@ -9,7 +9,7 @@ import com.cricket.dao.IGenericDao;
 import com.cricket.model.Scorebook;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class ScorebookServiceImpl implements ScorebookService{
 
 	IGenericDao<Scorebook> dao;

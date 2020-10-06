@@ -1,5 +1,6 @@
 <%@taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <div class="page-header">
    <h3 class="page-title">Player</h3>
    <nav aria-label="breadcrumb">
@@ -142,8 +143,10 @@
            </div>
          </div>
        </div>
-   </div>
+   </div><button type="button" onclick="submitScore();">Test score submit</button>
 </div>
+
+<form:form  method = "POST" action ="${pageContext.request.contextPath}/mvc/scorebook/saveScorebook" id="scoreBookForm" modelAttribute = "scorebook" >
 MATH ID <input type="text" name="matchId" id="matchId" value="1"><BR/>
 INNIN<input type="text" name="innings" id="innings"  value="1"><BR/>
 BATTING TEAM<input type="text" name="battingTeam" id="battingTeam" value="Australia"><BR/>
@@ -162,7 +165,7 @@ WIKET TYPE<input type="text" name="wicketType" id="wicketType"><BR/>
 FIELDER<input type="text" name="fielder" id="fielder"><BR/>
 PLAYEROUT<input type="text" name="playerOut" id="playerOut">
 
-
+</form:form>
 
 
 <script>
@@ -234,6 +237,7 @@ $(function(){
 			$('#extraRuns').val(extra_runs);
 			$('#extraType').val(extra_type);
 			$('#totalRuns').val(extra_runs + batsmanRun);
+			$("#isWicket").val(0);
 		}
 		resetScorePanel();
 		
@@ -370,14 +374,23 @@ $(function(){
 			});
 		}
 		
-		
-		
 		$this[0].checked = true;
 	});
 	
-	
-})
+});
+function submitScore(){
+	$.ajax({
+          type: "POST",
+          url: "${pageContext.request.contextPath}/mvc/scorer/saveScorebook",
+          data: $('#scoreBookForm').serialize(), // serializes the form's elements.
+          success: function(data)
+          {
+              alert(data); // show response from the php script.
+          }
+        });
+}
 </script>
+
 <div class="modal fade" id="exampleModal" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -428,7 +441,6 @@ $(function(){
 			</form>
       </div>
       <div class="modal-footer">
-
         <button type="button" class="btn btn-primary" id="newBatsman">Done</button>
       </div>
     </div>

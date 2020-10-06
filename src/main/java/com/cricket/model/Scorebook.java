@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "csn_player")
+@Table(name = "csn_scorebook")
 public class Scorebook implements Serializable {
 
 	/**
@@ -29,14 +29,32 @@ public class Scorebook implements Serializable {
 	@Column(name = "INNINGS")
 	private Integer innings;
 
+	@Column(name = "BATTING_TEAM")
+	private String battingTeam;
+
+	@Column(name = "BOWLING_TEAM")
+	private String bowlingTeam;
+
 	@Column(name = "BATSMAN")
 	private String batsman;
 
-	@Column(name = "NON_STRIKER_BATSMAN")
-	private String nonStrikeBatsman;
+	@Column(name = "NON_STRIKER")
+	private String nonStriker;
+
+	@Column(name = "BOWLER")
+	private String bowler;
+
+	@Column(name = "`OVER`")
+	private Integer over;
+
+	@Column(name = "BALL")
+	private Double ball;
 
 	@Column(name = "BATSMAN_RUN")
 	private Integer batsmanRun;
+
+	@Column(name = "EXTRA_TYPE")
+	private String extraType;
 
 	@Column(name = "EXTRA_RUNS")
 	private Integer extraRuns;
@@ -44,8 +62,14 @@ public class Scorebook implements Serializable {
 	@Column(name = "TOTAL_RUNS")
 	private Integer totalRuns;
 
-	@Column(name = "EXTRA_TYPE")
-	private Integer extraType;
+	@Column(name = "IS_WICKET")
+	private Boolean isWicket;
+
+	@Column(name = "FIELDER")
+	private String fielder;
+
+	@Column(name = "PLAYER_OUT")
+	private Boolean playerOut;
 
 	public Long getUuid() {
 		return uuid;
@@ -79,14 +103,6 @@ public class Scorebook implements Serializable {
 		this.batsman = batsman;
 	}
 
-	public String getNonStrikeBatsman() {
-		return nonStrikeBatsman;
-	}
-
-	public void setNonStrikeBatsman(String nonStrikeBatsman) {
-		this.nonStrikeBatsman = nonStrikeBatsman;
-	}
-
 	public Integer getBatsmanRun() {
 		return batsmanRun;
 	}
@@ -111,11 +127,84 @@ public class Scorebook implements Serializable {
 		this.totalRuns = totalRuns;
 	}
 
-	public Integer getExtraType() {
+	public String getBattingTeam() {
+		return battingTeam;
+	}
+
+	public void setBattingTeam(String battingTeam) {
+		this.battingTeam = battingTeam;
+	}
+
+	public String getBowlingTeam() {
+		return bowlingTeam;
+	}
+
+	public void setBowlingTeam(String bowlingTeam) {
+		this.bowlingTeam = bowlingTeam;
+	}
+
+	public String getNonStriker() {
+		return nonStriker;
+	}
+
+	public void setNonStriker(String nonStriker) {
+		this.nonStriker = nonStriker;
+	}
+
+	public String getBowler() {
+		return bowler;
+	}
+
+	public void setBowler(String bowler) {
+		this.bowler = bowler;
+	}
+
+	public Integer getOver() {
+		return over;
+	}
+
+	public void setOver(Integer over) {
+		this.over = over;
+	}
+
+	public Double getBall() {
+		return ball;
+	}
+
+	public void setBall(Double ball) {
+		this.ball = ball;
+	}
+
+	public String getExtraType() {
 		return extraType;
 	}
 
-	public void setExtraType(Integer extraType) {
+	public void setExtraType(String extraType) {
 		this.extraType = extraType;
 	}
+
+	public Boolean getIsWicket() {
+		return isWicket;
+	}
+
+	public void setIsWicket(Boolean isWicket) {
+		this.isWicket = isWicket;
+	}
+
+	public String getFielder() {
+		return fielder;
+	}
+
+	public void setFielder(String fielder) {
+		this.fielder = fielder;
+	}
+
+	public Boolean getPlayerOut() {
+		return playerOut;
+	}
+
+	public void setPlayerOut(Boolean playerOut) {
+		this.playerOut = playerOut;
+	}
+
 }

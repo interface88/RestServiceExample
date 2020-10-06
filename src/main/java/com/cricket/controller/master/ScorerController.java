@@ -19,6 +19,8 @@ public class ScorerController extends AbstractBaseController{
 	@Autowired
 	ScorebookService scorebookService;
 
+
+
 	@RequestMapping(value = "/toss", method = RequestMethod.GET)
 	public String toss(@RequestParam(required = false) Long uuid, Model model) {
 		return "toss";
@@ -41,13 +43,18 @@ public class ScorerController extends AbstractBaseController{
 	}
 
 	@RequestMapping(value = "/scorebook", method = RequestMethod.GET)
-	public String scorebook(@RequestParam(required = false) Long uuid, Model model) {
+	public String scorebook(@RequestParam(required = false) Long matchId, Model model) {
+		// other detail will be loaded here
+
+		model.addAttribute("scorebook", new Scorebook());
 		return "scorebook";
 	}
 
 	@RequestMapping(value = "/saveScorebook", method = RequestMethod.POST)
 	public String save(@ModelAttribute("scorebook") Scorebook scorebook, Model model, RedirectAttributes rm) {
 		scorebookService.save(scorebook);
+
+		// need to return calculated json
 		return "redirect:viewPlayer";
 	}
 }
