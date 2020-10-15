@@ -23,27 +23,41 @@
            <h1 class="card-title">Australia vs England</h1>
            <div class="row">
            		<div class="col-lg-9">
-	           		<form>
+	           		<form:form method = "post" action ="${pageContext.request.contextPath}/mvc/scorer/saveToss" id="matchForm" modelAttribute="match" >
+	           		<form:hidden path="tournament.uuid"/>
+	           		<form:hidden path="team1.uuid"/>
+	           		<form:hidden path="team2.uuid"/>
+	           		<form:hidden path="groupName"/>
+	           		<form:hidden path="matchNo"/>
+	           		<form:hidden path="umpire1"/>
+	           		<form:hidden path="umpire2"/>
+	           		<form:hidden path="umpire3"/>
+	           		<form:hidden path="estStartDatetime"/>
+	           		<form:hidden path="estEndDatetime"/>
+	           		<form:hidden path="matchTitle"/>
+	           		<form:hidden path="scorerId"/>
+	           		<form:hidden path="playerOfMatch"/>
+	           		<form:input path="uuid"/>
 					  <div class="form-group">
-					    <label for="exampleInputEmail1">Toss Won By</label>
-					    <select class="form-control">
-					    	<option value="Australia">Australia</option>
-					    	<option value="England">England</option>
-					    </select>
+					    <label for="tossWinnerTeam">Toss Won By</label>${match.team1.name}	
+					    <form:select path="tossWinnerTeam.uuid" cssClass="form-control">
+						   <form:option value="${match.team1.uuid}" label="${match.team1.name}"/>
+						   <form:option value="${match.team2.uuid}" label="${match.team2.name}"/>
+						</form:select>
 					  </div>
 					  <div class="form-group">
-					    <label for="exampleInputEmail1">Opted to</label>
-					    <select class="form-control">
-					    	<option value="Australia">Bat</option>
-					    	<option value="England">Bowl</option>
-					    </select>
+					    <label for="tossDecision">Opted to</label>
+					    <form:select path="tossDecision" cssClass="form-control">
+						   <form:option value="BAT" label="Bat"/>
+						   <form:option value="BOWL" label="Bowl"/>
+						</form:select>
 					  </div>
 					  <div class="form-group">
-					    <label for="exampleInputEmail1">Overs</label>
-					    <input class="form-control" type="number" name="over">
+					    <label for="overs">Overs</label>
+					    <form:input path="overs" cssClass="form-control"/>
 					  </div>
-		           	</form>
-		           	<button type="button">Start Match</button>
+		           	<button type="submit" class="btn btn-primary"><b>Start Match</b></button>
+		           	</form:form>
            		</div>
            </div>
            </div>

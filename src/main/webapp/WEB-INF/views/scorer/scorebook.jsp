@@ -1,6 +1,41 @@
 <%@taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<style>
+.btn-circle {
+  width: 45px;
+  height: 45px;
+  line-height: 45px;
+  text-align: center;
+  padding: 0;
+  border-radius: 50%;
+}
 
+.btn-circle i {
+  position: relative;
+  top: -1px;
+}
+
+.btn-circle-sm {
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  font-size: 0.9rem;
+}
+
+.btn-circle-lg {
+  width: 55px;
+  height: 55px;
+  line-height: 55px;
+  font-size: 1.1rem;
+}
+
+.btn-circle-xl {
+  width: 70px;
+  height: 70px;
+  line-height: 70px;
+  font-size: 1.3rem;
+}
+</style>
 <div class="page-header">
    <h3 class="page-title">Player</h3>
    <nav aria-label="breadcrumb">
@@ -27,13 +62,14 @@
     	}
     	
     	.current-over span{
-    		height: 30px;
-			width: 30px;
-			border-radius: 15px;
+    		height: 40px;
+			width: 40px;
+			border-radius: 50%;
 			border: 1px solid #333;
 			display: inline-block;
 			text-align: center;
-			line-height: 30px;
+			line-height: 40px;
+			font-size: 14px;
     	}
     	
     </style>
@@ -51,7 +87,7 @@
            <div class="row">
            		<div class="col-lg-9">
 	           		<table class="table">
-	           			<thead>
+	           			<thead class="thead-light">
 		           			<tr>
 		           				<th>Batsman</th>
 		           				<th>R</th>
@@ -63,19 +99,19 @@
 	           			</thead>
 	           			<tbody>
 	           				<tr>
-	           					<td><span class="striker">Steve waugh</span></td>
+	           					<td><span class="striker"><button type="button" class="btn btn-light batsman-selector-modal_opener" data-batsman_type="striker">Add batsman</button></span></td>
 	           					<td>0</td>
-	           					<td>5</td>
-	           					<td>4</td>
-	           					<td>6</td>
+	           					<td>0</td>
+	           					<td>0</td>
+	           					<td>0</td>
 	           					<td>0.00</td>
 	           				</tr>
 	           				<tr>
-	           					<td><span class="non-striker">Mark waugh</span></td>
+	           					<td><span class="non-striker"><button type="button" class="btn btn-light batsman-selector-modal_opener" data-batsman_type="non-striker">Add batsman</button></span></td>
 	           					<td>0</td>
-	           					<td>5</td>
-	           					<td>4</td>
-	           					<td>6</td>
+	           					<td>0</td>
+	           					<td>0</td>
+	           					<td>0</td>
 	           					<td>0.00</td>
 	           				</tr>
 	           			</tbody>
@@ -85,7 +121,7 @@
            <div class="row">
            		<div class="col-lg-9">
 	           		<table class="table">
-	           			<thead>
+	           			<thead class="thead-light">
 		           			<tr>
 		           				<th>Bowler</th>
 		           				<th>0</th>
@@ -97,12 +133,12 @@
 	           			</thead>
 	           			<tbody>
 	           				<tr>
-	           					<td>Donald</td>
-	           					<td>0.2</td>
+	           					<td><span class="bowler"><button type="button" class="btn btn-light bowler-selection-modal_opener">Add Bowler</button></span></td>
 	           					<td>0</td>
-	           					<td>5</td>
 	           					<td>0</td>
-	           					<td>6.00</td>
+	           					<td>o</td>
+	           					<td>0</td>
+	           					<td>0</td>
 	           				</tr>
 	           			</tbody>
 	           		</table>
@@ -110,18 +146,19 @@
            </div>
             <div class="row">
            		<div class="col-lg-9">
-           			<div class="current-over">
-	           			This over : <span>0</span> <span>4</span> <span>4</span> <span>4</span>
+           			<hr>
+           			<div>
+	           			This over : <span class="current-over"></span>
            			</div>
            		</div>
-           </div>
+     	      </div>
            <div class="row">
            		<div class="col-lg-9">
            			<label><input type="checkbox" class="ballType group1" name="wide" value="W" data-run="1" > Wide</label>
            			<label><input type="checkbox" class="ballType group1" name="no_ball" value="NB" data-run="1"> No Ball</label>
            			<label><input type="checkbox" class="ballType group2" name="bye" value="B" data-run="1"> Byes</label>
            			<label><input type="checkbox" class="ballType group2" name="legbye" value="LB" data-run="1"> Leg Byes</label>
-           			<label><input type="checkbox" class="wicket" name="wicket" value="WKT" data-run="1"> Wicket</label>
+           			<label><input type="checkbox" class="wicket" name="wicket" value="wkt" data-run="1"> Wicket</label>
            		</div>
            </div>
            <div class="row">
@@ -129,13 +166,13 @@
            			<div class="runPanel">
                        	<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                         	<div class="btn-groupq scorePanel"  role="group" aria-label="">
-							  <button type="button" class="btn btn-primary" data-run="0">0</button>
-							  <button type="button" class="btn btn-primary" data-run="1">1</button>
-							  <button type="button" class="btn btn-primary" data-run="2">2</button>
-							  <button type="button" class="btn btn-primary" data-run="3">3</button>
-							  <button type="button" class="btn btn-primary" data-run="4">4</button>
-							  <button type="button" class="btn btn-primary" data-run="5">5</button>
-							  <button type="button" class="btn btn-primary" data-run="6">6</button>
+							  <button type="button" class="btn btn-primary btn-circle" data-run="0">0</button>
+							  <button type="button" class="btn btn-primary btn-circle" data-run="1">1</button>
+							  <button type="button" class="btn btn-primary btn-circle" data-run="2">2</button>
+							  <button type="button" class="btn btn-primary btn-circle" data-run="3">3</button>
+							  <button type="button" class="btn btn-primary btn-circle" data-run="4">4</button>
+							  <button type="button" class="btn btn-primary btn-circle" data-run="5">5</button>
+							  <button type="button" class="btn btn-primary btn-circle" data-run="6">6</button>
 							</div>
 						</div>
                       </div>
@@ -151,9 +188,9 @@ MATH ID <input type="text" name="matchId" id="matchId" value="1"><BR/>
 INNIN<input type="text" name="innings" id="innings"  value="1"><BR/>
 BATTING TEAM<input type="text" name="battingTeam" id="battingTeam" value="Australia"><BR/>
 BOWLING<input type="text" name="bowlingTeam" id="bowlingTeam" value="India"><BR/>
-BATSMAN<input type="text" name="batsman" id="batsman" value="Steve waugh"><BR/>
-NON STRIKE<input type="text" name="nonStriker" id="nonStriker"  value="Mark waugh"><BR/>
-BOWLER<input type="text" name="bowler" id="bowler" value="Zaheer Khan"><BR/>
+BATSMAN<input type="text" name="batsman" id="batsman" value=""><BR/>
+NON STRIKE<input type="text" name="nonStriker" id="nonStriker"  value=""><BR/>
+BOWLER<input type="text" name="bowler" id="bowler" value=""><BR/>
 OVER<input type="text" name="over" id="over" value="1"><BR/>
 BALL<input type="text" name="ball" id="ball" value="0"><BR/>
 BATSMAN<input type="text" name="batsmanRun" id="batsmanRun"><BR/>
@@ -164,19 +201,112 @@ IS WIKET<input type="text" name="isWicket" id="isWicket"><BR/>
 WIKET TYPE<input type="text" name="wicketType" id="wicketType"><BR/>
 FIELDER<input type="text" name="fielder" id="fielder"><BR/>
 PLAYEROUT<input type="text" name="playerOut" id="playerOut">
-
+bowler
 </form:form>
 
 
 <script>
-var batting_team = ['Rick Ponting', 'Hayden', 'Gilchrist' , 'steve waugh' , 'bevan'];
-var bowling_team = ['Flintoff', 'Anderson', 'Naseer hussain' , 'Ashle giles' , 'Darren gough'];
+/*---- UTIL FUNCTION --*/
+var create_option_for_player = function(playerJsonObj){
+	var option = '';
+	for (var key in playerJsonObj) {
+		  if (playerJsonObj.hasOwnProperty(key)) {
+			  option = option + '<option value="'+key+'">'+playerJsonObj[key]+'</option>';
+		  }
+		} 
+	return option;
+}
+
+
+// this will be batting team line up
+var team_1 = ${team1PlayerListJson};
+
+//this will be fielding team line up
+var team_2 = {"101":"Player 101","102":"Player 102","103":"Player 103","104":"Player 104"};
+
 var nanToNumber = function (value) {
     var value = Number(value);
     return isNaN(value) ? 0 : value;
 };
 
+var overCalc = 0;
+
+var addBowltoOverPanel = function(bowlType, isValidDelivery){
+	if(isValidDelivery){
+		var ballSpan = '<span class="valid">'+bowlType+'</span>';
+		$('.current-over').append(ballSpan);
+	}else{
+		var ballSpan = '<span>'+bowlType+'</span>';
+		$('.current-over').append(ballSpan);
+	
+	}
+}
+
+var resetOver = function(){
+	$('.current-over').html('');
+};
+
+var resetBowler = function(){
+	$('.bowler').html('<button type="button" class="btn btn-light bowler-selection-modal_opener">Add Bowler</button>');
+	$('#bowler').val('');
+};
+
+var resetBatsman = function(batsmanPos){
+	if(batsmanPos == 'striker'){
+		$('.striker').html('<button type="button" class="btn btn-light batsman-selector-modal_opener" data-batsman_type="striker">Add batsman</button>');
+		$('#batsman').val('');
+	}else{
+		$('.non-striker').html('<button type="button" class="btn btn-light batsman-selector-modal_opener" data-batsman_type="striker">Add batsman</button>');
+		$('#nonStriker').val('');
+	
+	}
+};
+
+var checkMatchPlayableCondition = function(){
+	//TODO : check striker present or not
+	if($('#batsman').val() == '' || $('#nonStriker').val() == ''){
+		alert('select batsman');
+		return false;
+	}
+	
+	//TODO : check bolwer present or not
+
+	if($('#bowler').val() == ''){
+		alert('select bowler');
+		return false;
+	}
+
+	return true;
+	
+}
+
+
+
+
 $(function(){
+	// initializing batsman, bowler & fielder dropdown
+	$('#batsman-to-batting-combo').html(create_option_for_player(team_1)); // combo for selecting batsman
+	$('#batsman-out-combo').html(create_option_for_player(team_1)); // combo for selecting batsman who is out
+	$('#next-batsman-combo').html(create_option_for_player(team_1)); // combo for selecting next batsman after wicker fall
+	$('#fielder-combo').html(create_option_for_player(team_2)); // combo for selecting fielder
+	$('#bowler-to-bowling-combo').html(create_option_for_player(team_2)); // combo for selecting next batsman after wicker fall
+	
+
+	// ----- MODAL JQUERY OBJECT --
+	var $batsman_selection_modal = $("#batsman-selection-modal");
+	var $bowler_selection_modal = $("#bowler-selection-modal");
+	var $wicket_modal = $("#wicket-modal");
+
+	// ----- HELPER FUNCTION ---
+	var isOverCompleted = function(){
+		var noOfDeliveries = $('.current-over span.valid').length;
+		if(noOfDeliveries == 6){
+			$bowler_selection_modal.modal('show');
+			return true;
+		}
+		return false;
+	}
+	
 	// onload initilizer
 	
 	// select batsman
@@ -185,7 +315,25 @@ $(function(){
 	var batsman_choosing_applicable_wicket = ['Run Out'];
 	
 	
-	$('.scorePanel button').click(function(){
+	$('.scorePanel button').click(function(event){
+
+		//TOOD: Add validation if bowler and batsman are all selected or not
+		// if over is completed than force user to select new bowler
+		if(checkMatchPlayableCondition() == false){
+			event.stopPropagation();
+			return '';
+		}
+		
+		// setting batsman , non striker , bowler 
+		var striker = $('span.striker').text();
+		var non_striker = $('span.non-striker').text();
+		var bowler = $('span.bowler').text();
+
+		$('#batsman').val(striker);
+		$('#nonStriker').val(non_striker);
+		$('#bowler').val(bowler);
+
+		
 		var run = nanToNumber($(this).data('run'));
 	
 		var extra_runs = 0;
@@ -207,23 +355,28 @@ $(function(){
 					var $this = $(this);
 			
 					var val = $this.val();
+					alert(val);
 					if(val == 'W'){
 						extra_runs = 1 + run;
 						extra_type = val;
+						addBowltoOverPanel(run + 'NB', false);
 					}else if(val == 'NB'){
 						extra_runs = 1 + run;
 						extra_type = val;
 						batsmanRun = run;
+						addBowltoOverPanel(run + 'NB', false);
 						
 					}else if(val == 'B' || val == 'LB'){
 						extra_runs = run;
 						extra_type = val;
 						ball = ball + 0.1
+						addBowltoOverPanel(val, true);
 					}
 				});
 			}else{
 				ball = nanToNumber(ball) + 0.1;
 				batsmanRun = run;
+				addBowltoOverPanel(run, true);
 			}
 			
 		
@@ -240,16 +393,18 @@ $(function(){
 			$("#isWicket").val(0);
 		}
 		resetScorePanel();
-		
+
+		//TODO : check whether over completed or not 
+		isOverCompleted();		
 	 });
 	
 	$('#newBatsman').click(function(){
 		
-		$('#exampleModal').modal('hide');
+		$('#wicket-modal').modal('hide');
 		
 		var wicket_type_combo = $('#wicket_type_combo').val();
 		
-		var next_batsman = $('#next_batsman_combo').val();
+		var next_batsman = $('#next-batsman-combo').val();
 		
 		var run = nanToNumber($(this).data('run'));
 		
@@ -272,20 +427,24 @@ $(function(){
 				if(val == 'W'){
 					extra_runs = 1 + run;
 					extra_type = val;
+					addBowltoOverPanel(val, false);
 				}else if(val == 'NB'){
 					extra_runs = 1 + run;
 					extra_type = val;
 					batsmanRun = run;
+					addBowltoOverPanel(val, false); // even wicket fall no ball is not counted
 					
 				}else if(val == 'B' || val == 'LB'){
 					extra_runs = run;
 					extra_type = val;
-					ball = ball + 0.1
+					ball = ball + 0.1;
+					addBowltoOverPanel(val, true);
 				}
 			});
 		}else{
 			ball = nanToNumber(ball) + 0.1;
 			batsmanRun = run;
+			addBowltoOverPanel(val, true);
 		}
 			
 		
@@ -293,7 +452,7 @@ $(function(){
 		//$('#nonStriker').val(nonStriker);
 		
 		if(fielder_applicable_wicket.indexOf(wicket_type_combo) > -1){
-			var fielder_combo = $('#fielder_combo').val();
+			var fielder_combo = $('#fielder-combo').val();
 			$("#fielder").val(fielder_combo);
 		}else{
 			$("#fielder").val('');
@@ -301,10 +460,9 @@ $(function(){
 	
 	
 		$('#over').val(over);
-		$("#ball").val(ball);
 		$("#isWicket").val(1);
 		$("#wicketType").val(wicket_type_combo);
-		$("#playerOut").val($('#batsman_out_combo').val());
+		$("#playerOut").val($('#batsman-out-combo').val());
 		
 		
 		
@@ -313,6 +471,10 @@ $(function(){
 		$('#extraType').val(extra_type);
 		$('#totalRuns').val(extra_runs + batsmanRun);
 		resetScorePanel();
+
+		//TODO : check whether over completed or not 
+		isOverCompleted();
+		
 	});
 	
 	$('#wicket_type_combo').on('change', function() {
@@ -334,7 +496,7 @@ $(function(){
 	function refresh_batsman_out_combo(){
 		var option = '<option selected value="'+$('.striker').text()+'">'+$('.striker').text()+'</option>';
 		option = option + '<option value="'+$('.non-striker').text()+'">'+$('.non-striker').text()+'</option>';
-		$('#batsman_out_combo').html(option);
+		$('#batsman-out-combo').html(option);
 	}
 	
 	function resetScorePanel(){
@@ -376,129 +538,171 @@ $(function(){
 		
 		$this[0].checked = true;
 	});
+
+	// ------- BUTTON CLICK EVENT -----
+
+	// code to show batsman selection panel
+	$('.batsman-selector-modal_opener').click(function(){
+		// storing value body level show it can be access from anywhere
+		$('body').data('batsman_type',$(this).data('batsman_type'));
+		$batsman_selection_modal.modal('show');
+	});
+
+	$('#add-batsman-to-batting').click(function(){
+
+		var klass = $('body').data('batsman_type');
+		var $span = $('span.'+ klass);
+		var batsman_uuid = $('#batsman-to-batting-combo').val();
+		var batsman_name = $('#batsman-to-batting-combo option:selected' ).text();
+
+		//TODO : add ID for batsman
+		if(klass == 'striker'){
+			$('#batsman').val(batsman_name);
+		}else{
+			$('#nonStriker').val(batsman_name);
+		}
+		//batsman
+		$span.text(batsman_name	);
+
+		//$span.next().
+		//alert($('body').data('batsman_type'));
+		$batsman_selection_modal.modal('hide');
+	});
+
+	// code to show bowler selection panel
+	$('.bowler-selection-modal_opener').click(function(){
+		$bowler_selection_modal.modal('show');
+	});
+
+	$('#add-bowler-to-bowling').click(function(){
+
+		var $span = $('span.bowler');
+		var bowling_uuid = $('#bowler-to-bowling-combo').val();
+		var bowler_name = $('#bowler-to-bowling-combo option:selected').text();
+		$span.text(bowler_name	);
+
+		// TODO : add bowler id
+		$('#bowler').val(bowler_name);
+
+		$bowler_selection_modal.modal('hide');
+
+		// TODO : reseting the over
+		resetOver(); 
+	});
+	
 	
 });
 function submitScore(){
 	$.ajax({
-          type: "POST",
-          url: "${pageContext.request.contextPath}/mvc/scorer/saveScorebook",
-          data: $('#scoreBookForm').serialize(), // serializes the form's elements.
-          success: function(data)
-          {
-              alert(data); // show response from the php script.
-          }
-        });
+	         type: "POST",
+	         url: "${pageContext.request.contextPath}/mvc/scorer/saveScorebook",
+	         data: $('#scoreBookForm').serialize(), // serializes the form's elements.
+	         success: function(data)
+	         {
+	             alert(data); // show response from the php script.
+	         }
+	       });
 }
 </script>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Fall of Wicket</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-			  <div class="form-group">
-			    <label for="exampleInputEmail1">How wicket fall ?</label>
-			    <select class="form-control" id="wicket_type_combo">
-			    	<option value="Bowled">Bowled</option>
-			    	<option value="Catch">Catch</option>
-			    	<option value="Run Out">Run Out</option>
-			    	<option value="Stumping">Stumping</option>
-			    	<option value="LBW">LBW</option>
-			    	<option value="Hit Wicket">Hit Wicket</option>
-			    </select>
-			  </div>
-			  <div class="form-group" id="choose-out-batsman-panel" style="display:none;">
-			    <label for="exampleInputPassword1">Who got out?</label>
-			    <select class="form-control" id="batsman_out_combo">
-			    	<option value="Steve Waugh">Steve Waugh</option>
-			    	<option value="Mark waugh">Mark Waugh</option>
-			    </select>
-			  </div>
-			  <div class="form-group" id="fielder-panel"  style="display:none;">
-			    <label for="exampleInputPassword1">Who helped?</label>
-			    <select class="form-control" id="fielder_combo">
-			    	<option value="James Anderson">James Anderson</option>
-			    	<option value="Ian Blackwell">Ian Blackwell</option>
-			    	<option  value="Paul Collingwood">Paul Collingwood</option>
-			    	<option value="Ashley Giles">Ashley Giles</option>
-			    </select>
-			  </div>
-			  <div class="form-group">
-			    <label for="exampleInputPassword1">Next batsman</label>
-			    <select class="form-control" id="next_batsman_combo">
-			    	<option value="Ricky Ponting">Ricky Ponting</option>
-			    	<option value="Michael Bevan">Michael Bevan</option>
-			    	<option  value="Nathan Bracken">Nathan Bracken</option>
-			    	<option value="Glenn McGrath">Glenn McGrath</option>
-			    </select>
-			  </div>
-			</form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="newBatsman">Done</button>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="modal fade" id="matchInitatorModal" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Fall of Wicket</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-			  <div class="form-group">
-			    <label for="exampleInputEmail1">How wicket fall ?</label>
-			    <select class="form-control" id="wicket_type_combo">
-			    	<option value="Bowled">Bowled</option>
-			    	<option value="Catch">Catch</option>
-			    	<option value="Run Out">Run Out</option>
-			    	<option value="Stumping">Stumping</option>
-			    	<option value="LBW">LBW</option>
-			    	<option value="Hit Wicket">Hit Wicket</option>
-			    </select>
-			  </div>
-			  <div class="form-group" id="choose-out-batsman-panel" style="display:none;">
-			    <label for="exampleInputPassword1">Who got out?</label>
-			    <select class="form-control" id="batsman_out_combo">
-			    	<option value="Steve Waugh">Steve Waugh</option>
-			    	<option value="Mark waugh">Mark Waugh</option>
-			    </select>
-			  </div>
-			  <div class="form-group" id="fielder-panel"  style="display:none;">
-			    <label for="exampleInputPassword1">Who helped?</label>
-			    <select class="form-control" id="fielder_combo">
-			    	<option value="James Anderson">James Anderson</option>
-			    	<option value="Ian Blackwell">Ian Blackwell</option>
-			    	<option  value="Paul Collingwood">Paul Collingwood</option>
-			    	<option value="Ashley Giles">Ashley Giles</option>
-			    </select>
-			  </div>
-			  <div class="form-group">
-			    <label for="exampleInputPassword1">Next batsman</label>
-			    <select class="form-control" id="next_batsman_combo">
-			    	<option value="Ricky Ponting">Ricky Ponting</option>
-			    	<option value="Michael Bevan">Michael Bevan</option>
-			    	<option  value="Nathan Bracken">Nathan Bracken</option>
-			    	<option value="Glenn McGrath">Glenn McGrath</option>
-			    </select>
-			  </div>
-			</form>
-      </div>
-      <div class="modal-footer">
 
+<!-- ******** BATSMAN SELECTION MODAL ******* -->
+<div class="modal fade" id="batsman-selection-modal" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="batsman-selection-modal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="batsman-selection-modal-label">Batsman selection</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+			  <div class="form-group">
+			    <label for="exampleInputEmail1">Select Batsman</label>
+			    <select class="form-control" id="batsman-to-batting-combo">
+			    </select>
+			  </div>
+			  
+			</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="add-batsman-to-batting">Done</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ******** BOWLER SELECTION MODAL ******* -->
+<div class="modal fade" id="bowler-selection-modal" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="bowler-selection-modal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="bowler-selection-modal-label">Bolwer selection</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+			  <div class="form-group">
+			    <label for="exampleInputEmail1">Selection Bolwer</label>
+			    <select class="form-control" id="bowler-to-bowling-combo">
+			    </select>
+			  </div>
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="add-bowler-to-bowling">Done</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ******** WICKET MODAL ******* -->
+<div class="modal fade" id="wicket-modal" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="wicket-modal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="wicket-modal-label">Fall of Wicket</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+			  <div class="form-group">
+			    <label for="exampleInputEmail1">How wicket fall ?</label>
+			    <select class="form-control" id="wicket_type_combo">
+			    	<option value="Bowled">Bowled</option>
+			    	<option value="Caught">Caught</option>
+			    	<option value="Run Out">Run Out</option>
+			    	<option value="Stumping">Stumping</option>
+			    	<option value="LBW">LBW</option>
+			    	<option value="Hit Wicket">Hit Wicket</option>
+			    </select>
+			  </div>
+			  <div class="form-group" id="choose-out-batsman-panel" style="display:none;">
+			    <label for="exampleInputPassword1">Who got out?</label>
+			    <select class="form-control" id="batsman-out-combo">
+			    </select>
+			  </div>
+			  <div class="form-group" id="fielder-panel"  style="display:none;">
+			    <label for="exampleInputPassword1">Who helped?</label>
+			    <select class="form-control" id="fielder-combo">
+			    </select>
+			  </div>
+			  <div class="form-group">
+			    <label for="exampleInputPassword1">Next batsman</label>
+			    <select class="form-control" id="next-batsman-combo">
+			    </select>
+			  </div>
+			</form>
+      </div>
+      <div class="modal-footer">
         <button type="button" class="btn btn-primary" id="newBatsman">Done</button>
       </div>
     </div>
   </div>
 </div>
+
