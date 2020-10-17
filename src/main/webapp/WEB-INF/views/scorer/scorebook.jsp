@@ -72,11 +72,15 @@
 			font-size: 14px;
     	}
     	
+    	span.striker:after{
+    		content:" *";
+    	}
+    	
     </style>
  	<div class="col-12 grid-margin">
        <div class="card">
          <div class="card-body">
-           <h1 class="card-title">Australia vs India</h1>
+           <h1 class="card-title">${match.team1.name} vs ${match.team2.name}</h1>
            <div class="row">
            		<div class="col-lg-9">
 	           		<h4>Australia 1st Inning</h4>
@@ -99,7 +103,9 @@
 	           			</thead>
 	           			<tbody>
 	           				<tr>
-	           					<td><span class="striker"><button type="button" class="btn btn-light batsman-selector-modal_opener" data-batsman_type="striker">Add batsman</button></span></td>
+	           					<td><span class="striker"></span>
+	           						<button type="button" class="btn btn-light batsman-selector-modal_opener" data-batsman_type="striker">Add batsman</button>
+	           					</td>
 	           					<td>0</td>
 	           					<td>0</td>
 	           					<td>0</td>
@@ -107,7 +113,10 @@
 	           					<td>0.00</td>
 	           				</tr>
 	           				<tr>
-	           					<td><span class="non-striker"><button type="button" class="btn btn-light batsman-selector-modal_opener" data-batsman_type="non-striker">Add batsman</button></span></td>
+	           					<td><span class="non-striker">
+	           					</span>
+		           					<button type="button" class="btn btn-light batsman-selector-modal_opener" data-batsman_type="non-striker">Add batsman</button>
+	           					</td>
 	           					<td>0</td>
 	           					<td>0</td>
 	           					<td>0</td>
@@ -133,7 +142,7 @@
 	           			</thead>
 	           			<tbody>
 	           				<tr>
-	           					<td><span class="bowler"><button type="button" class="btn btn-light bowler-selection-modal_opener">Add Bowler</button></span></td>
+	           					<td><span class="bowler"></span><button type="button" class="btn btn-light bowler-selection-modal_opener">Add Bowler</button></td>
 	           					<td>0</td>
 	           					<td>0</td>
 	           					<td>o</td>
@@ -184,14 +193,14 @@
 </div>
 
 <form:form  method = "POST" action ="${pageContext.request.contextPath}/mvc/scorebook/saveScorebook" id="scoreBookForm" modelAttribute = "scorebook" >
-MATH ID <input type="text" name="matchId" id="matchId" value="1"><BR/>
-INNIN<input type="text" name="innings" id="innings"  value="1"><BR/>
-BATTING TEAM<input type="text" name="battingTeam" id="battingTeam" value="Australia"><BR/>
-BOWLING<input type="text" name="bowlingTeam" id="bowlingTeam" value="India"><BR/>
+MATH ID <input type="text" name="matchId" id="matchId" value="${match.uuid}"><BR/>
+INNIN<input type="text" name="innings" id="innings"  value="${match.currentInning}"><BR/>
+BATTING TEAM<input type="text" name="battingTeam" id="battingTeam" value="${battingteam}"><BR/>
+BOWLING<input type="text" name="bowlingTeam" id="bowlingTeam" value="${bowlingteam}"><BR/>
 BATSMAN<input type="text" name="batsman" id="batsman" value=""><BR/>
 NON STRIKE<input type="text" name="nonStriker" id="nonStriker"  value=""><BR/>
 BOWLER<input type="text" name="bowler" id="bowler" value=""><BR/>
-OVER<input type="text" name="over" id="over" value="1"><BR/>
+OVER<input type="text" name="overs" id="overs" value="1"><BR/>
 BALL<input type="text" name="ball" id="ball" value="0"><BR/>
 BATSMAN<input type="text" name="batsmanRun" id="batsmanRun"><BR/>
 EXTRA TYPE<input type="text" name="extraType" id="extraType"><BR/>
@@ -201,11 +210,25 @@ IS WIKET<input type="text" name="isWicket" id="isWicket"><BR/>
 WIKET TYPE<input type="text" name="wicketType" id="wicketType"><BR/>
 FIELDER<input type="text" name="fielder" id="fielder"><BR/>
 PLAYEROUT<input type="text" name="playerOut" id="playerOut">
-bowler
+batsmanUuid<input type="text" name="batsmanUuid" id="batsmanUuid">
+nonStrikerUuid<input type="text" name="nonStrikerUuid" id="nonStrikerUuid">
+bolwerUuid<input type="text" name="bolwerUuid" id="bolwerUuid">
+
 </form:form>
 
 
 <script>
+
+
+// version 2.0 code for panel
+/*
+ * Code to be re-wrote with simple logic and maintainable code. coz current javascript code is difficult to understand and maintain.
+ @rajesh 
+ */
+
+//
+
+
 /*---- UTIL FUNCTION --*/
 var create_option_for_player = function(playerJsonObj){
 	var option = '';
@@ -222,7 +245,7 @@ var create_option_for_player = function(playerJsonObj){
 var team_1 = ${team1PlayerListJson};
 
 //this will be fielding team line up
-var team_2 = {"101":"Player 101","102":"Player 102","103":"Player 103","104":"Player 104"};
+var team_2 = ${team2PlayerListJson};
 
 var nanToNumber = function (value) {
     var value = Number(value);
@@ -264,7 +287,7 @@ var resetBatsman = function(batsmanPos){
 
 var checkMatchPlayableCondition = function(){
 	//TODO : check striker present or not
-	if($('#batsman').val() == '' || $('#nonStriker').val() == ''){
+	if($('span.striker').text() == '' || $('span.non-striker').text() == ''){
 		alert('select batsman');
 		return false;
 	}
@@ -325,13 +348,18 @@ $(function(){
 		}
 		
 		// setting batsman , non striker , bowler 
-		var striker = $('span.striker').text();
-		var non_striker = $('span.non-striker').text();
-		var bowler = $('span.bowler').text();
+		var striker_span = $('span.striker')
+		var non_striker_span = $('span.non-striker');
+		var bowler_span = $('span.bowler');
 
-		$('#batsman').val(striker);
-		$('#nonStriker').val(non_striker);
-		$('#bowler').val(bowler);
+		$('#batsman').val(striker_span.text());
+		$('#batsmanUuid').val(striker_span.data('uuid'));
+
+		$('#nonStrikerUuid').val(non_striker_span.data('uuid'));
+		$('#nonStriker').val(non_striker_span.text());
+		
+		$('#bowler').val(bowler_span.text());
+		$('#bolwerUuid').val(bowler_span.data('uuid'));
 
 		
 		var run = nanToNumber($(this).data('run'));
@@ -383,7 +411,7 @@ $(function(){
 			//$('#batsman').val(batsman);
 			//$('#nonStriker').val(nonStriker);
 		
-			$('#over').val(over);
+			$('#overs').val(over);
 			$("#ball").val(ball);
 			
 			$('#batsmanRun').val(batsmanRun);
@@ -459,7 +487,7 @@ $(function(){
 		}
 	
 	
-		$('#over').val(over);
+		$('#overs').val(over);
 		$("#isWicket").val(1);
 		$("#wicketType").val(wicket_type_combo);
 		$("#playerOut").val($('#batsman-out-combo').val());
@@ -555,14 +583,25 @@ $(function(){
 		var batsman_uuid = $('#batsman-to-batting-combo').val();
 		var batsman_name = $('#batsman-to-batting-combo option:selected' ).text();
 
+		
+
 		//TODO : add ID for batsman
+		/*
+		Below code is not required because it will set when ball is bolwed not intially
 		if(klass == 'striker'){
 			$('#batsman').val(batsman_name);
+			$('#batsmanUuid').val(batsman_uuid);
 		}else{
 			$('#nonStriker').val(batsman_name);
+			$('#nonStrikerUuid').val(batsman_uuid);
 		}
+		*/
 		//batsman
 		$span.text(batsman_name	);
+		$span.data('uuid', batsman_uuid);
+
+		// remcving the button
+		$span.next().remove();
 
 		//$span.next().
 		//alert($('body').data('batsman_type'));
@@ -579,10 +618,15 @@ $(function(){
 		var $span = $('span.bowler');
 		var bowling_uuid = $('#bowler-to-bowling-combo').val();
 		var bowler_name = $('#bowler-to-bowling-combo option:selected').text();
-		$span.text(bowler_name	);
+		$span.text(bowler_name);
+		$span.data('uuid',bowling_uuid);
 
 		// TODO : add bowler id
+		$('#bolwerUuid').val(bowling_uuid);
 		$('#bowler').val(bowler_name);
+
+		// remcving the button
+		$span.next().remove();
 
 		$bowler_selection_modal.modal('hide');
 
@@ -594,14 +638,14 @@ $(function(){
 });
 function submitScore(){
 	$.ajax({
-	         type: "POST",
-	         url: "${pageContext.request.contextPath}/mvc/scorer/saveScorebook",
-	         data: $('#scoreBookForm').serialize(), // serializes the form's elements.
-	         success: function(data)
-	         {
-	             alert(data); // show response from the php script.
-	         }
-	       });
+         type: "POST",
+         url: "${pageContext.request.contextPath}/mvc/scorer/saveScorebook",
+         data: $('#scoreBookForm').serialize(), // serializes the form's elements.
+         success: function(data)
+         {
+             alert(data); // show response from the php script.
+         }
+       });
 }
 </script>
 

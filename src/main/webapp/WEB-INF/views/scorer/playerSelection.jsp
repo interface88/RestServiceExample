@@ -27,28 +27,31 @@
 					  <div class="form-group">
 					    <label for="exampleInputEmail1">Striker</label>
 					    <select class="form-control" id="select_striker_batsman">
-					    	<option value="Ricky Ponting">Ricky Ponting</option>
-					    	<option value="Michael Bevan">Michael Bevan</option>
-					    	<option  value="Nathan Bracken">Nathan Bracken</option>
-					    	<option value="Glenn McGrath">Glenn McGrath</option>
+					    	<c:if test="${(match.team1.uuid == match.tossWinnerTeam.uuid)  && (match.tossDecision == 'BAT')}">
+							   <c:forEach items="${match.team1.players}" var="player" varStatus="cnt">
+						    	<option value="${player.uuid}">${player.playerName}</option>
+						      </c:forEach>
+							</c:if>
 					    </select>
 					  </div>
 					  <div class="form-group">
 					    <label for="exampleInputEmail1">Non Striker</label>
 					    <select class="form-control"  id="select_non_striker_batsman">
-					    	<option value="Ricky Ponting">Ricky Ponting</option>
-					    	<option value="Michael Bevan">Michael Bevan</option>
-					    	<option  value="Nathan Bracken">Nathan Bracken</option>
-					    	<option value="Glenn McGrath">Glenn McGrath</option>
+					    	<c:if test="${(match.team1.uuid == match.tossWinnerTeam.uuid)  && (match.tossDecision == 'BAT')}">
+							   <c:forEach items="${match.team1.players}" var="player" varStatus="cnt">
+						    	<option value="${player.uuid}">${player.playerName}</option>
+						      </c:forEach>
+							</c:if>
 					    </select>
 					  </div>
 					  <div class="form-group">
-					    <label for="exampleInputEmail1">Opening Bowler</label>
+						    <label for="exampleInputEmail1">Opening Bowler</label>
 					    <select class="form-control"  id="select_opening_bowler">
-					    	<option value="James Anderson">James Anderson</option>
-					    	<option value="Ian Blackwell">Ian Blackwell</option>
-					    	<option  value="Paul Collingwood">Paul Collingwood</option>
-					    	<option value="Ashley Giles">Ashley Giles</option>
+					    	<c:if test="${(match.team1.uuid == match.tossWinnerTeam.uuid)  && (match.tossDecision == 'BAT')}">
+							   <c:forEach items="${match.team2.players}" var="player" varStatus="cnt">
+						    	<option value="${player.uuid}">${player.playerName}</option>
+						      </c:forEach>
+							</c:if>
 					    </select>
 					  </div>
 		           	</form>

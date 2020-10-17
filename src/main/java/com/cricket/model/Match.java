@@ -1,7 +1,6 @@
 package com.cricket.model;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -15,10 +14,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "csn_match")
-public class Match implements Serializable{
+public class Match implements Serializable {
 
 	/**
-	 * 
+	 * Scorebook.java
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -26,48 +25,48 @@ public class Match implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "UUID")
 	private Long uuid;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "tournament_uuid")
 	private Tournament tournament;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "team1_uuid")
 	private Team team1;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "team2_uuid")
 	private Team team2;
-	
-	//@ManyToOne
-	//@JoinColumn(name = "group_uuid")
-	//private TeamGroup teamGroup;
-	@Column(name="group_name")
+
+	// @ManyToOne
+	// @JoinColumn(name = "group_uuid")
+	// private TeamGroup teamGroup;
+	@Column(name = "group_name")
 	private String groupName;
-	
+
 	@Column(name = "match_no")
 	private Long matchNo;
-	
+
 	@Column(name = "toss_decision")
 	private String tossDecision;
 
 	@ManyToOne
 	@JoinColumn(name = "toss_winner_uuid")
 	private Team tossWinnerTeam;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "match_winner_uuid")
 	private Team matchWinnerTeam;
-	
+
 	@Column(name = "umpire_1")
 	private String umpire1;
-	
+
 	@Column(name = "umpire_2")
 	private String umpire2;
-	
+
 	@Column(name = "umpire_3")
 	private String umpire3;
-	
+
 	@Column(name = "est_start_datetime")
 	private String estStartDatetime;
 
@@ -85,16 +84,39 @@ public class Match implements Serializable{
 
 	@Column(name = "scorer_uuid")
 	private String scorerId;
-	
+
 	@Column(name = "overs")
 	private Long overs;
 
 	@Column(name = "player_of_match")
 	private String playerOfMatch;
-	
+
 	@Column(name = "outcome")
 	private String outcome;
-	
+
+	@Column(name = "first_innings_runs")
+	private Integer firstInningsRuns;
+
+	@Column(name = "second_innings_runs")
+	private Integer secondInningsRuns;
+
+	@Column(name = "first_innings_wickets")
+	private Integer firstInningsWickets;
+
+	@Column(name = "second_innings_wickets")
+	private Integer secondInningsWickets;
+
+	@Column(name = "current_inning")
+	private Integer currentInning;
+
+	@ManyToOne
+	@JoinColumn(name = "FIRST_INNINGS_TEAM_UUID")
+	private Team firstInningsTeam;
+
+	@ManyToOne
+	@JoinColumn(name = "SECOND_INNINGS_TEAM_UUID")
+	private Team secondInningsTeam;
+
 	public Long getUuid() {
 		return uuid;
 	}
@@ -126,12 +148,6 @@ public class Match implements Serializable{
 	public void setTeam2(Team team2) {
 		this.team2 = team2;
 	}
-
-	/*
-	 * public TeamGroup getTeamGroup() { return teamGroup; }
-	 * 
-	 * public void setTeamGroup(TeamGroup teamGroup) { this.teamGroup = teamGroup; }
-	 */
 
 	public Long getMatchNo() {
 		return matchNo;
@@ -225,6 +241,14 @@ public class Match implements Serializable{
 		return actEndDatetime;
 	}
 
+	public Team getSecondInningsTeam() {
+		return secondInningsTeam;
+	}
+
+	public void setSecondInningsTeam(Team secondInningsTeam) {
+		this.secondInningsTeam = secondInningsTeam;
+	}
+
 	public void setActEndDatetime(Date actEndDatetime) {
 		this.actEndDatetime = actEndDatetime;
 	}
@@ -267,6 +291,54 @@ public class Match implements Serializable{
 
 	public void setOutcome(String outcome) {
 		this.outcome = outcome;
+	}
+
+	public Team getFirstInningsTeam() {
+		return firstInningsTeam;
+	}
+
+	public void setFirstInningsTeam(Team firstInningsTeam) {
+		this.firstInningsTeam = firstInningsTeam;
+	}
+
+	public Integer getFirstInningsRuns() {
+		return firstInningsRuns;
+	}
+
+	public void setFirstInningsRuns(Integer firstInningsRuns) {
+		this.firstInningsRuns = firstInningsRuns;
+	}
+
+	public Integer getSecondInningsRuns() {
+		return secondInningsRuns;
+	}
+
+	public void setSecondInningsRuns(Integer secondInningsRuns) {
+		this.secondInningsRuns = secondInningsRuns;
+	}
+
+	public Integer getFirstInningsWickets() {
+		return firstInningsWickets;
+	}
+
+	public void setFirstInningsWickets(Integer firstInningsWickets) {
+		this.firstInningsWickets = firstInningsWickets;
+	}
+
+	public Integer getSecondInningsWickets() {
+		return secondInningsWickets;
+	}
+
+	public void setSecondInningsWickets(Integer secondInningsWickets) {
+		this.secondInningsWickets = secondInningsWickets;
+	}
+
+	public Integer getCurrentInning() {
+		return currentInning;
+	}
+
+	public void setCurrentInning(Integer currentInning) {
+		this.currentInning = currentInning;
 	}
 
 }

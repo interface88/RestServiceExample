@@ -20,7 +20,7 @@
  	<div class="col-12 grid-margin">
        <div class="card">
          <div class="card-body">
-           <h1 class="card-title">Australia vs England</h1>
+           <h1 class="card-title">${match.team1.name} vs ${match.team2.name}</h1>
            <div class="row">
            		<div class="col-lg-9">
 	           		<form:form method = "post" action ="${pageContext.request.contextPath}/mvc/scorer/saveToss" id="matchForm" modelAttribute="match" >
@@ -39,7 +39,7 @@
 	           		<form:hidden path="playerOfMatch"/>
 	           		<form:input path="uuid"/>
 					  <div class="form-group">
-					    <label for="tossWinnerTeam">Toss Won By</label>${match.team1.name}	
+					    <label for="tossWinnerTeam">Toss Won By</label>
 					    <form:select path="tossWinnerTeam.uuid" cssClass="form-control">
 						   <form:option value="${match.team1.uuid}" label="${match.team1.name}"/>
 						   <form:option value="${match.team2.uuid}" label="${match.team2.name}"/>

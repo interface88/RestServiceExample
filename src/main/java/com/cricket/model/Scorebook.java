@@ -24,7 +24,7 @@ public class Scorebook implements Serializable {
 	private Long uuid;
 
 	@Column(name = "MATCH_ID")
-	private Integer matchId;
+	private Long matchId;
 
 	@Column(name = "INNINGS")
 	private Integer innings;
@@ -44,8 +44,8 @@ public class Scorebook implements Serializable {
 	@Column(name = "BOWLER")
 	private String bowler;
 
-	@Column(name = "`OVER`")
-	private Integer over;
+	@Column(name = "OVERS")
+	private Integer overs;
 
 	@Column(name = "BALL")
 	private Double ball;
@@ -71,20 +71,21 @@ public class Scorebook implements Serializable {
 	@Column(name = "PLAYER_OUT")
 	private Boolean playerOut;
 
+	@Column(name = "BATSMAN_UUID")
+	private Long batsmanUuid;
+
+	@Column(name = "NON_STRIKER_UUID")
+	private Long nonStrikerUuid;
+
+	@Column(name = "BOWLER_UUID")
+	private Long bolwerUuid;
+
 	public Long getUuid() {
 		return uuid;
 	}
 
 	public void setUuid(Long uuid) {
 		this.uuid = uuid;
-	}
-
-	public Integer getMatchId() {
-		return matchId;
-	}
-
-	public void setMatchId(Integer matchId) {
-		this.matchId = matchId;
 	}
 
 	public Integer getInnings() {
@@ -159,12 +160,12 @@ public class Scorebook implements Serializable {
 		this.bowler = bowler;
 	}
 
-	public Integer getOver() {
-		return over;
+	public Integer getOvers() {
+		return overs;
 	}
 
-	public void setOver(Integer over) {
-		this.over = over;
+	public void setOvers(Integer overs) {
+		this.overs = overs;
 	}
 
 	public Double getBall() {
@@ -207,4 +208,35 @@ public class Scorebook implements Serializable {
 		this.playerOut = playerOut;
 	}
 
+	public Long getBatsmanUuid() {
+		return batsmanUuid;
+	}
+
+	public void setBatsmanUuid(Long batsmanUuid) {
+		this.batsmanUuid = batsmanUuid;
+	}
+
+	public Long getNonStrikerUuid() {
+		return nonStrikerUuid;
+	}
+
+	public void setNonStrikerUuid(Long nonStrikerUuid) {
+		this.nonStrikerUuid = nonStrikerUuid;
+	}
+
+	public Long getBolwerUuid() {
+		return bolwerUuid;
+	}
+
+	public void setBolwerUuid(Long bolwerUuid) {
+		this.bolwerUuid = bolwerUuid;
+	}
+
+	public Long getMatchId() {
+		return matchId;
+	}
+
+	public void setMatchId(Long matchId) {
+		this.matchId = matchId;
+	}
 }
