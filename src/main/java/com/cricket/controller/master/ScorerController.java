@@ -194,7 +194,9 @@ public class ScorerController extends AbstractBaseController{
 	private BatsmanMatchDtlsVO convertBatsmanMatchDtlsDTOtoVO(BatsmanMatchDtls batsmanMatchDtls) {
 
 		BatsmanMatchDtlsVO batsmanMatchDtlsVO = new BatsmanMatchDtlsVO();
-		BeanUtils.copyProperties(batsmanMatchDtls, batsmanMatchDtlsVO);
+		if(batsmanMatchDtls != null) {
+			BeanUtils.copyProperties(batsmanMatchDtls, batsmanMatchDtlsVO);
+		}
 		return batsmanMatchDtlsVO;
 	}
 	private BowlerMatchDtlsVO convertBowlerMatchDtlsDTOtoVO(BowlerMatchDtls bowlerMatchDtls) {
@@ -204,15 +206,17 @@ public class ScorerController extends AbstractBaseController{
 	}
 	private MatchVO convertMatchDTOtoVO(Match match) {
 		MatchVO matchVO = new MatchVO();
-		BeanUtils.copyProperties(matchVO, match);
-		matchVO.setTournamentUuid(match.getTournament().getUuid());
-		matchVO.setTeam1Uuid(match.getTeam1().getUuid());
-		matchVO.setTeam1Name(match.getTeam1().getName());
+		if(match != null) {
+			BeanUtils.copyProperties(matchVO, match);
+			matchVO.setTournamentUuid(match.getTournament().getUuid());
+			matchVO.setTeam1Uuid(match.getTeam1().getUuid());
+			matchVO.setTeam1Name(match.getTeam1().getName());
 
-		matchVO.setTeam2Uuid(match.getTeam2().getUuid());
-		matchVO.setTeam2Name(match.getTeam2().getName());
+			matchVO.setTeam2Uuid(match.getTeam2().getUuid());
+			matchVO.setTeam2Name(match.getTeam2().getName());
 
-		// TODO: OTHER INFORMATION REAMING TO COPY
+			// TODO: OTHER INFORMATION REAMING TO COPY
+		}
 
 		return matchVO;
 	}

@@ -83,7 +83,7 @@
            <h1 class="card-title">${match.team1.name} vs ${match.team2.name}</h1>
            <div class="row">
            		<div class="col-lg-9">
-	           		<h4>Australia 1st Inning</h4>
+	           		<h4>${battingteam} 1st Inning</h4>
 	           		<span class="current-inning-score">5-0</span><span class="current-inning-over">(0.5)</span>
            		</div>
            </div>
@@ -220,15 +220,24 @@ bolwerUuid<input type="text" name="bolwerUuid" id="bolwerUuid">
 <script>
 
 
-// version 2.0 code for panel
+// version 2.0 code for scorebook
 /*
  * Code to be re-wrote with simple logic and maintainable code. coz current javascript code is difficult to understand and maintain.
  @rajesh 
  */
 
-//
+// UI -> MODEL
+ 
+
+// MODEL
 
 
+
+// MODEL -> UI level code
+
+
+
+// ------- OLD _CODE ------
 /*---- UTIL FUNCTION --*/
 var create_option_for_player = function(playerJsonObj){
 	var option = '';
@@ -375,7 +384,7 @@ $(function(){
 		var batsmanRun = 0;
 	
 		if($('input.wicket:checkbox:checked').length > 0){
-			$('#exampleModal').modal('show');
+			$('#wicket-modal').modal('show');
 		}else{
 			if($('input.ballType:checkbox:checked').length > 0){
 				//TODO: need to open modal for wicket
