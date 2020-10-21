@@ -481,7 +481,7 @@ $(function(){
 		}else{
 			ball = nanToNumber(ball) + 0.1;
 			batsmanRun = run;
-			addBowltoOverPanel(val, true);
+			addBowltoOverPanel(run+'W', true);
 		}
 			
 		
@@ -495,13 +495,12 @@ $(function(){
 			$("#fielder").val('');
 		}
 	
-	
+		$("#ball").val(ball);
 		$('#overs').val(over);
 		$("#isWicket").val(1);
 		$("#wicketType").val(wicket_type_combo);
-		$("#playerOut").val($('#batsman-out-combo').val());
-		
-		
+		$("#playerOut").val($('#batsman-out-combo option:selected').text());
+		 		
 		
 		$('#batsmanRun').val(batsmanRun);
 		$('#extraRuns').val(extra_runs);
@@ -653,8 +652,25 @@ function submitScore(){
          success: function(data)
          {
              alert(data); // show response from the php script.
+             
+             $.ajax({
+                 url: 'http://localhost:3000/updateui',
+                 data: {"panel_name": 'scorecard'},
+                 type: 'GET',
+                 jsonpCallback: 'callback', // this is not relevant to the POST anymore
+                 success: function (data) {
+                     alert('ui changed sucessfully');
+                 },
+                 error: function (xhr, status, error) {
+                     console.log('Error: ' + error.message);
+                     $('#lblResponse').html('Error connecting to the server.');
+                 },
+             });
+             
          }
        });
+	
+	
 }
 </script>
 
