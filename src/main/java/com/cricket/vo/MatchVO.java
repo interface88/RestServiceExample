@@ -1,10 +1,9 @@
 package com.cricket.vo;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 public class MatchVO {
-	
+
 	private Long uuid;
 	private Long tournamentUuid;
 	private Long team1Uuid;
@@ -26,12 +25,19 @@ public class MatchVO {
 	private Long overs;
 	private String playerOfMatch;
 	private String outcome;
-	
+
 	private String team1Name;
 	private String team2Name;
 	private String teamGroupName;
-	
-	
+
+	private Integer firstInningsRuns;
+	private Integer secondInningsRuns;
+	private Integer firstInningsWickets;
+	private Integer secondInningsWickets;
+	private Integer currentInning;
+	private String firstInningsTeam;
+	private String secondInningsTeam;
+
 	public Long getUuid() {
 		return uuid;
 	}
@@ -180,26 +186,47 @@ public class MatchVO {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((actEndDatetime == null) ? 0 : actEndDatetime.hashCode());
-		result = prime * result + ((actStartDatetime == null) ? 0 : actStartDatetime.hashCode());
-		result = prime * result + ((estEndDatetime == null) ? 0 : estEndDatetime.hashCode());
-		result = prime * result + ((estStartDatetime == null) ? 0 : estStartDatetime.hashCode());
+		result = prime * result
+				+ ((actEndDatetime == null) ? 0 : actEndDatetime.hashCode());
+		result = prime * result + ((actStartDatetime == null)
+				? 0
+				: actStartDatetime.hashCode());
+		result = prime * result
+				+ ((estEndDatetime == null) ? 0 : estEndDatetime.hashCode());
+		result = prime * result + ((estStartDatetime == null)
+				? 0
+				: estStartDatetime.hashCode());
 		result = prime * result + ((matchNo == null) ? 0 : matchNo.hashCode());
-		result = prime * result + ((matchTitle == null) ? 0 : matchTitle.hashCode());
-		result = prime * result + ((matchWinnerTeamUuid == null) ? 0 : matchWinnerTeamUuid.hashCode());
+		result = prime * result
+				+ ((matchTitle == null) ? 0 : matchTitle.hashCode());
+		result = prime * result + ((matchWinnerTeamUuid == null)
+				? 0
+				: matchWinnerTeamUuid.hashCode());
 		result = prime * result + ((outcome == null) ? 0 : outcome.hashCode());
 		result = prime * result + ((overs == null) ? 0 : overs.hashCode());
-		result = prime * result + ((playerOfMatch == null) ? 0 : playerOfMatch.hashCode());
-		result = prime * result + ((scorerId == null) ? 0 : scorerId.hashCode());
-		result = prime * result + ((team1Name == null) ? 0 : team1Name.hashCode());
-		result = prime * result + ((team1Uuid == null) ? 0 : team1Uuid.hashCode());
-		result = prime * result + ((team2Name == null) ? 0 : team2Name.hashCode());
-		result = prime * result + ((team2Uuid == null) ? 0 : team2Uuid.hashCode());
-		result = prime * result + ((teamGroupName == null) ? 0 : teamGroupName.hashCode());
-		result = prime * result + ((teamGroupUuid == null) ? 0 : teamGroupUuid.hashCode());
-		result = prime * result + ((tossDecision == null) ? 0 : tossDecision.hashCode());
-		result = prime * result + ((tossWinnerTeamUuid == null) ? 0 : tossWinnerTeamUuid.hashCode());
-		result = prime * result + ((tournamentUuid == null) ? 0 : tournamentUuid.hashCode());
+		result = prime * result
+				+ ((playerOfMatch == null) ? 0 : playerOfMatch.hashCode());
+		result = prime * result
+				+ ((scorerId == null) ? 0 : scorerId.hashCode());
+		result = prime * result
+				+ ((team1Name == null) ? 0 : team1Name.hashCode());
+		result = prime * result
+				+ ((team1Uuid == null) ? 0 : team1Uuid.hashCode());
+		result = prime * result
+				+ ((team2Name == null) ? 0 : team2Name.hashCode());
+		result = prime * result
+				+ ((team2Uuid == null) ? 0 : team2Uuid.hashCode());
+		result = prime * result
+				+ ((teamGroupName == null) ? 0 : teamGroupName.hashCode());
+		result = prime * result
+				+ ((teamGroupUuid == null) ? 0 : teamGroupUuid.hashCode());
+		result = prime * result
+				+ ((tossDecision == null) ? 0 : tossDecision.hashCode());
+		result = prime * result + ((tossWinnerTeamUuid == null)
+				? 0
+				: tossWinnerTeamUuid.hashCode());
+		result = prime * result
+				+ ((tournamentUuid == null) ? 0 : tournamentUuid.hashCode());
 		result = prime * result + ((umpire1 == null) ? 0 : umpire1.hashCode());
 		result = prime * result + ((umpire2 == null) ? 0 : umpire2.hashCode());
 		result = prime * result + ((umpire3 == null) ? 0 : umpire3.hashCode());
@@ -339,17 +366,62 @@ public class MatchVO {
 	}
 	@Override
 	public String toString() {
-		return "MatchVO [uuid=" + uuid + ", tournamentUuid=" + tournamentUuid + ", team1Uuid=" + team1Uuid
-				+ ", team2Uuid=" + team2Uuid + ", teamGroupUuid=" + teamGroupUuid + ", matchNo=" + matchNo
-				+ ", tossDecision=" + tossDecision + ", tossWinnerTeamUuid=" + tossWinnerTeamUuid
-				+ ", matchWinnerTeamUuid=" + matchWinnerTeamUuid + ", umpire1=" + umpire1 + ", umpire2=" + umpire2
-				+ ", umpire3=" + umpire3 + ", estStartDatetime=" + estStartDatetime + ", estEndDatetime="
-				+ estEndDatetime + ", actStartDatetime=" + actStartDatetime + ", actEndDatetime=" + actEndDatetime
-				+ ", matchTitle=" + matchTitle + ", scorerId=" + scorerId + ", overs=" + overs + ", playerOfMatch="
-				+ playerOfMatch + ", outcome=" + outcome + ", team1Name=" + team1Name + ", team2Name=" + team2Name
-				+ ", teamGroupName=" + teamGroupName + "]";
+		return "MatchVO [uuid=" + uuid + ", tournamentUuid=" + tournamentUuid
+				+ ", team1Uuid=" + team1Uuid + ", team2Uuid=" + team2Uuid
+				+ ", teamGroupUuid=" + teamGroupUuid + ", matchNo=" + matchNo
+				+ ", tossDecision=" + tossDecision + ", tossWinnerTeamUuid="
+				+ tossWinnerTeamUuid + ", matchWinnerTeamUuid="
+				+ matchWinnerTeamUuid + ", umpire1=" + umpire1 + ", umpire2="
+				+ umpire2 + ", umpire3=" + umpire3 + ", estStartDatetime="
+				+ estStartDatetime + ", estEndDatetime=" + estEndDatetime
+				+ ", actStartDatetime=" + actStartDatetime + ", actEndDatetime="
+				+ actEndDatetime + ", matchTitle=" + matchTitle + ", scorerId="
+				+ scorerId + ", overs=" + overs + ", playerOfMatch="
+				+ playerOfMatch + ", outcome=" + outcome + ", team1Name="
+				+ team1Name + ", team2Name=" + team2Name + ", teamGroupName="
+				+ teamGroupName + "]";
 	}
-	
-	
-	
+	public Integer getFirstInningsRuns() {
+		return firstInningsRuns;
+	}
+	public void setFirstInningsRuns(Integer firstInningsRuns) {
+		this.firstInningsRuns = firstInningsRuns;
+	}
+	public Integer getSecondInningsRuns() {
+		return secondInningsRuns;
+	}
+	public void setSecondInningsRuns(Integer secondInningsRuns) {
+		this.secondInningsRuns = secondInningsRuns;
+	}
+	public Integer getFirstInningsWickets() {
+		return firstInningsWickets;
+	}
+	public void setFirstInningsWickets(Integer firstInningsWickets) {
+		this.firstInningsWickets = firstInningsWickets;
+	}
+	public Integer getSecondInningsWickets() {
+		return secondInningsWickets;
+	}
+	public void setSecondInningsWickets(Integer secondInningsWickets) {
+		this.secondInningsWickets = secondInningsWickets;
+	}
+	public Integer getCurrentInning() {
+		return currentInning;
+	}
+	public void setCurrentInning(Integer currentInning) {
+		this.currentInning = currentInning;
+	}
+	public String getFirstInningsTeam() {
+		return firstInningsTeam;
+	}
+	public void setFirstInningsTeam(String firstInningsTeam) {
+		this.firstInningsTeam = firstInningsTeam;
+	}
+	public String getSecondInningsTeam() {
+		return secondInningsTeam;
+	}
+	public void setSecondInningsTeam(String secondInningsTeam) {
+		this.secondInningsTeam = secondInningsTeam;
+	}
+
 }

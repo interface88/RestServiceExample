@@ -80,6 +80,9 @@ public class Scorebook implements Serializable {
 	@Column(name = "BOWLER_UUID")
 	private Long bolwerUuid;
 
+	@Column(name = "WICKET_TYPE")
+	private String wicketType;
+
 	public Long getUuid() {
 		return uuid;
 	}
@@ -239,4 +242,13 @@ public class Scorebook implements Serializable {
 	public void setMatchId(Long matchId) {
 		this.matchId = matchId;
 	}
+
+	public String getWicketType() {
+		return wicketType;
+	}
+
+	public void setWicketType(String wicketType) {
+		this.wicketType = wicketType;
+	}
+
 }

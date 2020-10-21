@@ -691,6 +691,10 @@ function submitScore(){
 				'<td>'+bowler.economyRate+'</td></tr>';
 				$('#bowler-stats-panel tbody').html(tr);
 		     }
+
+		     // setting current inning score
+			$('.current-inning-score').text();
+			$('.current-inning-over').text();
          }
       });
 }
