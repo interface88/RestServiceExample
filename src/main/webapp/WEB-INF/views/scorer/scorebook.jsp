@@ -90,7 +90,7 @@
            
            <div class="row">
            		<div class="col-lg-9">
-	           		<table class="table">
+	           		<table class="table" id="batsman-stats-panel">
 	           			<thead class="thead-light">
 		           			<tr>
 		           				<th>Batsman</th>
@@ -129,7 +129,7 @@
            </div>
            <div class="row">
            		<div class="col-lg-9">
-	           		<table class="table">
+	           		<table class="table" id="bowler-stats-panel">
 	           			<thead class="thead-light">
 		           			<tr>
 		           				<th>Bowler</th>
@@ -234,7 +234,6 @@ bolwerUuid<input type="text" name="bolwerUuid" id="bolwerUuid">
 
 
 // MODEL -> UI level code
-
 
 
 // ------- OLD _CODE ------
@@ -396,7 +395,7 @@ $(function(){
 					if(val == 'W'){
 						extra_runs = 1 + run;
 						extra_type = val;
-						addBowltoOverPanel(run + 'NB', false);
+						addBowltoOverPanel(run + 'Wd', false);
 					}else if(val == 'NB'){
 						extra_runs = 1 + run;
 						extra_type = val;
@@ -407,7 +406,7 @@ $(function(){
 						extra_runs = run;
 						extra_type = val;
 						ball = ball + 0.1
-						addBowltoOverPanel(val, true);
+						addBowltoOverPanel(run + val, true);
 					}
 				});
 			}else{
@@ -464,24 +463,24 @@ $(function(){
 				if(val == 'W'){
 					extra_runs = 1 + run;
 					extra_type = val;
-					addBowltoOverPanel(val, false);
+					addBowltoOverPanel(run + 'Wd', false);
 				}else if(val == 'NB'){
 					extra_runs = 1 + run;
 					extra_type = val;
 					batsmanRun = run;
-					addBowltoOverPanel(val, false); // even wicket fall no ball is not counted
+					addBowltoOverPanel(run + 'NB', false); // even wicket fall no ball is not counted
 					
 				}else if(val == 'B' || val == 'LB'){
 					extra_runs = run;
 					extra_type = val;
 					ball = ball + 0.1;
-					addBowltoOverPanel(val, true);
+					addBowltoOverPanel(run + val, true);
 				}
 			});
 		}else{
 			ball = nanToNumber(ball) + 0.1;
 			batsmanRun = run;
-			addBowltoOverPanel(run+'W', true);
+			addBowltoOverPanel(run + 'W', true);
 		}
 			
 		
@@ -508,6 +507,16 @@ $(function(){
 		$('#totalRuns').val(extra_runs + batsmanRun);
 		resetScorePanel();
 
+		// CODE TO ADD NEXT BATSMAN
+		//@rajesh
+		$('#batsman-stats-panel tbody tr').each(function(){
+			if($(this).find('span').text() == $("#playerOut").val()){
+				$(this).find('span').text($('#next-batsman-combo option:selected').text()); 
+				$(this).find('span').data('uuid', $('#next-batsman-combo').val());
+			}
+		});
+
+		
 		//TODO : check whether over completed or not 
 		isOverCompleted();
 		
@@ -591,9 +600,8 @@ $(function(){
 		var batsman_uuid = $('#batsman-to-batting-combo').val();
 		var batsman_name = $('#batsman-to-batting-combo option:selected' ).text();
 
-		
-
 		//TODO : add ID for batsman
+		
 		/*
 		Below code is not required because it will set when ball is bolwed not intially
 		if(klass == 'striker'){
@@ -605,10 +613,10 @@ $(function(){
 		}
 		*/
 		//batsman
-		$span.text(batsman_name	);
+		$span.text(batsman_name);
 		$span.data('uuid', batsman_uuid);
 
-		// remcving the button
+		// removing the button
 		$span.next().remove();
 
 		//$span.next().
@@ -649,28 +657,42 @@ function submitScore(){
          type: "POST",
          url: "${pageContext.request.contextPath}/mvc/scorer/saveScorebook",
          data: $('#scoreBookForm').serialize(), // serializes the form's elements.
-         success: function(data)
+         success: function(scorebookObj)
          {
-             alert(data); // show response from the php script.
-             
-             $.ajax({
-                 url: 'http://localhost:3000/updateui',
-                 data: {"panel_name": 'scorecard'},
-                 type: 'GET',
-                 jsonpCallback: 'callback', // this is not relevant to the POST anymore
-                 success: function (data) {
-                     alert('ui changed sucessfully');
-                 },
-                 error: function (xhr, status, error) {
-                     console.log('Error: ' + error.message);
-                     $('#lblResponse').html('Error connecting to the server.');
-                 },
-             });
-             
+             console.log(scorebookObj);
+             $('#batsman-stats-panel tbody').html('');
+             var batsman = scorebookObj.batsman;
+	         var tr = '<tr><td><span class="striker" data-uuid="'+batsman.playerUuid+'">'+batsman.playerName+'</span></td>'+
+				'<td>'+batsman.runs+'</td>'+
+				'<td>'+batsman.balls+'</td>'+
+				'<td>'+batsman.fours+'</td>'+
+				'<td>'+batsman.sixes+'</td>'+
+				'<td>'+batsman.strikeRate+'</td></tr>';
+         	$('#batsman-stats-panel tbody').append(tr);
+    		var nonStriker = scorebookObj.nonStriker;
+    		if(nonStriker.playerUuid != null){
+    			var tr = '<tr><td><span class="non-striker" data-uuid="'+nonStriker.playerUuid+'">'+nonStriker.playerName+'</span></td>'+
+				'<td>'+nonStriker.runs+'</td>'+
+				'<td>'+nonStriker.balls+'</td>'+
+				'<td>'+nonStriker.fours+'</td>'+
+				'<td>'+nonStriker.sixes+'</td>'+
+				'<td>'+nonStriker.strikeRate+'</td></tr>';
+    			$('#batsman-stats-panel tbody').append(tr);
+	         }
+
+			var bowler = scorebookObj.bowler;
+			debugger;
+			if(bowler.playerUuid != null){
+				var tr = '<tr><td><span class="bowler" data-uuid="'+bowler.playerUuid+'">'+bowler.playerName+'</span></td>'+
+				'<td>'+bowler.overs+'</td>'+
+				'<td>'+bowler.maiden+'</td>'+
+				'<td>'+bowler.runs+'</td>'+
+				'<td>'+bowler.wickets+'</td>'+
+				'<td>'+bowler.economyRate+'</td></tr>';
+				$('#bowler-stats-panel tbody').html(tr);
+		     }
          }
-       });
-	
-	
+      });
 }
 </script>
 
