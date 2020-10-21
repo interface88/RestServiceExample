@@ -69,7 +69,7 @@ public class Scorebook implements Serializable {
 	private String fielder;
 
 	@Column(name = "PLAYER_OUT")
-	private Boolean playerOut;
+	private String playerOut;
 
 	@Column(name = "BATSMAN_UUID")
 	private Long batsmanUuid;
@@ -200,11 +200,11 @@ public class Scorebook implements Serializable {
 		this.fielder = fielder;
 	}
 
-	public Boolean getPlayerOut() {
+	public String getPlayerOut() {
 		return playerOut;
 	}
 
-	public void setPlayerOut(Boolean playerOut) {
+	public void setPlayerOut(String playerOut) {
 		this.playerOut = playerOut;
 	}
 
