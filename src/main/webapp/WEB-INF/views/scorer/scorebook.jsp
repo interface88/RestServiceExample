@@ -84,7 +84,8 @@
            <div class="row">
            		<div class="col-lg-9">
 	           		<h4>${battingteam} 1st Inning</h4>
-	           		<span class="current-inning-score">5-0</span><span class="current-inning-over">(0.5)</span>
+	           		<span class="current-inning-score">0-0</span><span class="current-inning-over">(0)</span>
+	           		<button type="button" onclick="openNav()" class="btn btn-danger btn-rounded btn-fw"><i class="mdi mdi-video"></i> Youtube</button>
            		</div>
            </div>
            
@@ -93,6 +94,7 @@
 	           		<table class="table" id="batsman-stats-panel">
 	           			<thead class="thead-light">
 		           			<tr>
+		           				<th style="width: 10px;"></th>
 		           				<th>Batsman</th>
 		           				<th>R</th>
 		           				<th>B</th>
@@ -103,6 +105,7 @@
 	           			</thead>
 	           			<tbody>
 	           				<tr>
+	           					<td><input type="radio" checked name="striker-radio" class="striker-radio-klass"></td>
 	           					<td><span class="striker"></span>
 	           						<button type="button" class="btn btn-light batsman-selector-modal_opener" data-batsman_type="striker">Add batsman</button>
 	           					</td>
@@ -113,6 +116,7 @@
 	           					<td>0.00</td>
 	           				</tr>
 	           				<tr>
+	           					<td><input type="radio" name="striker-radio" class="striker-radio-klass"></td>
 	           					<td><span class="non-striker">
 	           					</span>
 		           					<button type="button" class="btn btn-light batsman-selector-modal_opener" data-batsman_type="non-striker">Add batsman</button>
@@ -190,6 +194,7 @@
          </div>
        </div>
    </div><button type="button" onclick="submitScore();">Test score submit</button>
+   
 </div>
 
 <form:form  method = "POST" action ="${pageContext.request.contextPath}/mvc/scorebook/saveScorebook" id="scoreBookForm" modelAttribute = "scorebook" >
@@ -234,6 +239,22 @@ bolwerUuid<input type="text" name="bolwerUuid" id="bolwerUuid">
 
 
 // MODEL -> UI level code
+
+$(document).on("click", ".striker-radio-klass", function(){
+//$('.striker-radio-klass').on('click', function(){
+	$('.striker-radio-klass').each(function(){
+		debugger;
+		if(this.checked){
+			var $span = $(this).parent().next().find('span');
+			$span.removeClass();
+			$span.addClass('striker');
+		}else{
+			var $span = $(this).parent().next().find('span');
+			$span.removeClass();
+			$span.addClass('non-striker');
+		}
+	});
+})
 
 
 // ------- OLD _CODE ------
@@ -428,6 +449,7 @@ $(function(){
 			$('#totalRuns').val(extra_runs + batsmanRun);
 			$("#isWicket").val(0);
 		}
+		submitScore();
 		resetScorePanel();
 
 		//TODO : check whether over completed or not 
@@ -505,6 +527,7 @@ $(function(){
 		$('#extraRuns').val(extra_runs);
 		$('#extraType').val(extra_type);
 		$('#totalRuns').val(extra_runs + batsmanRun);
+		submitScore();
 		resetScorePanel();
 
 		// CODE TO ADD NEXT BATSMAN
@@ -662,7 +685,8 @@ function submitScore(){
              console.log(scorebookObj);
              $('#batsman-stats-panel tbody').html('');
              var batsman = scorebookObj.batsman;
-	         var tr = '<tr><td><span class="striker" data-uuid="'+batsman.playerUuid+'">'+batsman.playerName+'</span></td>'+
+	         var tr = '<tr><td><input type="radio" name="striker-radio" class="striker-radio-klass"></td>' +  
+		         '<td><span class="striker" data-uuid="'+batsman.playerUuid+'">'+batsman.playerName+'</span></td>'+
 				'<td>'+batsman.runs+'</td>'+
 				'<td>'+batsman.balls+'</td>'+
 				'<td>'+batsman.fours+'</td>'+
@@ -671,7 +695,8 @@ function submitScore(){
          	$('#batsman-stats-panel tbody').append(tr);
     		var nonStriker = scorebookObj.nonStriker;
     		if(nonStriker.playerUuid != null){
-    			var tr = '<tr><td><span class="non-striker" data-uuid="'+nonStriker.playerUuid+'">'+nonStriker.playerName+'</span></td>'+
+    			var tr = '<tr><td><input type="radio" name="striker-radio" class="striker-radio-klass"></td>' +  
+        		'<td><span class="non-striker" data-uuid="'+nonStriker.playerUuid+'">'+nonStriker.playerName+'</span></td>'+
 				'<td>'+nonStriker.runs+'</td>'+
 				'<td>'+nonStriker.balls+'</td>'+
 				'<td>'+nonStriker.fours+'</td>'+
@@ -681,7 +706,6 @@ function submitScore(){
 	         }
 
 			var bowler = scorebookObj.bowler;
-			debugger;
 			if(bowler.playerUuid != null){
 				var tr = '<tr><td><span class="bowler" data-uuid="'+bowler.playerUuid+'">'+bowler.playerName+'</span></td>'+
 				'<td>'+bowler.overs+'</td>'+
@@ -692,9 +716,14 @@ function submitScore(){
 				$('#bowler-stats-panel tbody').html(tr);
 		     }
 
-		     // setting current inning score
-			$('.current-inning-score').text();
-			$('.current-inning-over').text();
+			var match = scorebookObj.match;
+			if(match.currentInning ==  1){
+				$('.current-inning-score').text(match.firstInningsRuns + '-' + match.firstInningsWickets);
+				$('.current-inning-over').text('('+match.firstInningsOvers+')');
+			}else{
+				$('.current-inning-score').text(match.secondInningsRuns + '-' + match.secondInningsWickets);
+				$('.current-inning-over').text('('+match.secondInningsOvers+')');
+			}
          }
       });
 }
@@ -800,4 +829,6 @@ function submitScore(){
     </div>
   </div>
 </div>
+
+
 

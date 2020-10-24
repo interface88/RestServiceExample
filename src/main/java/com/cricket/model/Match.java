@@ -117,6 +117,12 @@ public class Match implements Serializable {
 	@JoinColumn(name = "SECOND_INNINGS_TEAM_UUID")
 	private Team secondInningsTeam;
 
+	@Column(name = "first_innings_overs")
+	private Double firstInningsOvers;
+
+	@Column(name = "SECOND_INNINGS_OVERS")
+	private Double secondInningsOvers;
+
 	public Long getUuid() {
 		return uuid;
 	}
@@ -339,6 +345,22 @@ public class Match implements Serializable {
 
 	public void setCurrentInning(Integer currentInning) {
 		this.currentInning = currentInning;
+	}
+
+	public Double getFirstInningsOvers() {
+		return firstInningsOvers;
+	}
+
+	public void setFirstInningsOvers(Double firstInningsOvers) {
+		this.firstInningsOvers = firstInningsOvers;
+	}
+
+	public Double getSecondInningsOvers() {
+		return secondInningsOvers;
+	}
+
+	public void setSecondInningsOvers(Double secondInningsOvers) {
+		this.secondInningsOvers = secondInningsOvers;
 	}
 
 }

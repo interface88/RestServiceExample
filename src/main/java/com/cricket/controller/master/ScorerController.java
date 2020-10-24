@@ -207,7 +207,7 @@ public class ScorerController extends AbstractBaseController{
 	private MatchVO convertMatchDTOtoVO(Match match) {
 		MatchVO matchVO = new MatchVO();
 		if(match != null) {
-			BeanUtils.copyProperties(matchVO, match);
+			BeanUtils.copyProperties(match, matchVO );
 			matchVO.setTournamentUuid(match.getTournament().getUuid());
 			matchVO.setTeam1Uuid(match.getTeam1().getUuid());
 			matchVO.setTeam1Name(match.getTeam1().getName());

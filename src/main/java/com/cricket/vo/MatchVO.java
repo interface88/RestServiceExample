@@ -38,6 +38,9 @@ public class MatchVO {
 	private String firstInningsTeam;
 	private String secondInningsTeam;
 
+	private Double firstInningsOvers;
+	private Double secondInningsOvers;
+
 	public Long getUuid() {
 		return uuid;
 	}
@@ -422,6 +425,18 @@ public class MatchVO {
 	}
 	public void setSecondInningsTeam(String secondInningsTeam) {
 		this.secondInningsTeam = secondInningsTeam;
+	}
+	public Double getFirstInningsOvers() {
+		return firstInningsOvers;
+	}
+	public void setFirstInningsOvers(Double firstInningsOvers) {
+		this.firstInningsOvers = firstInningsOvers;
+	}
+	public Double getSecondInningsOvers() {
+		return secondInningsOvers;
+	}
+	public void setSecondInningsOvers(Double secondInningsOvers) {
+		this.secondInningsOvers = secondInningsOvers;
 	}
 
 }
