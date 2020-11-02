@@ -72,7 +72,7 @@
 			font-size: 14px;
     	}
     	
-    	span.striker:after{
+    	tr.striker span:after{
     		content:" *";
     	}
     	
@@ -85,7 +85,7 @@
            		<div class="col-lg-9">
 	           		<h4>${battingteam} 1st Inning</h4>
 	           		<span class="current-inning-score">0-0</span><span class="current-inning-over">(0)</span>
-	           		<button type="button" onclick="openNav()" class="btn btn-danger btn-rounded btn-fw"><i class="mdi mdi-video"></i> Youtube</button>
+	           		<button type="button" data-toggle="modal" data-target="#youtube-modal" class="btn btn-danger btn-rounded btn-fw"><i class="mdi mdi-video"></i> Youtube</button>
            		</div>
            </div>
            
@@ -107,7 +107,7 @@
 	           				<tr>
 	           					<td><input type="radio" checked name="striker-radio" class="striker-radio-klass"></td>
 	           					<td><span class="striker"></span>
-	           						<button type="button" class="btn btn-light batsman-selector-modal_opener" data-batsman_type="striker">Add batsman</button>
+	           						<button type="button" class="btn btn-light batsman-selector-modal_opener registery_elem" id="batsman-selector-modal_opener-1" data-batsman_type="striker">Add batsman</button>
 	           					</td>
 	           					<td>0</td>
 	           					<td>0</td>
@@ -119,7 +119,7 @@
 	           					<td><input type="radio" name="striker-radio" class="striker-radio-klass"></td>
 	           					<td><span class="non-striker">
 	           					</span>
-		           					<button type="button" class="btn btn-light batsman-selector-modal_opener" data-batsman_type="non-striker">Add batsman</button>
+		           					<button type="button" class="btn btn-light batsman-selector-modal_opener registery_elem" id="batsman-selector-modal_opener-2" data-batsman_type="non-striker">Add batsman</button>
 	           					</td>
 	           					<td>0</td>
 	           					<td>0</td>
@@ -146,7 +146,7 @@
 	           			</thead>
 	           			<tbody>
 	           				<tr>
-	           					<td><span class="bowler"></span><button type="button" class="btn btn-light bowler-selection-modal_opener">Add Bowler</button></td>
+	           					<td><span class="bowler"></span><button type="button" class="btn btn-light registery_elem bowler-selection-modal_opener" id="bowler-selection-modal_opener">Add Bowler</button></td>
 	           					<td>0</td>
 	           					<td>0</td>
 	           					<td>o</td>
@@ -193,9 +193,8 @@
            </div>
          </div>
        </div>
-   </div><button type="button" onclick="submitScore();">Test score submit</button>
-   
-</div>
+   </div>
+   <button type="button" onclick="submitScore();">Test score submit</button>
 
 <form:form  method = "POST" action ="${pageContext.request.contextPath}/mvc/scorebook/saveScorebook" id="scoreBookForm" modelAttribute = "scorebook" >
 MATH ID <input type="text" name="matchId" id="matchId" value="${match.uuid}"><BR/>
@@ -218,6 +217,7 @@ PLAYEROUT<input type="text" name="playerOut" id="playerOut">
 batsmanUuid<input type="text" name="batsmanUuid" id="batsmanUuid">
 nonStrikerUuid<input type="text" name="nonStrikerUuid" id="nonStrikerUuid">
 bolwerUuid<input type="text" name="bolwerUuid" id="bolwerUuid">
+bolwerUuid<input type="text" name="ballCount" id="ballCount" value="0">
 
 </form:form>
 
@@ -234,27 +234,37 @@ bolwerUuid<input type="text" name="bolwerUuid" id="bolwerUuid">
 // UI -> MODEL
  
 
+
+
+var score_a_ball = function(){
+
+
+	
+var striker_span = $('span.striker')
+var non_striker_span = $('span.non-striker');
+var bowler_span = $('span.bowler');
+
+
+	
+
+// 	$('#batsmanInput').val(striker_span.text());
+// 	$('#batsmanUuidInput').val(striker_span.data('uuid'));
+
+// 	$('#nonStrikerUuidInput').val(non_striker_span.data('uuid'));
+// 	$('#nonStrikerInput').val(non_striker_span.text());
+	
+// 	$('#bowlerInput').val(bowler_span.text());
+// 	$('#bolwerUuidInput').val(bowler_span.data('uuid'));
+}
+
+
 // MODEL
 
 
 
 // MODEL -> UI level code
 
-$(document).on("click", ".striker-radio-klass", function(){
-//$('.striker-radio-klass').on('click', function(){
-	$('.striker-radio-klass').each(function(){
-		debugger;
-		if(this.checked){
-			var $span = $(this).parent().next().find('span');
-			$span.removeClass();
-			$span.addClass('striker');
-		}else{
-			var $span = $(this).parent().next().find('span');
-			$span.removeClass();
-			$span.addClass('non-striker');
-		}
-	});
-})
+
 
 
 // ------- OLD _CODE ------
@@ -283,25 +293,6 @@ var nanToNumber = function (value) {
 
 var overCalc = 0;
 
-var addBowltoOverPanel = function(bowlType, isValidDelivery){
-	if(isValidDelivery){
-		var ballSpan = '<span class="valid">'+bowlType+'</span>';
-		$('.current-over').append(ballSpan);
-	}else{
-		var ballSpan = '<span>'+bowlType+'</span>';
-		$('.current-over').append(ballSpan);
-	
-	}
-}
-
-var resetOver = function(){
-	$('.current-over').html('');
-};
-
-var resetBowler = function(){
-	$('.bowler').html('<button type="button" class="btn btn-light bowler-selection-modal_opener">Add Bowler</button>');
-	$('#bowler').val('');
-};
 
 var resetBatsman = function(batsmanPos){
 	if(batsmanPos == 'striker'){
@@ -336,13 +327,6 @@ var checkMatchPlayableCondition = function(){
 
 
 $(function(){
-	// initializing batsman, bowler & fielder dropdown
-	$('#batsman-to-batting-combo').html(create_option_for_player(team_1)); // combo for selecting batsman
-	$('#batsman-out-combo').html(create_option_for_player(team_1)); // combo for selecting batsman who is out
-	$('#next-batsman-combo').html(create_option_for_player(team_1)); // combo for selecting next batsman after wicker fall
-	$('#fielder-combo').html(create_option_for_player(team_2)); // combo for selecting fielder
-	$('#bowler-to-bowling-combo').html(create_option_for_player(team_2)); // combo for selecting next batsman after wicker fall
-	
 
 	// ----- MODAL JQUERY OBJECT --
 	var $batsman_selection_modal = $("#batsman-selection-modal");
@@ -350,200 +334,7 @@ $(function(){
 	var $wicket_modal = $("#wicket-modal");
 
 	// ----- HELPER FUNCTION ---
-	var isOverCompleted = function(){
-		var noOfDeliveries = $('.current-over span.valid').length;
-		if(noOfDeliveries == 6){
-			$bowler_selection_modal.modal('show');
-			return true;
-		}
-		return false;
-	}
 	
-	// onload initilizer
-	
-	// select batsman
-	
-	var fielder_applicable_wicket = ['Run Out' , 'Catch' , 'Stumping'];
-	var batsman_choosing_applicable_wicket = ['Run Out'];
-	
-	
-	$('.scorePanel button').click(function(event){
-
-		//TOOD: Add validation if bowler and batsman are all selected or not
-		// if over is completed than force user to select new bowler
-		if(checkMatchPlayableCondition() == false){
-			event.stopPropagation();
-			return '';
-		}
-		
-		// setting batsman , non striker , bowler 
-		var striker_span = $('span.striker')
-		var non_striker_span = $('span.non-striker');
-		var bowler_span = $('span.bowler');
-
-		$('#batsman').val(striker_span.text());
-		$('#batsmanUuid').val(striker_span.data('uuid'));
-
-		$('#nonStrikerUuid').val(non_striker_span.data('uuid'));
-		$('#nonStriker').val(non_striker_span.text());
-		
-		$('#bowler').val(bowler_span.text());
-		$('#bolwerUuid').val(bowler_span.data('uuid'));
-
-		
-		var run = nanToNumber($(this).data('run'));
-	
-		var extra_runs = 0;
-		var total_runs = 0;
-		var extra_type = '';
-		var is_wicket = 0;
-	
-		var over = 0;
-		var ball = nanToNumber($('#ball').val());
-	
-		var batsmanRun = 0;
-	
-		if($('input.wicket:checkbox:checked').length > 0){
-			$('#wicket-modal').modal('show');
-		}else{
-			if($('input.ballType:checkbox:checked').length > 0){
-				//TODO: need to open modal for wicket
-				$('input.ballType:checkbox:checked').each(function () {
-					var $this = $(this);
-			
-					var val = $this.val();
-					alert(val);
-					if(val == 'W'){
-						extra_runs = 1 + run;
-						extra_type = val;
-						addBowltoOverPanel(run + 'Wd', false);
-					}else if(val == 'NB'){
-						extra_runs = 1 + run;
-						extra_type = val;
-						batsmanRun = run;
-						addBowltoOverPanel(run + 'NB', false);
-						
-					}else if(val == 'B' || val == 'LB'){
-						extra_runs = run;
-						extra_type = val;
-						ball = ball + 0.1
-						addBowltoOverPanel(run + val, true);
-					}
-				});
-			}else{
-				ball = nanToNumber(ball) + 0.1;
-				batsmanRun = run;
-				addBowltoOverPanel(run, true);
-			}
-			
-		
-			//$('#batsman').val(batsman);
-			//$('#nonStriker').val(nonStriker);
-		
-			$('#overs').val(over);
-			$("#ball").val(ball);
-			
-			$('#batsmanRun').val(batsmanRun);
-			$('#extraRuns').val(extra_runs);
-			$('#extraType').val(extra_type);
-			$('#totalRuns').val(extra_runs + batsmanRun);
-			$("#isWicket").val(0);
-		}
-		submitScore();
-		resetScorePanel();
-
-		//TODO : check whether over completed or not 
-		isOverCompleted();		
-	 });
-	
-	$('#newBatsman').click(function(){
-		
-		$('#wicket-modal').modal('hide');
-		
-		var wicket_type_combo = $('#wicket_type_combo').val();
-		
-		var next_batsman = $('#next-batsman-combo').val();
-		
-		var run = nanToNumber($(this).data('run'));
-		
-		var extra_runs = 0;
-		var total_runs = 0;
-		var extra_type = '';
-		var is_wicket = 0;
-	
-		var over = 0;
-		var ball = $('#ball').val();
-	
-		var batsmanRun = 0;
-	
-		if($('input.ballType:checkbox:checked').length > 0){
-			//TODO: need to open modal for wicket
-			$('input.ballType:checkbox:checked').each(function () {
-				var $this = $(this);
-		
-				var val = $this.val();
-				if(val == 'W'){
-					extra_runs = 1 + run;
-					extra_type = val;
-					addBowltoOverPanel(run + 'Wd', false);
-				}else if(val == 'NB'){
-					extra_runs = 1 + run;
-					extra_type = val;
-					batsmanRun = run;
-					addBowltoOverPanel(run + 'NB', false); // even wicket fall no ball is not counted
-					
-				}else if(val == 'B' || val == 'LB'){
-					extra_runs = run;
-					extra_type = val;
-					ball = ball + 0.1;
-					addBowltoOverPanel(run + val, true);
-				}
-			});
-		}else{
-			ball = nanToNumber(ball) + 0.1;
-			batsmanRun = run;
-			addBowltoOverPanel(run + 'W', true);
-		}
-			
-		
-		//$('#batsman').val(batsman);
-		//$('#nonStriker').val(nonStriker);
-		
-		if(fielder_applicable_wicket.indexOf(wicket_type_combo) > -1){
-			var fielder_combo = $('#fielder-combo').val();
-			$("#fielder").val(fielder_combo);
-		}else{
-			$("#fielder").val('');
-		}
-	
-		$("#ball").val(ball);
-		$('#overs').val(over);
-		$("#isWicket").val(1);
-		$("#wicketType").val(wicket_type_combo);
-		$("#playerOut").val($('#batsman-out-combo option:selected').text());
-		 		
-		
-		$('#batsmanRun').val(batsmanRun);
-		$('#extraRuns').val(extra_runs);
-		$('#extraType').val(extra_type);
-		$('#totalRuns').val(extra_runs + batsmanRun);
-		submitScore();
-		resetScorePanel();
-
-		// CODE TO ADD NEXT BATSMAN
-		//@rajesh
-		$('#batsman-stats-panel tbody tr').each(function(){
-			if($(this).find('span').text() == $("#playerOut").val()){
-				$(this).find('span').text($('#next-batsman-combo option:selected').text()); 
-				$(this).find('span').data('uuid', $('#next-batsman-combo').val());
-			}
-		});
-
-		
-		//TODO : check whether over completed or not 
-		isOverCompleted();
-		
-	});
 	
 	$('#wicket_type_combo').on('change', function() {
 		if(fielder_applicable_wicket.indexOf(this.value) > -1){
@@ -558,7 +349,6 @@ $(function(){
 			$('#choose-out-batsman-panel').hide();
 		}
 		refresh_batsman_out_combo();
-	
 	});
 	
 	function refresh_batsman_out_combo(){
@@ -568,165 +358,13 @@ $(function(){
 	}
 	
 	function resetScorePanel(){
-		
 		$('.ballType, .wicket').each(function() {
 			this.checked = false;
 		});
 	}
-	
-	$('.ballType ').on('change', function(){
-		var $this = $(this);
-		
-		// toggling of WIDE & NO-BALL
-		if($this.hasClass('group1')){
-			$('.group1').each(function() {
-				this.checked = false;
-			});
-			
-			//if ball is wide then uncheck 	LEG-BYE & BYE
-			if(this.value == 'W'){
-				$('.group2').each(function() {
-					this.checked = false;
-				});
-			}
-		}
-		
-		// toggling of LEG-BYE & BYE
-		if($this.hasClass('group2')){
-			$('.group2').each(function() {
-				this.checked = false;
-			});
-			// also add WIDE BALL FOR THIS
-			$('.group1').each(function() {
-				if(this.value == 'W'){
-					this.checked = false;
-				}
-			});
-		}
-		
-		$this[0].checked = true;
-	});
-
-	// ------- BUTTON CLICK EVENT -----
-
-	// code to show batsman selection panel
-	$('.batsman-selector-modal_opener').click(function(){
-		// storing value body level show it can be access from anywhere
-		$('body').data('batsman_type',$(this).data('batsman_type'));
-		$batsman_selection_modal.modal('show');
-	});
-
-	$('#add-batsman-to-batting').click(function(){
-
-		var klass = $('body').data('batsman_type');
-		var $span = $('span.'+ klass);
-		var batsman_uuid = $('#batsman-to-batting-combo').val();
-		var batsman_name = $('#batsman-to-batting-combo option:selected' ).text();
-
-		//TODO : add ID for batsman
-		
-		/*
-		Below code is not required because it will set when ball is bolwed not intially
-		if(klass == 'striker'){
-			$('#batsman').val(batsman_name);
-			$('#batsmanUuid').val(batsman_uuid);
-		}else{
-			$('#nonStriker').val(batsman_name);
-			$('#nonStrikerUuid').val(batsman_uuid);
-		}
-		*/
-		//batsman
-		$span.text(batsman_name);
-		$span.data('uuid', batsman_uuid);
-
-		// removing the button
-		$span.next().remove();
-
-		//$span.next().
-		//alert($('body').data('batsman_type'));
-		$batsman_selection_modal.modal('hide');
-	});
-
-	// code to show bowler selection panel
-	$('.bowler-selection-modal_opener').click(function(){
-		$bowler_selection_modal.modal('show');
-	});
-
-	$('#add-bowler-to-bowling').click(function(){
-
-		var $span = $('span.bowler');
-		var bowling_uuid = $('#bowler-to-bowling-combo').val();
-		var bowler_name = $('#bowler-to-bowling-combo option:selected').text();
-		$span.text(bowler_name);
-		$span.data('uuid',bowling_uuid);
-
-		// TODO : add bowler id
-		$('#bolwerUuid').val(bowling_uuid);
-		$('#bowler').val(bowler_name);
-
-		// remcving the button
-		$span.next().remove();
-
-		$bowler_selection_modal.modal('hide');
-
-		// TODO : reseting the over
-		resetOver(); 
-	});
-	
-	
 });
-function submitScore(){
-	$.ajax({
-         type: "POST",
-         url: "${pageContext.request.contextPath}/mvc/scorer/saveScorebook",
-         data: $('#scoreBookForm').serialize(), // serializes the form's elements.
-         success: function(scorebookObj)
-         {
-             console.log(scorebookObj);
-             $('#batsman-stats-panel tbody').html('');
-             var batsman = scorebookObj.batsman;
-	         var tr = '<tr><td><input type="radio" name="striker-radio" class="striker-radio-klass"></td>' +  
-		         '<td><span class="striker" data-uuid="'+batsman.playerUuid+'">'+batsman.playerName+'</span></td>'+
-				'<td>'+batsman.runs+'</td>'+
-				'<td>'+batsman.balls+'</td>'+
-				'<td>'+batsman.fours+'</td>'+
-				'<td>'+batsman.sixes+'</td>'+
-				'<td>'+batsman.strikeRate+'</td></tr>';
-         	$('#batsman-stats-panel tbody').append(tr);
-    		var nonStriker = scorebookObj.nonStriker;
-    		if(nonStriker.playerUuid != null){
-    			var tr = '<tr><td><input type="radio" name="striker-radio" class="striker-radio-klass"></td>' +  
-        		'<td><span class="non-striker" data-uuid="'+nonStriker.playerUuid+'">'+nonStriker.playerName+'</span></td>'+
-				'<td>'+nonStriker.runs+'</td>'+
-				'<td>'+nonStriker.balls+'</td>'+
-				'<td>'+nonStriker.fours+'</td>'+
-				'<td>'+nonStriker.sixes+'</td>'+
-				'<td>'+nonStriker.strikeRate+'</td></tr>';
-    			$('#batsman-stats-panel tbody').append(tr);
-	         }
+	
 
-			var bowler = scorebookObj.bowler;
-			if(bowler.playerUuid != null){
-				var tr = '<tr><td><span class="bowler" data-uuid="'+bowler.playerUuid+'">'+bowler.playerName+'</span></td>'+
-				'<td>'+bowler.overs+'</td>'+
-				'<td>'+bowler.maiden+'</td>'+
-				'<td>'+bowler.runs+'</td>'+
-				'<td>'+bowler.wickets+'</td>'+
-				'<td>'+bowler.economyRate+'</td></tr>';
-				$('#bowler-stats-panel tbody').html(tr);
-		     }
-
-			var match = scorebookObj.match;
-			if(match.currentInning ==  1){
-				$('.current-inning-score').text(match.firstInningsRuns + '-' + match.firstInningsWickets);
-				$('.current-inning-over').text('('+match.firstInningsOvers+')');
-			}else{
-				$('.current-inning-score').text(match.secondInningsRuns + '-' + match.secondInningsWickets);
-				$('.current-inning-over').text('('+match.secondInningsOvers+')');
-			}
-         }
-      });
-}
 </script>
 
 
@@ -830,5 +468,679 @@ function submitScore(){
   </div>
 </div>
 
+<div class="modal fade" id="youtube-modal" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="youtube-modal" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="youtube-modall-label">Youtube Panel</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        	<div class="row">
+	    		<div class="col-6">
+		    		<div class="card">
+					  <h5 class="card-header">Flash Screen</h5>
+					  <div class="card-body">
+					  		<div class="btn-group text-center" role="group" aria-label="Basic example">
+							  <button type="button" class="btn btn-secondary">4</button>
+							  <button type="button" class="btn btn-secondary">6</button>
+							  <button type="button" class="btn btn-secondary">Duck</button>
+							  <button type="button" class="btn btn-secondary">Free Hit</button>
+							  <button type="button" class="btn btn-secondary">Wide ball</button>
+							  <button type="button" class="btn btn-secondary">Wicket</button>
+							  <button type="button" class="btn btn-secondary">Out</button>
+							  <button type="button" class="btn btn-secondary">Not Out</button>
+					  		</div>
+					  </div>
+					</div>
+	    		</div>
+	    		<div class="col-6">
+		    		<div class="card">
+					  <h5 class="card-header">Statistics</h5>
+					  <div class="card-body">
+					    <div class="btn-group text-center" role="group" aria-label="Basic example">
+						  <button type="button" class="btn btn-secondary">Most runs</button>
+						  <button type="button" class="btn btn-secondary">Most Wicket</button>
+						  <button type="button" class="btn btn-secondary">Most 4s</button>
+						  <button type="button" class="btn btn-secondary">Most 6s</button>
+						</div>
+					  </div>
+					</div>
+	    		</div>
+	   		</div>
+	   		<div class="row">
+	    		<div class="col-12">
+		    		<div class="card">
+					  <h5 class="card-header">Team 1</h5>
+					  <div class="card-body">
+				  			<c:forEach var="player" items="${match.team1.players}">
+						  		<div class="btn-group">
+								  <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								    ${player.playerName}
+								  </button>
+								  <div class="dropdown-menu">
+								    <a class="dropdown-item" href="#">Profile</a>
+								    <a class="dropdown-item" href="#">Current match</a>
+								    <a class="dropdown-item" href="#">Current tournament</a>
+								    <div class="dropdown-divider"></div>
+								    <a class="dropdown-item" href="#">Separated link</a>
+								  </div>
+								</div>
+						      </c:forEach>
+					  </div>
+					</div>
+	    		</div>
+	   		</div>
+	   		<div class="row">
+	    		<div class="col-12">
+		    		<div class="card">
+					  <h5 class="card-header">Team 2</h5>
+  						  <div class="card-body">
+							<c:forEach var="player" items="${match.team2.players}">
+					  		<div class="btn-group">
+							  <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							    ${player.playerName}
+							  </button>
+							  <div class="dropdown-menu">
+							    <a class="dropdown-item" href="#">Profile</a>
+							    <a class="dropdown-item" href="#">Current match</a>
+							    <a class="dropdown-item" href="#">Current tournament</a>
+							    <div class="dropdown-divider"></div>
+							    <a class="dropdown-item" href="#">Separated link</a>
+							  </div>
+							</div>
+					      </c:forEach>
+					  </div>
 
+					</div>
+	    		</div>
+	   		</div>
+	   		<div class="row">
+	    		<div class="col-6">
+		    		<div class="card">
+					  <h5 class="card-header">Batsman</h5>
+					  <div class="card-body">
+					  		<div class="btn-group text-center" role="group" aria-label="Basic example">
+							  <button type="button" class="btn btn-secondary panel_selector" data-panel_name="batsman_card">Batsman Card</button>
+							  <button type="button" class="btn btn-secondary panel_selector" data-panel_name="batsman_match_card" >Batsman Match Card</button>
+							  <button type="button" class="btn btn-secondary panel_selector" data-panel_name="batsman_series_card">Batsman Series Card</button>
+					  		</div>
+					  </div>
+					</div>
+	    		</div>
+	    		<div class="col-6">
+		    		<div class="card">
+					  <h5 class="card-header">Bowler</h5>
+					  <div class="card-body">
+					  		<div class="btn-group text-center" role="group" aria-label="Basic example">
+							  <button type="button" class="btn btn-secondary panel_selector" data-panel_name="bowler_card">Bowler Card</button>
+							  <button type="button" class="btn btn-secondary panel_selector" data-panel_name="bowler_match_card" >Bowler Match Card</button>
+							  <button type="button" class="btn btn-secondary panel_selector" data-panel_name="bowler_series_card">Bowler Series Card</button>
+					  		</div>
+					  </div>
+					</div>
+	    		</div>
+	   		</div>
+	   		<div class="row">
+	    		<div class="col-12">
+		    		<div class="card">
+					  <h5 class="card-header">Match</h5>
+					  <div class="card-body">
+					  		<div class="btn-group text-center" role="group" aria-label="Basic example">
+							  <button type="button" class="btn btn-secondary panel_selector" data-panel_name="point_table_card">Points Table</button>
+							  <button type="button" class="btn btn-secondary panel_selector" data-panel_name="score_card">Score Card</button>
+							  <button type="button" class="btn btn-secondary panel_selector" data-panel_name="squad_card">Squad Card</button>
+							  <button type="button" class="btn btn-secondary panel_selector" data-panel_name="toss_card">Toss Card</button>
+					  		</div>
+					  </div>
+					</div>
+	    		</div>
+	   		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Done</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+//--- fucntion to support older browser
+if (!String.prototype.includes) {
+  String.prototype.includes = function(search, start) {
+    'use strict';
+
+    if (search instanceof RegExp) {
+      throw TypeError('first argument must not be a RegExp');
+    } 
+    if (start === undefined) { start = 0; }
+    return this.indexOf(search, start) !== -1;
+  };
+}
+
+// ------------------- function for showing panel in video ----------
+$('body').data('panel_name', 'score'); // TODO : need to set default panel
+
+$('.panel_selector').click(function(){
+	var panel = $(this).data('panel_name');
+	$('body').data('panel_name', panel);// for reference purpose which panel user selected.
+	refreshMatchPanel(panel);
+	
+});
+
+// code to call node application goes here
+function refreshMatchPanel(panel_name){
+	var url = 'http://localhost:3000/updateui';
+	//TODO : 
+    var obj = {};
+    obj.panel_name = $('body').data('panel_name');
+    obj.match_id = ${match.uuid};
+	 $.get( url, obj, function( data ) {
+ 		  //$( ".result" ).html( data );
+ 		  //TODO: need to do something if score refreshed successfully.
+ 		  //alert( "Load was performed." );
+ 	});
+	
+}
+//-------------------end of  function for showing panel in video ----------
+// function to register click event
+$('.registery_elem').on('click',function(e) {
+	var id = $(e.target).attr("id");
+	console.log(e.target);
+	if(typeof id != 'undefined'){
+		$('body').data('element_id', id); // we are storing click element id if exist
+	}
+});
+
+
+// function to check is over completed
+var isOverCompleted = function(){
+	var noOfDeliveries = $('#ballCount').val();
+	if(noOfDeliveries == 6){
+		$bowler_selection_modal.modal('show');
+
+		//adding add bowler button back
+		var template = $("#reset_bowler_template").html();
+		var row = Mustache.render(template,{});
+        $("#bowler-stats-panel tbody").html(row);
+		$('#bowler').val('');
+		$('.current-over').html('');
+		$('#overs').val(nanToNumber($('#overs').val()) + 1);
+		$('#ball').val(0);
+		$('#ballCount').val(0);
+		return true;
+	}
+	return false;
+}
+
+var isMatchPlayable = function(){
+	// checking batsman present
+	var message = "";
+	var is_match_playable = true;
+	$('#batsman-stats-panel tbody tr').each(function(){
+		var id = $(this).data('batsman_id');
+		if(typeof id == 'undefined'){
+			is_match_playable = false;
+		}
+	});
+	if(is_match_playable == false){
+		message = message + 'select batsman \n';
+	}
+	
+	// checking bowler present
+	$('#bowler-stats-panel tbody tr').each(function(){
+		var id = $(this).data('bowler_id');
+		if(typeof id == 'undefined'){
+			is_match_playable = false;
+			message = message + 'select bowler \n';
+		}
+	});
+
+	// checking the striker selected or not
+	if($('.striker-radio-klass:checked').length == 0){
+		is_match_playable = false;
+		message = message + 'select striker \n';
+	}
+	if(is_match_playable == false){
+		alert(message);
+	}
+	return is_match_playable;
+}
+$(document).on("click", ".striker-radio-klass", function(){
+	//$('.striker-radio-klass').on('click', function(){
+		$('.striker-radio-klass').each(function(){
+			var $tr = $(this).closest('tr');
+			$tr.removeClass();
+			if(this.checked){
+				$tr.addClass('striker');
+			}else{
+				$tr.addClass('non-striker');
+			}
+		});
+	})
+
+// global level
+var fielder_applicable_wicket = ['Run Out' , 'Catch' , 'Stumping'];
+var batsman_choosing_applicable_wicket = ['Run Out'];
+//initializing batsman, bowler & fielder dropdown
+$('#batsman-to-batting-combo').html(create_option_for_player(team_1)); // combo for selecting batsman
+$('#batsman-out-combo').html(create_option_for_player(team_1)); // combo for selecting batsman who is out
+$('#next-batsman-combo').html(create_option_for_player(team_1)); // combo for selecting next batsman after wicker fall
+$('#fielder-combo').html(create_option_for_player(team_2)); // combo for selecting fielder
+$('#bowler-to-bowling-combo').html(create_option_for_player(team_2)); // combo for selecting next batsman after wicker fall
+
+
+/**
+ * 
+ * We will use  body element to store button clicked element ID
+  so it can be fetch from any function to know click element
+  body element will work as registory of click element
+ */
+
+// ----- MODAL JQUERY OBJECT --
+var $batsman_selection_modal = $("#batsman-selection-modal");
+var $bowler_selection_modal = $("#bowler-selection-modal");
+var $wicket_modal = $("#wicket-modal");
+
+
+// function to check logic of No-ball, wide ball & bye & leg bye logic check box
+$('.ballType ').on('change', function() {
+    var $this = $(this);
+
+    // toggling of WIDE & NO-BALL
+    if ($this.hasClass('group1')) {
+        $('.group1').each(function() {
+            this.checked = false;
+        });
+
+        //if ball is wide then uncheck 	LEG-BYE & BYE
+        if (this.value == 'W') {
+            $('.group2').each(function() {
+                this.checked = false;
+            });
+        }
+    }
+
+    // toggling of LEG-BYE & BYE
+    if ($this.hasClass('group2')) {
+        $('.group2').each(function() {
+            this.checked = false;
+        });
+        // also add WIDE BALL FOR THIS
+        $('.group1').each(function() {
+            if (this.value == 'W') {
+                this.checked = false;
+            }
+        });
+    }
+
+    $this[0].checked = true;
+});
+
+
+// code 2.0
+var Scorebook = function () {
+     var self = this;
+     self.batsman = '';
+     self.bowler = '';
+     self.striker = '';
+     self.rough_run = 0; // rough run ie 
+     self.extra_runs = 0;
+     self.extra_type_arr = [];
+     self.extra_type = '';
+     self.ui_ball_label = '';
+     self.count_this_ball = true;
+     self.batsman_run = '';
+     self.is_player_out = 0;
+     self.over = 0;
+     self.is_wicket = 0;
+     self.fielder = '';
+     self.player_out = '';
+     self.total_run = 0;
+     self.no_of_ball = 0;
+     self.wicket_type = '';
+     self.batsman_run = 0;
+     self.rough_run = 0;
+     self.applyBallLogic = function () {
+    	 if(self.extra_type_arr.includes("W")){
+    			self.extra_runs = 1 + self.rough_run;
+    			self.extra_type = 'Wd';
+    			self.ui_ball_label =  self.rough_run + 'Wd';
+    			self.batsman_run = 0;
+    			self.count_this_ball = false;
+    		}else if(self.extra_type_arr.includes("NB")){
+    			self.extra_runs = 1;
+    			// if ball is no ball + (LB or Bye) then all run will be extra
+    			if(self.extra_type_arr.includes("LB") || self.extra_type_arr.includes("B")){
+    				self.extra_runs = 1 + self.rough_run ;
+    				self.batsman_run = 0;
+    			}else{
+    				self.batsman_run = self.rough_run;
+    				self.extra_type = 1;
+    			}
+    			self.extra_type = 'NB';
+    			self.ui_ball_label =  self.rough_run + 'NB';
+    			self.count_this_ball = false;
+    			
+    		}else if(self.extra_type_arr.includes("LB") || self.extra_type_arr.includes("B")){
+    			self.extra_runs = self.rough_run;
+    			self.extra_type = self.extra_type_arr.join('');
+    			self.no_of_ball = self.no_of_ball + 0.1
+    			self.ui_ball_label =  self.rough_run + self.extra_type_arr.join('');
+    			self.batsman_run = 0;
+    			self.count_this_ball = true;
+    		}else{
+    			self.extra_runs = 0;
+    			self.extra_type = '';
+    			self.no_of_ball = self.no_of_ball + 0.1
+    			self.ui_ball_label =  self.rough_run;
+    			self.batsman_run = self.rough_run;
+    			self.count_this_ball = true;
+    		}
+    	 self.total_run = self.batsman_run + self.extra_runs;
+    	 console.log('******************');
+    	 console.log(self);
+    	 console.log('******************');
+    	 return self; // for chaining the object.
+     };
+     
+     self.syncToForm = function(){
+    	 
+		// clearing html element
+		$('.ballType, .wicket').each(function() {
+			this.checked = false;
+		});
+		console.log('++++++++');
+   	 	console.log(self);
+   		console.log('++++++++');
+    	 // setting value to form
+    	$("#ball").val(self.no_of_ball);
+ 		$("#isWicket").val(self.is_wicket);
+ 		$("#wicketType").val(self.wicket_type);
+ 		$("#playerOut").val(self.player_out);
+ 		$('#batsmanRun').val(self.batsman_run);
+ 		$('#extraRuns').val(self.extra_runs);
+ 		$('#extraType').val(self.extra_type);
+ 		$('#totalRuns').val(self.total_run);
+ 		$('#fielder').val(self.fielder);
+
+ 		// setting other value to form
+ 		var $tr_striker = $('tr.striker');
+ 		document.getElementById('batsman').value = 	$tr_striker.data('batsman_name'	);
+ 		document.getElementById('batsmanUuid').value = 	$tr_striker.data('batsman_id');
+
+ 		var $tr_non_striker = $('tr.non-striker');
+ 		document.getElementById('nonStriker').value = 	$tr_non_striker.data('batsman_name');
+ 		document.getElementById('nonStrikerUuid').value = 	$tr_non_striker.data('batsman_id');
+
+ 		var $tr_bowler = $('tr.bowler');
+ 		document.getElementById('bowler').value = 	$tr_bowler.data('bowler_name');
+ 		document.getElementById('bolwerUuid').value = 	$tr_bowler.data('bowler_id');
+
+ 		// binding value with ui
+ 		self.bindWithUI();
+     };
+     
+     self.syncToDB = function(){
+
+    	 //need to add custom form value to database.
+    	 // will call once over is completed and sync with db
+    	 $.ajax({
+             type: "POST",
+             url: "${pageContext.request.contextPath}/mvc/scorer/saveScorebook",
+             data: $('#scoreBookForm').serialize(), // serializes the form's elements.
+             success: function(scorebookObj)
+             {
+             	var template = $("#batsman_template").html();
+                $('#batsman-stats-panel tbody').html('');
+                var batsman = scorebookObj.batsman;
+            	var template_data = {};
+            	template_data.batsman_name = batsman.playerName;
+            	template_data.batsman_id = batsman.playerUuid;
+            	template_data.runs = batsman.runs;
+            	template_data.balls = batsman.balls;
+            	template_data.fours = batsman.fours;
+            	template_data.sixes = batsman.sixes;
+            	template_data.strike_rate = batsman.strikeRate;
+                var row = Mustache.render(template, template_data);
+                $("#batsman-stats-panel tbody").append(row);
+
+        		
+       			var nonStriker = scorebookObj.nonStriker;
+        		if(nonStriker.playerUuid != null){
+            		var template_data_obj = {};
+            		template_data_obj.batsman_name = nonStriker.playerName;
+            		template_data_obj.batsman_id = nonStriker.playerUuid;
+            		template_data_obj.runs = nonStriker.runs;
+            		template_data_obj.balls = nonStriker.balls;
+            		template_data_obj.fours = nonStriker.fours;
+            		template_data_obj.sixes = nonStriker.sixes;
+            		template_data_obj.strike_rate = nonStriker.strikeRate;
+                    var row = Mustache.render(template, template_data_obj);
+                    $("#batsman-stats-panel tbody").append(row);
+    	         }
+
+        		//-----OLD CODE------
+    			var bowler = scorebookObj.bowler;
+    			if(bowler.playerUuid != null){
+
+    				var template_bowler = $("#bowler_template").html();
+    				var template_bowler_data = {};
+    				template_bowler_data.bowler_name = bowler.playerName;
+    				template_bowler_data.bowler_id = bowler.playerUuid;
+    				template_bowler_data.overs = bowler.overs;
+    				template_bowler_data.maiden = bowler.maiden;
+    				template_bowler_data.runs = bowler.runs;
+    				template_bowler_data.wickets = bowler.wickets;
+    				template_bowler_data.economy_rate = bowler.economyRate;
+
+    				var row = Mustache.render(template_bowler, template_bowler_data);
+    		        $("#bowler-stats-panel tbody").html(row);
+    		     }
+
+    			var match = scorebookObj.match;
+    			if(match.currentInning ==  1){
+    				$('.current-inning-score').text(match.firstInningsRuns + '-' + match.firstInningsWickets);
+    				$('.current-inning-over').text('('+match.firstInningsOvers+')');
+    			}else{
+    				$('.current-inning-score').text(match.secondInningsRuns + '-' + match.secondInningsWickets);
+    				$('.current-inning-over').text('('+match.secondInningsOvers+')');
+    			}
+    			isOverCompleted();
+             }
+          });
+     };
+     
+     self.bindWithUI = function(){
+         
+    	 if(self.count_this_ball){
+    		 var ballCount = nanToNumber($('#ballCount').val()) + 1;
+    		 $('#ballCount').val(ballCount);
+         }
+    	 $('.current-over').append('<span>'+self.ui_ball_label+'</span>');
+
+
+    	 
+    	 // storing value to DB
+    	 self.syncToDB();
+     }
+
+     // this function is to refresh live score
+     self.refreshLiveScore = function(){
+    	 $('body').data('panel_name'); // getting panel from body element
+    	 refreshMatchPanel(panel_name);
+     }
+
+     return self;
+};
+
+//function to need to run onload
+$(function(){
+	// initializing batsman, bowler & fielder dropdown
+	$('#batsman-to-batting-combo').html(create_option_for_player(team_1)); // combo for selecting batsman
+	$('#batsman-out-combo').html(create_option_for_player(team_1)); // combo for selecting batsman who is out
+	$('#next-batsman-combo').html(create_option_for_player(team_1)); // combo for selecting next batsman after wicker fall
+	$('#fielder-combo').html(create_option_for_player(team_2)); // combo for selecting fielder
+	$('#bowler-to-bowling-combo').html(create_option_for_player(team_2)); // combo for selecting next batsman after wicker fall
+
+});
+
+var book = new Scorebook();
+
+//  click event handling
+$('.scorePanel button').click(function(event){
+
+	if(isMatchPlayable() == false){
+		event.stopPropagation();
+		return '';
+	}
+	
+	book = new Scorebook();
+	$('input.ballType:checkbox:checked').each(function () {
+		book.extra_type_arr.push(this.value);
+	});
+	
+	book.rough_run = nanToNumber($(this).data('run')); // getting run
+	book.is_player_out =  $('input.wicket:checkbox:checked').length > 0;
+	//book.extra_type_arr = ballType;
+	book.over = nanToNumber($('#overs').val());
+	book.no_of_ball = nanToNumber($('#ball').val());
+
+	// if any player is out then
+	if($('input.wicket:checkbox:checked').length > 0){
+		$('#wicket-modal').modal('show');
+	}else{
+		book.applyBallLogic(); // calculating all the stuff
+		book.syncToForm();
+	}
+});
+
+
+$('#newBatsman').click(function(){
+	
+	$('#wicket-modal').modal('hide'); // hiding the opened div
+	var wicket_type_combo = $('#wicket_type_combo').val();
+	var next_batsman = $('#next-batsman-combo').val();
+
+	book.wicket_type = wicket_type_combo;
+
+	if(fielder_applicable_wicket.includes(wicket_type_combo)){
+		book.fielder = $('#fielder-combo').val();
+		book.is_wicket = 1;
+		book.player_out = $('#batsman-out-combo option:selected').text();
+	} 
+
+	var template = $("#batsman_template").html();
+	var template_data = {};
+	template_data.batsman_name = $('#next-batsman-combo option:selected' ).text()
+	template_data.batsman_id = $('#next-batsman-combo').val();
+	template_data.runs = 0;
+	template_data.balls = 0;
+	template_data.fours = 0;
+	template_data.sixes = 0;
+	template_data.strike_rate = 0;
+    var row = Mustache.render(template, template_data);
+    $("#batsman-stats-panel tbody").append(row);
+
+    // removing out batsman
+    var player_out_id = $('#batsman-out-combo option:selected').val();
+    $("#batsman-stats-panel tbody").find("[data-batsman_id='" + player_out_id + "']").remove(); 
+
+    book.applyBallLogic(); // calculating all the stuff
+	book.syncToForm();
+});
+
+// ---- OLDER CODE -----
+// code to show batsman selection panel
+	$('.batsman-selector-modal_opener').click(function(){
+		// storing value body level show it can be access from anywhere
+		$('body').data('batsman_type',$(this).data('batsman_type'));
+		$batsman_selection_modal.modal('show');
+	});
+
+	$('#add-batsman-to-batting').click(function(){
+		
+		var clicked_btn_id =  $('body').data('element_id');
+		$('#' + clicked_btn_id).closest('tr').remove();// removing the row where button is present.
+
+		var template = $("#batsman_template").html();
+		var template_data = {};
+		template_data.batsman_name = $('#batsman-to-batting-combo option:selected' ).text()
+		template_data.batsman_id = $('#batsman-to-batting-combo').val();
+    	template_data.runs = 0;
+    	template_data.balls = 0;
+    	template_data.fours = 0;
+    	template_data.sixes = 0;
+    	template_data.strike_rate = 0;
+		
+        var row = Mustache.render(template, template_data);
+        $("#batsman-stats-panel tbody").append(row);
+		$batsman_selection_modal.modal('hide');
+	});
+
+	// code to show bowler selection panel
+	$(document).on('click', '.bowler-selection-modal_opener', function(){
+		$bowler_selection_modal.modal('show');
+	});
+
+	$('#add-bowler-to-bowling').click(function(){
+
+		var clicked_btn_id =  $('body').data('element_id');
+		$('#' + clicked_btn_id).closest('tr').remove();// removing the row where button is present.
+		
+
+		var template = $("#bowler_template").html();
+		var template_data = {};
+		template_data.bowler_name = $('#bowler-to-bowling-combo option:selected').text()
+		template_data.bowler_id = $('#bowler-to-bowling-combo').val();
+		template_data.overs = 0;
+		template_data.maiden = 0;
+		template_data.runs = 0;
+		template_data.wickets = 0;
+		template_data.economy_rate = 0;
+
+		var row = Mustache.render(template, template_data);
+        $("#bowler-stats-panel tbody").html(row);
+		$bowler_selection_modal.modal('hide');
+
+		// TODO: implement reset over functionality
+		//resetOver(); 
+	});
+
+</script>
+
+
+<script id="batsman_template" type="text/template">
+	<tr data-batsman_id="{{batsman_id}}" data-batsman_name="{{batsman_name}}">
+		<td><input type="radio" name="striker-radio" class="striker-radio-klass"></td>
+		<td><span>{{batsman_name}}</span></td>
+		<td>{{runs}}</td>
+		<td>{{balls}}</td>
+		<td>{{fours}}</td>
+		<td>{{sixes}}</td>
+		<td>{{strike_rate}}</td>
+	</tr>
+</script>
+<script id="reset_bowler_template" type="text/template">
+	<tr>
+		<td><span class="bowler"></span><button type="button" class="btn btn-light registery_elem bowler-selection-modal_opener" id="bowler-selection-modal_opener">Add Bowler</button></td>
+		<td>0</td>
+		<td>0</td>
+		<td>o</td>
+		<td>0</td>
+		<td>0</td>
+	</tr>
+</script>
+
+<script id="bowler_template" type="text/template">
+	<tr class="bowler" data-bowler_id="{{bowler_id}}" data-bowler_name="{{bowler_name}}">
+		<td>{{bowler_name}}</td>
+		<td>{{overs}}</td>
+		<td>{{maiden}}</td>
+		<td>{{runs}}</td>
+		<td>{{wickets}}</td>
+		<td>{{economy_rate}}</td>
+	</tr>
+</script>
 
