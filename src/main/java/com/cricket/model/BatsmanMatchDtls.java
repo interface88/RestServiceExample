@@ -18,41 +18,6 @@ public class BatsmanMatchDtls implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "UUID")
-	private Long uuid;
-
-	@Column(name = "MATCH_UUID")
-	private Long matchUuid;
-
-	@Column(name = "PLAYER_UUID")
-	private Long playerUuid;
-
-	@Column(name = "PLAYER_NAME")
-	private String playerName;
-
-	@Column(name = "RUNS")
-	private Integer runs;
-
-	@Column(name = "BALLS")
-	private Integer balls;
-
-	@Column(name = "4s")
-	private Integer fours;
-
-	@Column(name = "6s")
-	private Integer sixes;
-
-	@Column(name = "0s")
-	private Integer zeroes;
-
-	@Column(name = "STRIKE_RATE")
-	private double strikeRate;
-
-	@Column(name = "IS_OUT")
-	private int isOut;
-
 	public Long getUuid() {
 		return uuid;
 	}
@@ -117,12 +82,12 @@ public class BatsmanMatchDtls implements Serializable {
 		this.sixes = sixes;
 	}
 
-	public Integer getZeroes() {
-		return zeroes;
+	public Integer getdots() {
+		return dots;
 	}
 
-	public void setZeroes(Integer zeroes) {
-		this.zeroes = zeroes;
+	public void setdots(Integer dots) {
+		this.dots = dots;
 	}
 
 	public double getStrikeRate() {
@@ -140,5 +105,45 @@ public class BatsmanMatchDtls implements Serializable {
 	public void setIsOut(int isOut) {
 		this.isOut = isOut;
 	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "UUID")
+	private Long uuid;
+
+	@Column(name = "MATCH_UUID")
+	private Long matchUuid;
+
+	@Column(name = "PLAYER_UUID")
+	private Long playerUuid;
+
+	@Column(name = "PLAYER_NAME")
+	private String playerName;
+
+	@Column(name = "RUNS")
+	private Integer runs;
+
+	@Column(name = "balls")
+	private Integer balls;
+
+	@Column(name = "fours")
+	private Integer fours;
+
+	@Column(name = "sixes")
+	private Integer sixes;
+
+	@Column(name = "dots")
+	private Integer dots;
+
+	@Column(name = "STRIKE_RATE")
+	private double strikeRate;
+
+	@Column(name = "IS_OUT")
+	private Integer isOut;
+
 
 }
