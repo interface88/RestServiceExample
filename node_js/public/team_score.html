@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Socket.IO Example</title>
+    </head>
+    <body>
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            
+            var socket = io();
+ 
+            socket.on('sendToClient', function (data) {
+                
+                document.getElementById('score-div').innerHTML = data.score;
+                console.log(data);
+                
+                socket.emit('receivedFromClient', { my: 'data' });
+            });
+        </script>
+        <h1>Score</h1>
+        <div id="score-div"></div>
+    </body>
+</html>

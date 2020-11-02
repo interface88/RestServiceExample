@@ -1,0 +1,56 @@
+                     
+<head>
+ <link rel="stylesheet" href="https://www.bootstrapdash.com/demo/plus/jquery/template/assets/css/demo_1/style.css">
+</head>
+<style>
+
+.table td {
+height: 5px;
+padding:0.6375rem;
+}
+tr:nth-child(even) {background-color: #00cff4;}
+</style>
+
+<div class="row">
+<div class="col-lg-6 grid-margin stretch-card">
+<table class="table table-striped" style="width:50%;margin-left: auto;margin-right: 20;">
+      <tbody>
+        <tr>
+            <th>#</th>
+			<th>Name</th>
+            
+        </tr>
+		{% set num = 1 %}	
+         {% for player in first_details %}
+            <tr>
+                <td>{{ num }}</td>
+				<td>{{ player.player_name }}</td>
+                
+            </tr>
+			{% set num = num + 1 %}
+        {% endfor %}			
+		
+	 </tbody>
+</table>
+</div>
+<div class="col-lg-6 grid-margin stretch-card">
+<table class="table table-striped" style="width:50%;margin-left: 20;margin-right: auto;">
+      <tbody>
+        <tr>
+            <th>#</th>
+			<th>Name</th>
+            
+        </tr>
+		{% set num = 1 %}	
+         {% for player in second_details %}
+            <tr>
+                <td>{{ num }}</td>
+				<td>{{ player.player_name }}</td>
+                
+            </tr>
+			{% set num = num + 1 %}
+        {% endfor %}			
+		
+	 </tbody>
+</table>
+</div>

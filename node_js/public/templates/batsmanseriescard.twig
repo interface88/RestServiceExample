@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://www.bootstrapdash.com/demo/plus/jquery/template/assets/css/demo_1/style.css">
+</head>
+<body>
+{% for batsman in batsman_details %}
+
+
+<table class="table" style="position:absolute;top:0px;width:30%;text-align:center;border:0px;" align="center" >
+      <tbody>
+		<tr >
+			<td class="badge-info badge-pill" style="border:0px">
+			<h1>{{batsman.player_name}}</h1>
+			</td>
+		</tr>
+		<tr>
+			<td class="badge-warning badge-pill" style="border:0px"> Matches : {{batsman.matches}}
+			</td>
+		</tr>
+		<tr>
+			<td class="badge-info badge-pill" style="border:0px"> Runs : {{batsman.runs}}
+			</td>
+		</tr>
+		<tr>
+			<td class="badge-warning badge-pill" style="border:0px"> Average : {{batsman.average}}
+			</td>
+		</tr>
+		<tr>
+			<td class="badge-info badge-pill" style="border:0px"> SR : {{batsman.sr}}
+			</td>
+		</tr>					
+		
+	  </tbody>
+</table>	 
+
+{% endfor %} 

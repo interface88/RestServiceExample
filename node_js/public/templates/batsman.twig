@@ -1,0 +1,24 @@
+<table border="1">
+    <thead>
+        <tr>
+            <th>BATSMEN</th>
+            <th>R</th>
+            <th>B</th>
+            <th>4s</th>
+            <th>6s</th>
+            <th>SR</th>
+        </tr>
+    </thead>
+    <tbody>
+         {% for batsman in batsman_list %}
+            <tr>
+                <td>{{ batsman.name }}</td>
+                <td>{{ batsman.run }}</td>
+                <td>{{ batsman.ball }}</td>
+                <td>{{ batsman.fours }}</td>
+                <td>{{ batsman.sixes }}</td>
+               <td>{{ batsman.strikerate }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

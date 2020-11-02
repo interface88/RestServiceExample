@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Socket.IO Example</title>
+    </head>
+    <body onload="load_panel('scorecard')">
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+        <script>
+            
+            var socket = io();
+ 
+            socket.on('msg_from_server', function (data) {
+                
+                
+                
+                
+               // socket.emit('receivedFromClient', { my: 'data' });
+                
+            });
+
+            socket.on('updateui', function (param_obj) {
+                load_panel(param_obj);
+                
+            });
+
+            function load_panel(param_obj){
+                var panel_name = param_obj.panel_name;
+
+                var panel_arr = {};
+                panel_arr['point_table_card'] = '/pointstablecard';
+                panel_arr['score_card'] = '/scorecard';
+                panel_arr['squad_card'] = '/squadcard';
+                panel_arr['toss_card'] = '/tosscard';
+                panel_arr['bowler_card'] = '/scorecard';
+                panel_arr['bowler_match_card'] = '/scorecard';
+                panel_arr['bowler_series_card'] = '/bowlerseriescard';
+                panel_arr['batsman_card'] = '/playercard';
+                panel_arr['batsman_match_card'] = '/bowlermatchcard';
+                panel_arr['batsman_series_card'] = '/batsmanseriescard';
+
+                
+
+                if(panel_name != '' && typeof panel_arr['panel_name'] != 'undefined'){
+                    var url = panel_arr['panel_name'];
+                    $.get( url, match_data, function( response ) {
+                        $( "#card-panel" ).html( response );
+                        //alert( "Load was performed." );
+                    });
+                }else{
+                    $( "#card-panel" ).html('');
+                }
+                
+            }
+
+           
+            
+        </script>
+       
+        <div id="card-panel" class="panel">
+            
+        </div>
+        
+        
+    </body>
+</html>
