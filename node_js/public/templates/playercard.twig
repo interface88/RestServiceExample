@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://www.bootstrapdash.com/demo/plus/jquery/template/assets/css/demo_1/style.css">
+</head>
+<body>
+{% for player in player_details %}
+
+<h1 class="badge-info badge-pill">{{player.player_name}}</h1>
+
+<table class="table">
+      <tbody>
+        <tr>
+			<td rowspan="3">
+				<img style="width:210px;height:310px"  src="http://localhost:8080/RestServiceExample/mvc/resource/image/{{player.PROFILE_PIC}}" class="gambar img-responsive img-thumbnail" id="item-img-output" />	
+			</td>
+			<th>Born
+			</th>
+			<td>{{player.dob_format}}
+			</td>
+			<th>Place
+			</th>
+			<td>{{player.place}}
+			</td>
+		</tr>
+		<tr>
+			<th>Player Id
+			</th>
+			<td>{{player.player_id}}
+			</td>
+			<th>Role
+			</th>
+			<td>{{player.player_role}}
+			</td>
+		</tr>
+		<tr>
+			<th>Batting Style
+			</th>
+			<td>{{player.batting_style}}
+			</td>
+			<th>Bowling Style
+			</th>
+			<td>{{player.bowling_style}}
+			</td>
+		</tr>
+		
+	  </tbody>
+</table>
+{% endfor %}
+
+
+
+<table class="table">
+      <tbody>
+        <tr class="badge-warning badge-pill">
+            <th>M</th>
+			<th>NO</th>  
+			<th>Runs</th>
+			<th>HS</th>
+			<th>Avg</th>
+			<th>BF</th>
+			<th>SR</th>
+			<th>4s</th>
+			<th>6s</th>
+        </tr>
+		
+		<tr>
+			{% for bat in batting_details %}
+			<td>{{bat.matches}}</td>
+			<td>{{bat.not_outs}}</td>
+			<td>{{bat.runs}}</td>
+			<td>{{bat.max_score}}</td>
+			<td>{{bat.average}}</td>
+			<td>{{bat.balls_faced}}</td>
+			<td>{{bat.sr}}</td>
+			<td>{{bat.fours}}</td>
+			<td>{{bat.sixes}}</td>
+			{% endfor %}
+		</tr>
+	  </tbody>
+</table>
+
+
+<table class="table">
+      <tbody>
+        <tr class="badge-warning badge-pill">
+			<th>M</th>
+			<th>B</th>
+			<th>Runs</th>
+			<th>Wkts</th>
+			<th>BB</th>
+			<th>Econ</th>
+			<th>Avg</th>
+			<th>SR</th>		
+			<th></th>	
+		</tr>
+		<tr>
+			{% for bowl in bowling_details %}
+			<td>{{bowl.matches}}</td>
+			<td>{{bowl.balls}}</td>
+			<td>{{bowl.runs}}</td>
+			<td>{{bowl.wickets}}</td>
+			<td>{{bowl.best_figures}}</td>
+			<td>{{bowl.economy_rate}}</td>
+			<td>{{bowl.bowling_avg}}</td>
+			<td>{{bowl.bowling_strike_rate}}</td>
+			<td></td>
+			{% endfor %}
+		</tr>
+	  </tbody>
+</table>	
+	  
+</body>
+</html>

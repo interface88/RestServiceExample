@@ -1,0 +1,56 @@
+<table border="1">
+    <thead>
+        <tr>
+            <th>BATSMEN</th>
+			<th></th>
+            <th>R</th>
+            <th>B</th>
+            <th>4s</th>
+            <th>6s</th>
+            <th>SR</th>
+        </tr>
+    </thead>
+    <tbody>
+         {% for batsman in batsman_list %}
+            <tr>
+                <td>{{ batsman.player_name }}</td>
+				<td>{{ batsman.wicket_type }}</td>
+                <td>{{ batsman.runs }}</td>
+                <td>{{ batsman.balls }}</td>
+                <td>{{ batsman.fours }}</td>
+                <td>{{ batsman.sixes }}</td>
+               <td>{{ batsman.strike_rate }}</td>
+            </tr>
+        {% endfor %}
+		
+		<tr>
+			<td>Extras</td>
+			{% if extras_list %}
+				{% for extra in extras_list %}
+					<td>{{extra.extras}}</td>
+					<td>{{extra.extra_runs}}</td>
+				{% endfor %}
+				
+			{% else %}
+			<td>0</td>
+			<td>0</td>
+			{% endif %}			
+		</tr>
+		
+		<tr>
+			<td>TOTAL</td>
+			{% if total_list %}
+				{% for total in total_list %}
+					<td>({{total.ACTUAL_OVERS}} Ov, RR:{{total.runrate}})</td>
+					<td>{{total.score}}</td>
+				{% endfor %}
+				
+			{% else %}
+			<td>0</td>
+			<td>0</td>
+			{% endif %}			
+		</tr>
+		
+		
+    </tbody>
+</table>

@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Socket.IO Client</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+   <style>
+       table{width:100%;border-collapse:collapse}tr:nth-of-type(odd){background:#eee}th{background:#333;color:#fff;font-weight:700}td,th{padding:6px;border:1px solid #ccc;text-align:left}
+   </style>
+</head>
+
+<body>
+
+    <script>
+        function refreshscore() {
+            $.ajax({
+                url: '/updatescore',
+                data: '{"score": "TEST"}',
+                type: 'GET',
+                jsonpCallback: 'callback', // this is not relevant to the POST anymore
+                success: function (data) {
+                    alert('score refresh sucessfully');
+                },
+                error: function (xhr, status, error) {
+                    console.log('Error: ' + error.message);
+                    $('#lblResponse').html('Error connecting to the server.');
+                },
+            });
+
+        }
+
+        function refreshUI(panel_name) {
+            $.ajax({
+                url: '/updateui',
+                data: {"panel_name": panel_name},
+                type: 'GET',
+                jsonpCallback: 'callback', // this is not relevant to the POST anymore
+                success: function (data) {
+                    alert('ui changed sucessfully');
+                },
+                error: function (xhr, status, error) {
+                    console.log('Error: ' + error.message);
+                    $('#lblResponse').html('Error connecting to the server.');
+                },
+            });
+
+        }
+
+    </script>
+    <table border="1">
+        <tr><td><button type="buttom" onclick="refreshscore()">refresh</button></td></tr>
+        <tr><td><button type="buttom" onclick="refreshUI('score_panel')">Score panel</button></td></tr>
+        <tr><td><button type="buttom" onclick="refreshUI('bowling_panel')">Bowling panel</button></td></tr>
+        <tr><td><button type="buttom" onclick="refreshUI('batsman_panel')">Batsman panel</button></td></tr>
+    </table>
+    
+</body>
+
+</html>
