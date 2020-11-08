@@ -32,18 +32,17 @@
                 panel_arr['score_card'] = '/scorecard';
                 panel_arr['squad_card'] = '/squadcard';
                 panel_arr['toss_card'] = '/tosscard';
-                panel_arr['bowler_card'] = '/scorecard';
-                panel_arr['bowler_match_card'] = '/scorecard';
+                panel_arr['bowler_card'] = '/playercard';
+                panel_arr['bowler_match_card'] = '/bowlermatchcard';
                 panel_arr['bowler_series_card'] = '/bowlerseriescard';
                 panel_arr['batsman_card'] = '/playercard';
-                panel_arr['batsman_match_card'] = '/bowlermatchcard';
+                panel_arr['batsman_match_card'] = '/batsmanmatchcard';
                 panel_arr['batsman_series_card'] = '/batsmanseriescard';
 
-                
-
-                if(panel_name != '' && typeof panel_arr['panel_name'] != 'undefined'){
-                    var url = panel_arr['panel_name'];
-                    $.get( url, match_data, function( response ) {
+              
+                if(panel_name != '' && typeof panel_arr[panel_name] != 'undefined'){
+                    var url = panel_arr[panel_name];
+                    $.get( url, param_obj, function( response ) {
                         $( "#card-panel" ).html( response );
                         //alert( "Load was performed." );
                     });

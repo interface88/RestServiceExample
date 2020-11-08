@@ -86,6 +86,7 @@ app.get('/updateui', function(req, res){
   var param_obj = {};
   param_obj.panel_name = req.query.panel_name;
   param_obj.match_id = req.query.match_id;
+  param_obj.player_id = req.query.player_id;
  // console.log('panel_name' + panel_name);
   io.emit('updateui', param_obj);
   res.send("UI CHANGES");

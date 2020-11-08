@@ -521,11 +521,9 @@ $(function(){
 								    ${player.playerName}
 								  </button>
 								  <div class="dropdown-menu">
-								    <a class="dropdown-item" href="#">Profile</a>
-								    <a class="dropdown-item" href="#">Current match</a>
-								    <a class="dropdown-item" href="#">Current tournament</a>
-								    <div class="dropdown-divider"></div>
-								    <a class="dropdown-item" href="#">Separated link</a>
+								    <a class="dropdown-item panel_selector" href="#" data-panel_name="batsman_card" data-player_id="${player.uuid}">Batsman Card</a>
+								    <a class="dropdown-item panel_selector" href="#" data-panel_name="batsman_match_card" data-player_id="${player.uuid}">Batsman Match Card</a>
+								    <a class="dropdown-item panel_selector" href="#" data-panel_name="batsman_series_card" data-player_id="${player.uuid}">Batsman Series Card</a>
 								  </div>
 								</div>
 						      </c:forEach>
@@ -544,42 +542,14 @@ $(function(){
 							    ${player.playerName}
 							  </button>
 							  <div class="dropdown-menu">
-							    <a class="dropdown-item" href="#">Profile</a>
-							    <a class="dropdown-item" href="#">Current match</a>
-							    <a class="dropdown-item" href="#">Current tournament</a>
-							    <div class="dropdown-divider"></div>
-							    <a class="dropdown-item" href="#">Separated link</a>
+							    <a class="dropdown-item panel_selector" href="#" data-panel_name="bowler_card" data-player_id="${player.uuid}">Bowler Card</a>
+							    <a class="dropdown-item panel_selector" href="#" data-panel_name="bowler_match_card" data-player_id="${player.uuid}">Bowler Match Card</a>
+							    <a class="dropdown-item panel_selector" href="#" data-panel_name="bowler_series_card" data-player_id="${player.uuid}">Bowler Series Card</a>
 							  </div>
 							</div>
 					      </c:forEach>
 					  </div>
 
-					</div>
-	    		</div>
-	   		</div>
-	   		<div class="row">
-	    		<div class="col-6">
-		    		<div class="card">
-					  <h5 class="card-header">Batsman</h5>
-					  <div class="card-body">
-					  		<div class="btn-group text-center" role="group" aria-label="Basic example">
-							  <button type="button" class="btn btn-secondary panel_selector" data-panel_name="batsman_card">Batsman Card</button>
-							  <button type="button" class="btn btn-secondary panel_selector" data-panel_name="batsman_match_card" >Batsman Match Card</button>
-							  <button type="button" class="btn btn-secondary panel_selector" data-panel_name="batsman_series_card">Batsman Series Card</button>
-					  		</div>
-					  </div>
-					</div>
-	    		</div>
-	    		<div class="col-6">
-		    		<div class="card">
-					  <h5 class="card-header">Bowler</h5>
-					  <div class="card-body">
-					  		<div class="btn-group text-center" role="group" aria-label="Basic example">
-							  <button type="button" class="btn btn-secondary panel_selector" data-panel_name="bowler_card">Bowler Card</button>
-							  <button type="button" class="btn btn-secondary panel_selector" data-panel_name="bowler_match_card" >Bowler Match Card</button>
-							  <button type="button" class="btn btn-secondary panel_selector" data-panel_name="bowler_series_card">Bowler Series Card</button>
-					  		</div>
-					  </div>
 					</div>
 	    		</div>
 	   		</div>
@@ -624,7 +594,9 @@ $('body').data('panel_name', 'score'); // TODO : need to set default panel
 
 $('.panel_selector').click(function(){
 	var panel = $(this).data('panel_name');
+	var player_id = $(this).data('player_id');
 	$('body').data('panel_name', panel);// for reference purpose which panel user selected.
+	$('body').data('player_id', player_id);
 	refreshMatchPanel(panel);
 	
 });
@@ -635,6 +607,7 @@ function refreshMatchPanel(panel_name){
 	//TODO : 
     var obj = {};
     obj.panel_name = $('body').data('panel_name');
+    obj.player_id = $('body').data('player_id');
     obj.match_id = ${match.uuid};
 	 $.get( url, obj, function( data ) {
  		  //$( ".result" ).html( data );
