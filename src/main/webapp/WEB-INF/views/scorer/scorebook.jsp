@@ -484,14 +484,14 @@ $(function(){
 					  <h5 class="card-header">Flash Screen</h5>
 					  <div class="card-body">
 					  		<div class="btn-group text-center" role="group" aria-label="Basic example">
-							  <button type="button" class="btn btn-secondary">4</button>
-							  <button type="button" class="btn btn-secondary">6</button>
-							  <button type="button" class="btn btn-secondary">Duck</button>
-							  <button type="button" class="btn btn-secondary">Free Hit</button>
-							  <button type="button" class="btn btn-secondary">Wide ball</button>
-							  <button type="button" class="btn btn-secondary">Wicket</button>
-							  <button type="button" class="btn btn-secondary">Out</button>
-							  <button type="button" class="btn btn-secondary">Not Out</button>
+							  <button type="button" class="btn btn-secondary panel_selector" data-panel_name="fours_card">4</button>
+							  <button type="button" class="btn btn-secondary panel_selector" data-panel_name="sixes_card">6</button>
+							  <button type="button" class="btn btn-secondary panel_selector" data-panel_name="duck_card">Duck</button>
+							  <button type="button" class="btn btn-secondary panel_selector" data-panel_name="free_hit_card">Free Hit</button>
+							  <button type="button" class="btn btn-secondary panel_selector" data-panel_name="wide_ball_card">Wide ball</button>
+							  <button type="button" class="btn btn-secondary panel_selector" data-panel_name="wicket_card">Wicket</button>
+							  <button type="button" class="btn btn-secondary panel_selector" data-panel_name="out_card">Out</button>
+							  <button type="button" class="btn btn-secondary panel_selector" data-panel_name="not_out_card">Not Out</button>
 					  		</div>
 					  </div>
 					</div>
