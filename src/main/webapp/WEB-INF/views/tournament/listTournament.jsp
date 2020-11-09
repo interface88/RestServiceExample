@@ -31,7 +31,10 @@
 	           				<td>${tournament.tournamentName}</td>
 	           				<td>${tournament.organiser}</td>
 	           				<td>${tournament.place}</td>
-	           				<td><a class="btn btn-outline-primary" href="<spring:url value="/mvc/tournament/viewTournament?uuid=${tournament.uuid}" htmlEscape="true"/>">View</a></td>
+	           				<td>
+	           				<a class="btn btn-outline-primary" href="<spring:url value="/mvc/tournament/viewTournament?uuid=${tournament.uuid}" htmlEscape="true"/>">View</a>
+	           				<a class="btn btn-outline-primary" href="<spring:url value="/mvc/tournament/viewSchedule?uuid=${tournament.uuid}" htmlEscape="true"/>">Add Match</a>
+	           				</td>
            				</tr>
 			        </c:forEach>
            			

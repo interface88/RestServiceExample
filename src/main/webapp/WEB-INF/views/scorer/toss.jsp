@@ -37,7 +37,7 @@
 	           		<form:hidden path="matchTitle"/>
 	           		<form:hidden path="scorerId"/>
 	           		<form:hidden path="playerOfMatch"/>
-	           		<form:input path="uuid"/>
+	           		<form:hidden path="uuid"/>
 					  <div class="form-group">
 					    <label for="tossWinnerTeam">Toss Won By</label>
 					    <form:select path="tossWinnerTeam.uuid" cssClass="form-control">

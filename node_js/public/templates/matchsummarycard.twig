@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://www.bootstrapdash.com/demo/plus/jquery/template/assets/css/demo_1/style.css">
+</head>
+<body>
+
+<div style="width:30%;margin-right:auto;margin-left:auto;margin-top:50px;">
+
+		{% for match in match_details %}
+			<div class="badge-info badge-pill" style="border:0px;height:20px;text-align:center;">
+			{{match.tournament_name}}
+			</div>  
+			<div class="badge-warning badge-pill" style="border:0px;height:60px;text-align:center;padding:12px 0;">
+				<B>MATCH SUMMARY</B>
+				<br/>{{match.toss_winner_team}} WON THE TOSS AND CHOSE TO {{match.toss_decision}}
+			</div>
+			
+			
+			
+			<div class="badge-primary badge-pill" style="border:0px;height:40px;text-align:center;padding:10px 0;">			
+				<span style="float:left;padding-left:24px">{{match.first_team}}</span>
+				<span style="float:right;padding-right:34px">OVERS {{match.first_innings_overs}} <b>{{match.first_innings_runs}}-{{match.first_innings_wickets}}</b></span>
+			</div>
+			
+			<div style="height:150px">	
+				<div style="float:left;padding-left: 9px;width:50%;">
+				<table class="table" style="width:95%;border:1px;" align="center" >
+					  <tbody>
+					  {% for first_bat in first_inn_bat_details %}
+						<tr class="badge-success badge-pill">
+							<td>{{first_bat.player_name}}</td>
+							<td><b>{{first_bat.runs}}</b>&nbsp;&nbsp;{{first_bat.balls}}</td>
+						</tr>
+					  {% endfor %} 
+					  </tbody>
+				</table>	
+				</div>
+				
+				<div style="float:right;padding-right: 20px;width:50%;">			
+				<table class="table" style="width:95%;border:1px;" align="center" >
+					  <tbody>
+					  {% for first_bowl in first_inn_bowl_details %}
+						<tr class="badge-danger badge-pill">
+							<td>{{first_bowl.player_name}}</td>
+							<td><b>{{first_bowl.bowl_figures}}</b>&nbsp;&nbsp;{{first_bowl.overs}}</td>
+						</tr>
+						{% endfor %} 	
+					  </tbody>
+				</table>	
+				</div>
+			</div>
+			
+			
+			<div class="badge-primary badge-pill" style="border:0px;height:40px;text-align:center;padding:10px 0;">			
+				<span style="float:left;padding-left:24px">{{match.second_team}}</span>
+				<span style="float:right;padding-right:34px">OVERS {{match.second_innings_overs}} <b>{{match.second_innings_runs}}-{{match.second_innings_wickets}}</b></span>
+			</div>
+			
+			<div style="height:150px;">	
+				<div style="float:left;padding-left: 9px;width:50%;">
+				<table class="table" style="width:95%;border:1px;" align="center" >
+					  <tbody>
+					  {% for second_bat in second_inn_bat_details %}
+						<tr class="badge-success badge-pill">
+							<td>{{second_bat.player_name}}</td>
+							<td><b>{{second_bat.runs}}</b>&nbsp;&nbsp;{{second_bat.balls}}</td>
+						</tr>
+					  {% endfor %} 
+					  </tbody>
+				</table>	
+				</div>
+				
+				<div style="float:right;padding-right: 20px;width:50%;">			
+				<table class="table" style="width:95%;border:1px;" align="center" >
+					  <tbody>
+					  {% for second_bowl in second_inn_bowl_details %}
+						<tr class="badge-danger badge-pill">
+							<td>{{second_bowl.player_name}}</td>
+							<td><b>{{second_bowl.bowl_figures}}</b>&nbsp;&nbsp;{{second_bowl.overs}}</td>
+						</tr>
+						{% endfor %} 	
+					  </tbody>
+				</table>	
+				</div>
+			</div>
+			
+			<div class="badge-primary badge-pill" style="border:0px;height:40px;text-align:center;padding:10px 0;">			
+				<span>{{match.winner_team}} {{match.outcome}}</span>
+				
+			</div>
+			
+		{% endfor %} 	  
+</div>
+</body>
+
+

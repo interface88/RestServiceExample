@@ -4,13 +4,14 @@
 <link rel="stylesheet" href="https://www.bootstrapdash.com/demo/plus/jquery/template/assets/css/demo_1/style.css">
 </head>
 <body>
+<div  style="width:50%;">
 {% for player in player_details %}
 
 <h1 class="badge-info badge-pill">{{player.player_name}}</h1>
 
 <table class="table">
       <tbody>
-        <tr>
+        <tr class="badge-danger badge-pill">
 			<td rowspan="3">
 				<img style="width:210px;height:310px"  src="http://localhost:8080/RestServiceExample/mvc/resource/image/{{player.PROFILE_PIC}}" class="gambar img-responsive img-thumbnail" id="item-img-output" />	
 			</td>
@@ -23,7 +24,7 @@
 			<td>{{player.place}}
 			</td>
 		</tr>
-		<tr>
+		<tr class="badge-danger badge-pill">
 			<th>Player Id
 			</th>
 			<td>{{player.player_id}}
@@ -33,7 +34,7 @@
 			<td>{{player.player_role}}
 			</td>
 		</tr>
-		<tr>
+		<tr class="badge-danger badge-pill">
 			<th>Batting Style
 			</th>
 			<td>{{player.batting_style}}
@@ -64,7 +65,7 @@
 			<th>6s</th>
         </tr>
 		
-		<tr>
+		<tr class="badge-success badge-pill">
 			{% for bat in batting_details %}
 			<td>{{bat.matches}}</td>
 			<td>{{bat.not_outs}}</td>
@@ -94,7 +95,7 @@
 			<th>SR</th>		
 			<th></th>	
 		</tr>
-		<tr>
+		<tr class="badge-success badge-pill">
 			{% for bowl in bowling_details %}
 			<td>{{bowl.matches}}</td>
 			<td>{{bowl.balls}}</td>
@@ -109,6 +110,6 @@
 		</tr>
 	  </tbody>
 </table>	
-	  
+</div>	  
 </body>
 </html>

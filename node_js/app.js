@@ -36,7 +36,7 @@ app.use(function (req, res, next) {
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "",
+  password: "admin",
   database: "cricket",
   multipleStatements:true
 });
@@ -85,9 +85,13 @@ app.get('/panelShow', function(req, res){
 app.get('/updateui', function(req, res){
   var param_obj = {};
   param_obj.panel_name = req.query.panel_name;
+  param_obj.tournament_id = req.query.tournament_id;
   param_obj.match_id = req.query.match_id;
+  param_obj.innings = req.query.innings;
   param_obj.player_id = req.query.player_id;
- // console.log('panel_name' + panel_name);
+  
+  console.log(' param_obj.innings' +  param_obj);
+  //io.emit('updateui', {'panel_name' : panel_name,'tournament_id' : tournament_id,'match_id' : match_id,'player_id' : player_id});
   io.emit('updateui', param_obj);
   res.send("UI CHANGES");
   
@@ -157,9 +161,10 @@ app.get('/scorecard', function (req, res) {
 	
 	
 	var sql = sql_match+sql_curr_inn_score+sql_last_balls+sql_first_inn_score+sql_batsman_score+sql_bowler+sql_overs;
-	//console.log(sql);
+	//console.log(innings);
 	
 	con.query(sql,[match_id,innings,innings,innings,match_id,match_id,innings,match_id,match_id,innings,match_id,match_id,match_id,innings], function (err, results, fields) {
+		
     if (err) throw err;
 	twing.render('scorecard.twig', {'match_list': results[0],'score_list':results[1],'last_balls_list':results[2],'first_inn_list':results[3]
 	,'batsman_list':results[4],'bowler_list':results[5],'over_list':results[6]}).then((output) => {
@@ -315,7 +320,58 @@ app.get('/pointstablecard', function (req, res) {
   }); 
 }); 
 
+app.get('/matchsummarycard', function (req, res) {
+  var match_id = req.query.match_id;
+  var sql_match = ' select '+
+			' (select UPPER(t.tournament_name) from csn_tournament t where uuid=m.tournament_uuid) tournament_name,'+
+			' (select UPPER(name) from csn_team t where t.uuid=m.team1_uuid) team1,'+
+			' (select UPPER(name) from csn_team t where t.uuid=m.team2_uuid) team2,'+
+			' (select UPPER(name) from csn_team t where t.uuid=m.toss_winner_uuid) toss_winner_team,m.toss_decision '+
+			' ,m.first_innings_runs,m.first_innings_wickets,m.first_innings_overs,(select UPPER(name) from csn_team t where t.uuid=m.first_innings_team_uuid) first_team'+
+			' ,m.second_innings_runs,m.second_innings_wickets,m.second_innings_overs,(select UPPER(name) from csn_team t where t.uuid=m.second_innings_team_uuid) second_team'+
+			' ,(select UPPER(name) from csn_team t where t.uuid=m.match_winner_uuid) winner_team ,m.outcome '+
+			' from csn_match m where uuid = ? ;';
+  
+  
+	var sql_first_inn_bat = ' select UPPER(player_name) player_name,runs,balls '+
+						' from csn_batsman_match_dtls s '+
+						' where s.match_uuid=? '+
+						' and s.innings=1 '+
+						' order by s.runs desc,s.strike_rate,s.uuid limit 3;';
+						
+	var sql_second_inn_bat = ' select UPPER(player_name) player_name,runs,balls '+
+						' from csn_batsman_match_dtls s '+
+						' where s.match_uuid=? '+
+						' and s.innings=2 '+
+						' order by s.runs desc,s.strike_rate,s.uuid limit 3;';
+						
+    var sql_first_inn_bowl = 'select UPPER(player_name) player_name,concat(s.wickets,\'-\',s.runs) bowl_figures,s.overs '+
+							' from csn_bowler_match_dtls s '+
+							' where s.match_uuid=? '+
+							' and s.innings=1 '+
+							' order by s.wickets desc,s.runs,s.overs desc limit 3;';
+	
+	var sql_second_inn_bowl = 'select UPPER(player_name) player_name,concat(s.wickets,\'-\',s.runs) bowl_figures,s.overs '+
+							' from csn_bowler_match_dtls s '+
+							' where s.match_uuid=? '+
+							' and s.innings=2 '+
+							' order by s.wickets desc,s.runs,s.overs desc limit 3;';
+	
+	
+	var sql = sql_match + sql_first_inn_bat + sql_second_inn_bat + sql_first_inn_bowl + sql_second_inn_bowl;
+	
+    con.query(sql,[match_id,match_id,match_id,match_id,match_id], function (err, results, fields) {
+    if (err) throw err;	
+	twing.render('matchsummarycard.twig', {'match_details': results[0],'first_inn_bat_details': results[1],'second_inn_bat_details': results[2]
+	,'first_inn_bowl_details': results[3],'second_inn_bowl_details': results[4]}).then((output) => {
+      res.end(output);
+  });
+  
+  }); 
+}); 
+
 
 http.listen(3000, function(){
     console.log('HTTP server started on port 3000');
 });
+

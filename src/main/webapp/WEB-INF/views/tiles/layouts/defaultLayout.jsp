@@ -50,6 +50,10 @@
     <script src="<c:url value="/static/assets/vendors/jsrender/jsrender.min.js" />"></script>
     <script src="<c:url value="/static/assets/vendors/mustache/mustache.min.js" />"></script>
     
+     <script src="<c:url value="/static/assets/js/misc.js" />"></script>
+    <script src="<c:url value="/static/assets/js/off-canvas.js" />"></script>
+    
+    
     <script>
     	$('.dropdown-toggle').dropdown()
     </script>

@@ -81,4 +81,9 @@
        <put-attribute name="title" value="Scorebook" />  
        <put-attribute name="body" value="/WEB-INF/views/scorer/scorebook.jsp" />     
    </definition>
+   
+   <definition name="viewSchedule" extends="template-def">  
+       <put-attribute name="title" value="Schedule" />  
+       <put-attribute name="body" value="/WEB-INF/views/tournament/viewSchedule.jsp" />     
+   </definition>
 </tiles-definitions>
