@@ -89,8 +89,7 @@ app.get('/updateui', function(req, res){
   param_obj.match_id = req.query.match_id;
   param_obj.innings = req.query.innings;
   param_obj.player_id = req.query.player_id;
-  
-  console.log(' param_obj.innings' +  param_obj);
+    
   //io.emit('updateui', {'panel_name' : panel_name,'tournament_id' : tournament_id,'match_id' : match_id,'player_id' : player_id});
   io.emit('updateui', param_obj);
   res.send("UI CHANGES");

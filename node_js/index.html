@@ -56,11 +56,12 @@
                 stinger_arr['out_card'] = 'out_card';
                 stinger_arr['not_out_card'] = 'not_out_card';
 
-             
+				
 
                 if(panel_name != '' && typeof panel_arr[panel_name] != 'undefined'){
                     
                     var url = panel_arr[panel_name];
+					console.log('url'+url);
                     $.get( url, param_obj, function( response ) {
                         $( "#card-panel" ).html( response );
                         //alert( "Load was performed." );
