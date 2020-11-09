@@ -2,6 +2,12 @@
 <html>
     <head>
         <title>Socket.IO Example</title>
+        <style>
+
+            .stinger{
+                display: none;
+            }
+        </style>
     </head>
     <body onload="load_panel('scorecard')">
         <script src="/socket.io/socket.io.js"></script>
@@ -39,13 +45,36 @@
                 panel_arr['batsman_match_card'] = '/batsmanmatchcard';
                 panel_arr['batsman_series_card'] = '/batsmanseriescard';
 
-              
+                var stinger_arr = {};
+                stinger_arr['fours_card'] = 'fours_card';
+                stinger_arr['sixes_card'] = 'sixes_card';
+                stinger_arr['duck_card'] = 'duck_card';
+                stinger_arr['free_hit_card'] = 'free_hit_card';
+                stinger_arr['wide_ball_card'] = 'wide_ball_card';
+                stinger_arr['wicket_card'] = 'wicket_card';
+                stinger_arr['out_card'] = 'out_card';
+                stinger_arr['not_out_card'] = 'not_out_card';
+
+             
+
                 if(panel_name != '' && typeof panel_arr[panel_name] != 'undefined'){
+                    
                     var url = panel_arr[panel_name];
                     $.get( url, param_obj, function( response ) {
                         $( "#card-panel" ).html( response );
                         //alert( "Load was performed." );
                     });
+                }else if(panel_name != '' && typeof stinger_arr[panel_name] != 'undefined'){
+                   
+                    var $div = '#' + stinger_arr[panel_name];
+                   
+                    $("#card-panel").hide();
+                    $($div).show();
+                    setTimeout(function(){
+                        $($div).hide();
+                        $('#card-panel').show();
+                    }, 3000);
+
                 }else{
                     $( "#card-panel" ).html('');
                 }
@@ -59,5 +88,14 @@
         <div id="card-panel" class="panel">
             
         </div>
+        <div id="fours_card" class="stinger">
+			<img src="/images/4.gif" width="1920" height="1080"  />
+		</div>
+        <div id="sixes_card" class="stinger">
+			<img src="/images/6.gif" width="1920" height="1080"  />
+        </div>
+        <div id="duck_card" class="stinger">
+			<img src="/images/duck.gif" width="1920" height="1080"  />
+		</div>
     </body>
 </html>

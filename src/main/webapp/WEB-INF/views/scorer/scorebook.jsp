@@ -609,6 +609,7 @@ function refreshMatchPanel(panel_name){
     obj.panel_name = $('body').data('panel_name');
     obj.player_id = $('body').data('player_id');
     obj.match_id = ${match.uuid};
+    obj.innings = 1;
 	 $.get( url, obj, function( data ) {
  		  //$( ".result" ).html( data );
  		  //TODO: need to do something if score refreshed successfully.
