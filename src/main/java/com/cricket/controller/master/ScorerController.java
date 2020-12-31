@@ -1,5 +1,6 @@
 package com.cricket.controller.master;
 
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,6 +22,7 @@ import com.cricket.model.BowlerMatchDtls;
 import com.cricket.model.Match;
 import com.cricket.model.Player;
 import com.cricket.model.Scorebook;
+import com.cricket.model.Team;
 import com.cricket.service.BatsmanDtlsService;
 import com.cricket.service.BowlerDtlsService;
 import com.cricket.service.MatchService;
@@ -189,6 +191,33 @@ public class ScorerController extends AbstractBaseController{
 
 		// need to return calculated json
 		return scorebookDisplayVO;
+	}
+
+	@RequestMapping(value = "/updateInnings")
+	public @ResponseBody String updateInnings(@RequestParam(required = true) Long uuid, Model model){
+		matchService.updateInning(uuid);
+		return "success";
+	}
+
+	@RequestMapping(value = "/endTheMatch")
+	public  @ResponseBody String endTheMatch(@ModelAttribute("match_uuid") Long match_uuid, Long winner_team_uuid, String playerOfMatch, Model model,BindingResult bindingResult){
+		Match match = matchService.getByUuid(match_uuid);
+		Team team = new Team();
+		team.setUuid(winner_team_uuid);
+		match.setMatchWinnerTeam(team);
+		match.setPlayerOfMatch(playerOfMatch);
+		String msg = "";
+		if(match.getFirstInningsTeam().getUuid() == winner_team_uuid) {
+			int runs = match.getFirstInningsRuns() - match.getSecondInningsRuns();
+			msg = MessageFormat.format("{0} won by  \"{0}\" runs", match.getFirstInningsTeam().getName(), runs);
+		}else {
+			int wkt = 11 - match.getSecondInningsWickets();
+			msg = MessageFormat.format("{0} won by  \"{0}\" wicket", match.getSecondInningsTeam().getName(), wkt);
+		}
+
+		match.setOutcome(msg);
+		matchService.endTheMatch(match);
+		return "success";
 	}
 
 	private BatsmanMatchDtlsVO convertBatsmanMatchDtlsDTOtoVO(BatsmanMatchDtls batsmanMatchDtls) {

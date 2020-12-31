@@ -12,4 +12,6 @@ public interface MatchService {
 	void update(Match team);
 	List<Match> getList(Map<String, String> paramList);
 	int deleteByIds(List<String> teamGroups);
+	void updateInning(Long uuid);
+	void endTheMatch(Match match);
 }

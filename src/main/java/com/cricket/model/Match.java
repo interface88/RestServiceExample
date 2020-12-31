@@ -10,10 +10,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "csn_match")
+@NamedNativeQueries({
+  @NamedNativeQuery(
+    name = "sp_upd_match_dtls",
+    query = "{ CALL sp_upd_match_dtls(:match_uuid) }")
+})
 public class Match implements Serializable {
 
 	/**

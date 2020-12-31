@@ -53,37 +53,50 @@
 	        </div>
         </c:if>
     </div>
-    <style>
-    	.current-inning-score{
-    		font-size:30px;
-    	}
-    	.current-inning-over{
-    		font-size:20px;
-    	}
-    	
-    	.current-over span{
-    		height: 40px;
-			width: 40px;
-			border-radius: 50%;
-			border: 1px solid #333;
-			display: inline-block;
-			text-align: center;
-			line-height: 40px;
-			font-size: 14px;
-    	}
-    	
-    	tr.striker span:after{
-    		content:" *";
-    	}
-    	
-    </style>
- 	<div class="col-12 grid-margin">
+</div>
+   <style>
+   	.current-inning-score{
+   		font-size:30px;
+   	}
+   	.current-inning-over{
+   		font-size:20px;
+   	}
+   	
+   	.current-over span{
+   		height: 40px;
+		width: 40px;
+		border-radius: 50%;
+		border: 1px solid #333;
+		display: inline-block;
+		text-align: center;
+		line-height: 40px;
+		font-size: 14px;
+   	}
+   	
+   	tr.striker span:after{
+   		content:" *";
+   	}
+   	
+   </style>
+<div class="row">    
+ 	<div class="col-9 grid-margin">
        <div class="card">
          <div class="card-body">
            <h1 class="card-title">${match.team1.name} vs ${match.team2.name}</h1>
+           <c:choose>
+			    <c:when test="${match.currentInning == 2}">
+		           <div class="row">
+		           		<div class="col-lg-9">
+			           		<h4>${match.firstInningsTeam.name} Inning-1</h4>
+			           		<span class="current-inning-score">${match.firstInningsRuns}-${match.firstInningsWickets}</span>
+		           		</div>
+		           </div>
+			    </c:when>
+			</c:choose>
+			           
            <div class="row">
            		<div class="col-lg-9">
-	           		<h4>${battingteam} 1st Inning</h4>
+	           		<h4>${battingteam} Inning-${match.currentInning}</h4>
 	           		<span class="current-inning-score">0-0</span><span class="current-inning-over">(0)</span>
 	           		<button type="button" data-toggle="modal" data-target="#youtube-modal" class="btn btn-danger btn-rounded btn-fw"><i class="mdi mdi-video"></i> Youtube</button>
            		</div>
@@ -194,6 +207,12 @@
          </div>
        </div>
    </div>
+
+	<div class="col-3 grid-margin">
+		<button type="button" id="endTheInnings" >End the Innings</button>
+		<button type="button" id="endTheMatch" data-toggle="modal" data-target="#end-the-match-modal">End the Match</button>
+	</div>
+</div>
    <button type="button" onclick="submitScore();">Test score submit</button>
 
 <form:form  method = "POST" action ="${pageContext.request.contextPath}/mvc/scorebook/saveScorebook" id="scoreBookForm" modelAttribute = "scorebook" >
@@ -571,6 +590,44 @@ $(function(){
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary">Done</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End the match modal -->
+<div class="modal fade" id="end-the-match-modal" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="end-the-match-modal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="end-the-match-modal-label">End the match</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       	<form>
+		  <div class="form-group">
+		    <label for="winning_team_combo">Winning team</label>
+		    <select class="form-control" id="winning_team_combo">
+		    	<option value="${match.team1.uuid}">${match.team1.name}</option>
+		    	<option value="${match.team2.uuid}">${match.team2.name}</option>
+		    </select>
+		  </div>
+		  <div class="form-group">
+		    <label for="player_of_match_combo">Player of the Match</label>
+		    <select class="form-control" id="player_of_match_combo">
+		    	<c:forEach var="player" items="${match.team1.players}">
+				    <option value="${player.playerName}">${player.playerName}</option>
+			    </c:forEach>
+			    <c:forEach var="player" items="${match.team2.players}">
+				    <option value="${player.playerName}">${player.playerName}</option>
+			    </c:forEach>
+		    </select>
+		  </div>
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="endTheBatsmanBtn">Done</button>
       </div>
     </div>
   </div>
@@ -1082,6 +1139,30 @@ $('#newBatsman').click(function(){
 
 		// TODO: implement reset over functionality
 		//resetOver(); 
+	});
+
+	// ----- 
+	$('#endTheInnings').click(function(){
+		var url = "${pageContext.request.contextPath}/mvc/scorer/updateInnings";
+		$.get(url, {'uuid' : ${match.uuid}}, function( response ) {
+			if(response == 'success'){
+				 location.reload(); 
+			}
+		});
+	});
+
+	$('#endTheBatsmanBtn').click(function(){
+		var url = "${pageContext.request.contextPath}/mvc/scorer/endTheMatch";
+		var obj = {};
+		obj.playerOfMatch = $('#player_of_match_combo').val();
+		obj.winner_team_uuid = $('#winning_team_combo').val();
+		obj.match_uuid = ${match.uuid};
+		$.get(url, obj, function( response ) {
+			if(response == 'success'){
+				 //location.reload(); 
+			}
+			alert(response);
+		});
 	});
 
 </script>
